@@ -29,6 +29,7 @@ This evidence pack does not prove that SCP answers all 1,000 RAG questions corre
 | `REVIEW_SHEET_50.csv` | Reader-friendly 50-row review/triage table with provenance and independent-model label. |
 | `PUBLIC_EXPORT_MANIFEST.json` | Machine-readable export scope and redaction assertions. |
 | `artifacts/reports/PHASE3_RAG_GATE_STATUS_V3_20260826.md` | Current honest RAG gate status and limitations. |
+| `artifacts/reports/FULL_FOLDER_AUDIT_20260826.md` | Sanitized full-folder audit: stale artifacts, duplicate classification, runtime-port alignment, and verification limits. |
 | `artifacts/reports/phase3_rag_evidence_20260826/` | Sanitized admission audit, independent-review summary, and one-row pilot evidence. |
 | `artifacts/reports/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json` | Snapshot provenance for the canonical private repository commit; local paths are redacted in this public copy. |
 | `artifacts/reports/archived_workspaces_20260826/` | Provenance explaining why divergent workspaces were not blindly copied. |
