@@ -1,0 +1,37 @@
+{
+  "schema_version": "phase3-ragas-v2-result",
+  "generated_at": "2026-08-26T10:23:32.669365+00:00",
+  "evaluation_method": "official_ragas_evaluate_only",
+  "ragas_version": "0.1.7",
+  "datasets_version": "3.6.0",
+  "langchain_openai_version": "0.1.25",
+  "model_id": "gpt-5-mini",
+  "runtime_input_path": "<SANDBOX_PATH>",
+  "runtime_input_sha256": "sha256:6efd255d59d3761d393e75b30a5b26ea9c69810c14c7d01735b3608950ae19d0",
+  "gold_input_path": "<SANDBOX_PATH>",
+  "gold_input_sha256": "sha256:efcd39a99c1a129b69e706ce713ecb0dd2495ba94b696690eccfc3398ba5643c",
+  "runtime_rows_seen": 1000,
+  "gold_rows_seen": 50,
+  "rows_admitted": 0,
+  "rows_excluded_by_reason": {
+    "gold_not_verified_or_not_eligible": 50,
+    "gold_row_missing": 225,
+    "runtime_http_not_200": 725
+  },
+  "metrics_requested": [
+    "faithfulness",
+    "context_precision",
+    "context_recall",
+    "answer_relevancy",
+    "answer_correctness"
+  ],
+  "proxy_fallback_used": false,
+  "score_release_allowed": false,
+  "raw_judge_artifacts": [],
+  "provider": {
+    "openai_api_base_present": true,
+    "openai_api_key_present": true
+  },
+  "status": "BLOCKED_NO_VERIFIED_ROWS",
+  "blocked_reason": "No runtime row is paired with a Gold row carrying verified review provenance and eligible_for_ragas=true. Ragas evaluate() was not called; no score exists."
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "phase3-independent-gold-review-v1",
+  "model": "gpt-5-mini",
+  "input_rows": 50,
+  "reviewed_rows": 50,
+  "failed_rows": 0,
+  "original_question_promotions": 0,
+  "static_core_promotions": 1,
+  "high_stakes_or_current_rows": 38,
+  "failures": [],
+  "output": "<TEMP_PATH>",
+  "claim_boundary": "Independent LLM review is not human review; no row may be labeled HUMAN_VERIFIED."
+}

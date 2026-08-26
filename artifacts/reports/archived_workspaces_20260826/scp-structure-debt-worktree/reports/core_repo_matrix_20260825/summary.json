@@ -1,0 +1,18 @@
+﻿{
+    "generated_at":  "2026-08-25T21:05:28.2565508+07:00",
+    "repo_a":  "<CANONICAL_SCP_ROOT>s\\scp-agent-structure-debt",
+    "repo_a_head":  "cb132a5af9f0dbcc6293b939ab32136cef22593c",
+    "repo_b":  "<CANONICAL_SCP_ROOT>s\\scp",
+    "repo_b_head":  "23f41b7efae89b3b1e2a96c50cae51021ac9098d",
+    "repo_a_tracked":  689,
+    "repo_b_tracked":  1172,
+    "common_paths":  475,
+    "common_blob_identical":  435,
+    "common_blob_different":  40,
+    "only_scp_agent":  214,
+    "only_ga_lab":  697,
+    "shared_kernel_paths":  6,
+    "shared_stack_paths":  203,
+    "kernel_only_scp_agent":  14,
+    "stack_only_ga_lab":  174
+}

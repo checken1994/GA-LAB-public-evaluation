@@ -1,0 +1,39 @@
+{
+  "source": "<CANONICAL_SCP_ROOT>s\\scp-structure-debt-worktree",
+  "source_head": "23f41b7efae89b3b1e2a96c50cae51021ac9098d",
+  "destination": "<CANONICAL_SCP_ROOT>s\\scp\\reports\\archived_workspaces_20260826\\scp-structure-debt-worktree",
+  "file_count": 6,
+  "files": [
+    {
+      "relative": "reports\\core_repo_matrix_20260825\\common_paths.json",
+      "bytes": 156177,
+      "sha256": "B5B4F7060C7013275E8743CA4A7F5510E0DA17D9A791B564E7B73CA2C6B1961F"
+    },
+    {
+      "relative": "reports\\core_repo_matrix_20260825\\CORE_REPO_MATRIX.md",
+      "bytes": 4082,
+      "sha256": "BA4B728A2400817FDA3B28021E6069B24953A1ADA6007EC78132C7DF36AFB5DD"
+    },
+    {
+      "relative": "reports\\core_repo_matrix_20260825\\only_ga_lab.json",
+      "bytes": 43095,
+      "sha256": "66877F7BA3CB932053B03811976CA4B3B07AF3FE72FB0101C6872D5D6A8C5377"
+    },
+    {
+      "relative": "reports\\core_repo_matrix_20260825\\only_scp_agent.json",
+      "bytes": 12352,
+      "sha256": "6E14A61217BAFA2FC66D382E2680FF6D4FC9815BB56F4D999537D8DE506F87E3"
+    },
+    {
+      "relative": "reports\\core_repo_matrix_20260825\\summary.json",
+      "bytes": 666,
+      "sha256": "112D1B4CA6F7DAF440445A1BDF838261BFA653A88087A081E07677C30B3F3185"
+    },
+    {
+      "relative": "tools\\build_core_repo_matrix_worktree.ps1",
+      "bytes": 4445,
+      "sha256": "8C843B7F3D33891C32E02D49ABA3E6A353DD87BA48989BBACC759F9E7E1E1C43"
+    }
+  ],
+  "note": "Preserved untracked worktree artifacts under a separate archive namespace; no tracked root file overwritten."
+}

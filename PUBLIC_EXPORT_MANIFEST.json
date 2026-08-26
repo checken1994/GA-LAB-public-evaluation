@@ -1,0 +1,11 @@
+{
+  "schema_version": "public-evaluation-export-v1",
+  "artifact_files": 17,
+  "independent_review_rows": 50,
+  "raw_secrets_exported": false,
+  "private_cache_exported": false,
+  "personal_pc_paths_redacted": true,
+  "human_gold_claim": false,
+  "ragas_release_score_claim": false,
+  "scope": "Public evidence and reproducibility artifacts only; not a full source-code mirror and not a production-readiness claim."
+}

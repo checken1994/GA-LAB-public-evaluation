@@ -1,0 +1,35 @@
+{
+  "schema_version": "phase3-ragas-local-embedding-pilot-v1",
+  "evaluation_method": "official_ragas_evaluate_only",
+  "ragas_version": "0.1.7",
+  "dataset_rows_seen": 1,
+  "runtime_rows_seen": 1,
+  "rows_admitted": 1,
+  "judge_model": "gpt-5-mini",
+  "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "embedding_provider": "local_sentence_transformers",
+  "human_verified_rows": 0,
+  "independent_llm_reviewed_rows": 1,
+  "public_gold_release_allowed": false,
+  "score_release_allowed": false,
+  "scope": "One-row independent-LLM pilot only; not the 50-row human Gold lane and not the 1,000-row benchmark.",
+  "status": "RAGAS_PILOT_WITH_MISSING_METRIC",
+  "rows_scored": 1,
+  "scores": [
+    {
+      "question": "Phương pháp học ngoại ngữ hiệu quả qua kỹ thuật Spaced Repetition (Mã CH-0005)?",
+      "answer": "Spaced repetition is an evidence-based learning technique that is usually performed with flashcards. Newly introduced and more difficult flashcards are shown more frequently, while older and less difficult flashcards are shown less frequently in order to exploit the psychological spacing effect. The use of spaced repetition has been proven to increase the rate of learning.",
+      "contexts": "['Spaced repetition is an evidence-based learning technique that is usually performed with flashcards. Newly introduced and more difficult flashcards are shown more frequently, while older and less difficult flashcards are shown less frequently in order to exploit the psychological spacing effect. The use of spaced repetition has been proven to increase the rate of learning.']",
+      "ground_truth": "Câu trả lời của ứng viên là trích dẫn chính xác nội dung trong nguồn: nó định nghĩa Spaced Repetition và ghi rằng đây là kỹ thuật dựa trên bằng chứng giúp tăng tốc độ học. Tuy nhiên câu trả lời không xử lý được phần 'mới nhất năm nay' và thiếu hướng dẫn cụ thể về cách áp dụng kỹ thuật này cho việc học ngoại ngữ.",
+      "faithfulness": 1.0,
+      "context_precision": 0.9999999999,
+      "context_recall": 0.0,
+      "answer_relevancy": 0.5766613533458759,
+      "answer_correctness": null
+    }
+  ],
+  "non_finite_values_normalized_to_null": [
+    "answer_correctness"
+  ],
+  "blocked_reason": "Official Ragas executed on one independent-LLM static-core row, but answer_correctness was non-finite/None and the lane has zero human-verified rows; no release score exists."
+}
