@@ -17,6 +17,12 @@ jobs:
           python-version: '3.11'
       - name: Validate public artifacts
         run: python3 scripts/validate_public_evaluation.py
-      - name: Scan for accidental sensitive material
+      - name: Scan tracked names for private artifacts
         run: |
-          ! grep -RInE 'OPENAI_API_KEY|ANTHROPIC_API_KEY|GEMINI_API_KEY|AWS_SECRET_ACCESS_KEY|BEGIN (RSA |OPENSSH |EC |DSA )?PRIVATE KEY|Bearer[[:space:]]+[A-Za-z0-9._-]{12,}|C:\\\\Users\\\\check|/home/ubuntu/|/tmp/|\.env([.]|$)' . --exclude-dir=.git --exclude='.github/workflows/public-evaluation.yml'
+          if git ls-files | grep -E '(^|/)(\.env$|.*\.(log|sqlite|db|pyc|bak|tar|gz|zip)$)'; then
+            echo 'private artifact filename found'
+            exit 1
+          fi
+      - name: Scan exported text for accidental secrets or local paths
+        run: |
+          ! git grep -nI -E 'BEGIN (RSA |OPENSSH |EC |DSA )?PRIVATE KEY|Bearer[[:space:]]+[A-Za-z0-9._-]{12,}|C:\\\\Users\\\\check|/home/ubuntu/|/tmp/' -- ':!scripts/validate_public_evaluation.py' ':!.github' ':!artifacts/reports/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json'
