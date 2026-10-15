@@ -1,0 +1,13 @@
+# Optional Playwright browser backend for scp/web_control.
+# Install ONLY when the rendered-page backend is intentionally enabled.
+# Runtime opt-in: set SCP_WEB_BACKEND=playwright (exact value). When the
+# variable is unset, empty or any other value, WebNavigator behavior is
+# unchanged and this dependency is not required.
+#
+# Install:
+#   pip install -r scp/requirements-optional-web.txt
+#   python -m playwright install chromium
+#
+# Pinned to the version verified by the D1 test run (T03 test_playwright_backend)
+# with the matching chromium build from the playwright browser cache.
+playwright==1.61.0

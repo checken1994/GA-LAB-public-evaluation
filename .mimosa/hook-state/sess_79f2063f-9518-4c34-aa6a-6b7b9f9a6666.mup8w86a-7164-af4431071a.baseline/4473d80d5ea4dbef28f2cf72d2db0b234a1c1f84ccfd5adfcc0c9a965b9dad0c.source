@@ -1,0 +1,164 @@
+# SCP V105 FIXED — Production dependencies (pinned versions for supply-chain security)
+# Audit Task 7-B: requirements.txt creation (CWE-1357 / SLSA Level 1)
+# TẤT CẢ versions pinned (==) để đảm bảo reproducible builds.
+#
+# Cài đặt: pip install -r requirements.txt
+# Dev/test: pip install -r requirements-dev.txt
+# Reproducible full-env install: dùng requirements.lock.txt (pip freeze từ
+# container — xem header của lockfile) [A3].
+
+# === Runtime framework (REQUIRED) ===
+# FastAPI + Uvicorn + Starlette — ASGI web framework.
+# Verified by codebase: api_server.py, api/chat.py dùng `from fastapi import ...`.
+fastapi==0.128.0
+uvicorn[standard]==0.44.0
+starlette==0.50.0  # [FIX] 0.51 incompatible with fastapi 0.128 (needs <0.51); was 0.51.0
+
+# === Data validation (REQUIRED) ===
+# Verified by codebase: nhiều files dùng `from pydantic import BaseModel, Field`.
+pydantic==2.13.4
+pydantic-core==2.46.4
+pydantic-settings==2.14.2
+
+# === HTTP clients (REQUIRED) ===
+# Verified: runtime/llm_client.py, core/real_learning_engine.py, ... dùng
+# `import httpx` (async) và `import requests` (sync fallback).
+httpx==0.28.1
+requests==2.32.5
+
+# === ASGI/HTTP transitive pins (REQUIRED — transitive của fastapi/httpx) ===
+anyio==4.13.0
+sniffio==1.3.0
+h11==0.16.0
+certifi==2025.8.3
+charset-normalizer==3.4.3
+idna==3.11
+urllib3==2.7.0  # Security fixes for affected streaming/proxy redirect usages; see official advisories.
+
+# === Environment configuration (REQUIRED) ===
+# Verified: autofix/runner.py dùng `from dotenv import load_dotenv` (unconditional
+# top-level try/except ImportError, nhưng nếu thiếu → log warning + skip .env).
+# Pin để đảm bảo .env load được khi deploy production.
+python-dotenv==1.0.1
+# === XML security (REQUIRED — biology.py imports defusedxml for XXE hardening) ===
+defusedxml==0.7.1
+
+# === At-rest encryption (REQUIRED — security/bypass_encrypt.py Fernet) ===
+# [A1] Trước đây nằm ở requirements-optional-ml.txt → container chạy với
+# SCP_ENCRYPT_BYPASSES=1 nhưng thiếu cryptography → bypass records bị ghi
+# plaintext (fail-open). Giờ là hard runtime dep; thiếu dep = fail-closed raise.
+cryptography==49.0.0
+
+# === Optional ML / embeddings ===
+# Không cài trong runtime mặc định: code hiện tại không import trực tiếp hai gói này,
+# và CI không được buộc tải torch hàng trăm MB chỉ để chạy policy/reality checks.
+# Nếu bật vector search/semantic matching, cài riêng từ requirements-optional-ml.txt.
+
+# === Production server extras (OPTIONAL — uncomment for production) ===
+# gunicorn==23.0.0
+# uvloop==0.21.0
+# httptools==0.6.4
+
+# === Optional integrations (COMMENTED — không trong default install) ===
+# Ollama gateway (core/real_learning_engine.py::_ask_ollama dùng urllib sync,
+# không cần package `ollama` — để commented để tránh false dependency).
+# ollama==0.4.4
+#
+# Redis cache (sẽ dùng nếu SCP_REDIS_URL set — hiện tại dùng in-memory dict).
+# redis==5.2.0
+#
+# JWT auth (REQUIRED — jwt_guard.py:1 dùng `import jwt` trực tiếp trong production).
+# [A3] pinned về version thật trong container (pip freeze scp-scp-api-1).
+pyjwt==2.13.0
+#
+# File uploads (chưa có endpoint /upload — để commented).
+# python-multipart==0.0.20
+#
+# aiohttp (httpx đã đủ — không cần aiohttp song song).
+# aiohttp==3.11.10
+#
+# Retry logic (REQUIRED — api_utils.py dùng tenacity decorator trong production paths).
+tenacity==9.0.0
+#
+# aiofiles (async file I/O — hiện tại dùng sync open() với Path.read_text).
+# aiofiles==24.1.0
+
+# === TaskKernel storage — PostgreSQL backend (ADOPT-AND-FIX Track C1) ===
+# PgKernelStorage (scp/kernel_storage_pg.py): production PostgreSQL storage
+# backend for TaskKernel. Default storage backend remains SQLite; opt in via
+# SCP_KERNEL_BACKEND=postgres + SCP_KERNEL_PG_DSN. psycopg 3.x (psycopg[binary]
+# ships prebuilt wheels — no libpq build step required).
+psycopg[binary]==3.3.5
+
+# === Windows-only runtime dependency (REQUIRED on win32) ===
+# Verified: security/os_sandbox.py dùng win32process/win32job/win32file... cho
+# Job Object sandbox (runtime path trên Windows). Marker giới hạn về win32.
+pywin32==306; sys_platform == "win32"
+
+# === Rate limiting + Observability (REQUIRED — api_server.py imports all 5 at top level) ===
+# Confirmed: api_server.py:30 `from slowapi import Limiter, _rate_limit_exceeded_handler`
+# api_server.py:33 `from prometheus_client import generate_latest, ...`
+# scp/observability/telemetry.py:2-5 imports opentelemetry
+# [A3] pinned về version thật trong container (pip freeze scp-scp-api-1)
+slowapi==0.1.10
+prometheus-client==0.26.0
+opentelemetry-api==1.44.0
+opentelemetry-sdk==1.44.0
+opentelemetry-instrumentation-fastapi==0.65b0
+# scp/observability/otel.py configure_fastapi_otel imports OTLPSpanExporter —
+# missing here made test_otel_configuration_header_sanitization_rules fail on
+# clean CI checkouts ("OTel packages unavailable") while dev machines had it.
+opentelemetry-exporter-otlp-proto-http==1.44.0
+PyYAML==6.0.3
+
+# === Optional: Media/Audio processing (scp/hands/, scp/web_control/) ===
+# whisper (speech-to-text) — imported in hands/audio_transcriber.py
+# openai-whisper>=20231117
+# edge-tts (text-to-speech) — imported in hands/tts_engine.py
+# edge-tts>=6.1.0
+# pytesseract (OCR) — imported in web_control/screenshot_reader.py
+# pytesseract>=0.3.10
+# pillow (image processing) — imported in web_control/screenshot_reader.py, hands/
+# Pillow>=10.0.0
+
+# === Optional: Browser automation (scp/web_control/) ===
+# playwright (headless browser) — imported in web_control/playwright_backend.py
+# playwright>=1.40.0
+# websockets (WS client) — imported in api/chat.py WS handler
+# websockets>=12.0
+
+# === Optional: ML/Embeddings (scp/knowledge/, scp/epistemic/) ===
+# sentence-transformers (embeddings) — imported in knowledge/embedding_engine.py
+# sentence-transformers>=2.2.0
+# chromadb (vector store) — imported in knowledge/vector_store.py
+# chromadb>=0.4.0
+# torch (ML backend) — transitive dep of sentence-transformers/whisper
+# torch>=2.0.0
+
+# === Optional: System monitoring (scp/observability/, scp/security/) ===
+# psutil (process monitoring) — imported in observability/system_monitor.py, security/
+psutil>=5.9.0
+# watchdog (file watcher) — imported in core/file_watcher.py
+# watchdog>=3.0.0
+
+# unidecode (Unicode transliteration) — imported in core/top_systems_learning.py
+# (Semantic Firewall homoglyph normalization, commit 32a3611b R4-F03). Optional
+# enhancement at runtime (try/except), but the import manifest (DNA #2) requires
+# every external import to be declared — missing pin = silent feature loss.
+unidecode==1.3.8
+
+# === Optional: Data/Storage (scp/data_sources/, scp/knowledge/) ===
+# beautifulsoup4 (HTML parsing) — imported in web_control/browser_session.py
+beautifulsoup4>=4.12.0
+# lxml (XML/HTML parser) — imported in data_sources/
+# lxml>=4.9.0
+# numpy (numerical) — transitive dep used in prediction/, epistemic/
+numpy>=1.24.0
+# scipy (statistics) — imported in prediction/forecast.py
+# scipy>=1.11.0
+
+# === Optional: Code analysis (scp/autofix/, tools/) ===
+# pygments (syntax highlighting) — imported in autofix/code_formatter.py
+# pygments>=2.16.0
+# GitPython (git ops) — imported in core/code_evolution_agent.py
+# GitPython>=3.1.40

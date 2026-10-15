@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "stop-20261001T070757887Z-20156-48cbdf5874ee",
+  "runId": "20261001T070757887Z-20156-48cbdf5874ee",
+  "runStatus": "inconclusive",
+  "coverage": {
+    "status": "partial",
+    "reasons": [
+      {
+        "code": "bash_discovery_incomplete",
+        "stage": "baseline-enumerate",
+        "target": ".pytest_cache",
+        "detail": "EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+        "affectsCompletion": true
+      },
+      {
+        "code": "baseline_partial",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline capture had enumeration or snapshot errors",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline-enumerate",
+        "target": ".pytest_cache",
+        "detail": "bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline_partial: baseline capture had enumeration or snapshot errors",
+        "affectsCompletion": true
+      }
+    ]
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "Stop"
+  },
+  "revision": "01f3c08cc3eafa2b0264547ae7cef8684b4313a6",
+  "diffHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "rulesVersion": "unavailable",
+  "sessionHash": "4b28d25ef066705756f9a0805c3245d77d2f52a2b301d9d315602e1f23d459c9",
+  "reportRef": ".mimosa/reports/task-review-sess_79f2063f-9518-4c34-aa6a-6b7b9f9a6666-20261001T070757887Z-20156-48cbdf5874ee.json",
+  "events": [],
+  "observedFindingIds": [],
+  "verifiedFiles": [],
+  "recordedAt": "2026-10-01T07:07:58.305Z"
+}

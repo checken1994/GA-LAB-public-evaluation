@@ -1,0 +1,24 @@
+# Optional semantic/vector search dependencies.
+# Install only when the corresponding SCP feature is intentionally enabled.
+# [A1] `cryptography` đã chuyển sang requirements.txt chính (hard runtime dep
+# của scp/security/bypass_encrypt.py — fail-closed khi thiếu).
+# [AUDIT-R2 2026-10-01] 3.3.1 -> 5.6.0: MAJOR bump để đóng PYSEC-2026-4164
+# (không có fixed version nào trong major 3.x/4.x). Break-risk: toàn bộ code
+# SCP chỉ dùng API `SentenceTransformer('model')` + `.encode()`
+# (scp/capabilities/vector_db.py:42,51,69) — API này ổn định xuyên major.
+# UNPROVEN: chưa chạy reality test vì không install (kéo torch — ngoài phạm vi);
+# file này KHÔNG được CI/runtime cài mặc định, nên runtime surface không đổi.
+sentence-transformers==5.6.0
+numpy==2.1.3
+pillow
+# [AUDIT-R2 2026-10-01] Pin mới để đóng PYSEC-2026-3716 (trước đây unpinned,
+# host env 3.6.0 vulnerable, fixed 5.0.1). MAJOR bump 3.x -> 5.x (datasets 4.x
+# bỏ script-based datasets). SCP không import datasets trực tiếp (grep 0 hit
+# trên scp/) -> break-risk cho product surface thấp; chỉ ảnh hưởng experiments.
+datasets==5.0.1
+edge_tts
+huggingface_hub
+networkx
+pytesseract
+websockets
+openai-whisper

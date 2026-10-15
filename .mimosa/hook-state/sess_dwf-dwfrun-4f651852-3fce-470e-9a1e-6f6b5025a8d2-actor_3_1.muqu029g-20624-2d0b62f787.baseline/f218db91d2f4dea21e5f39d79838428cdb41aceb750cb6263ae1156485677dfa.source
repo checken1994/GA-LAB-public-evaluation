@@ -1,0 +1,17 @@
+from pathlib import Path
+from datetime import datetime
+root=Path.cwd(); stamp=datetime.now().strftime('%Y%m%d-%H%M%S'); backup=root/'.private-secrets'/f'production-guard-before-{stamp}'; backup.mkdir(parents=True,exist_ok=True)
+mod=root/'scp/security/production_guard.py'; main=root/'scp/__main__.py'
+for p in (mod,main):
+    if p.exists(): (backup/(p.name+'.before')).write_bytes(p.read_bytes())
+mod.write_text('''"""Fail-closed checks for explicitly declared production mode."""\nfrom __future__ import annotations\nimport os\n\n_DANGEROUS_FLAGS = (\n    "SCP_DEV_MODE", "SCP_SKIP_STARTUP_GATE", "SCP_AUTO_APPROVE_TIER3",\n    "SCP_EVOLUTION_AUTO", "SCP_ENABLE_CLOSED_LOOP",\n    "SCP_TIER3_ALLOW_RELAXATION", "SCP_TIER3_ALLOW_BAREEXCEPTPASS",\n)\n_TRUE = {"1", "true", "yes", "on"}\n\ndef enforce_production_safety() -> None:\n    """Refuse startup only when explicit production mode is enabled.\n\n    Error messages include flag names and counts, never secret values.\n    """\n    if os.environ.get("SCP_PRODUCTION_MODE", "0").strip().lower() not in _TRUE:\n        return\n    active = [name for name in _DANGEROUS_FLAGS if os.environ.get(name, "").strip().lower() in _TRUE]\n    errors = []\n    if active:\n        errors.append("unsafe bypass flags active: " + ", ".join(active))\n    password = os.environ.get("SCP_AUTH_PASSWORD", "")\n    if len(password) < 16:\n        errors.append("SCP_AUTH_PASSWORD must be at least 16 characters")\n    if errors:\n        raise RuntimeError("Production safety guard refused startup: " + "; ".join(errors))\n''',encoding='utf-8',newline='\n')
+s=main.read_text(encoding='utf-8-sig')
+marker='_load_env_at_startup()\n'
+call='''_load_env_at_startup()\nfrom scp.security.production_guard import enforce_production_safety\nenforce_production_safety()\n'''
+if 'enforce_production_safety()' not in s:
+    if marker not in s: raise SystemExit('main env marker missing')
+    s=s.replace(marker,call,1)
+main.write_text(s,encoding='utf-8',newline='\n')
+test=root/'tests/reality-tests/reality_4-d-026.py'
+test.write_text('''#!/usr/bin/env python3\n"""Reality test for explicit fail-closed production safety guard."""\nimport os, sys\nfrom pathlib import Path\nsys.path.insert(0, str(Path(__file__).resolve().parents[2]))\nfrom scp.security.production_guard import enforce_production_safety\nkeys=["SCP_PRODUCTION_MODE","SCP_AUTH_PASSWORD","SCP_DEV_MODE","SCP_SKIP_STARTUP_GATE","SCP_AUTO_APPROVE_TIER3","SCP_EVOLUTION_AUTO","SCP_ENABLE_CLOSED_LOOP","SCP_TIER3_ALLOW_RELAXATION","SCP_TIER3_ALLOW_BAREEXCEPTPASS"]\nold={k:os.environ.get(k) for k in keys}\ntry:\n    os.environ["SCP_PRODUCTION_MODE"]="1"\n    os.environ["SCP_AUTH_PASSWORD"]="short"\n    os.environ["SCP_DEV_MODE"]="1"\n    try:\n        enforce_production_safety()\n    except RuntimeError as exc:\n        text=str(exc)\n        assert "SCP_DEV_MODE" in text and "short" not in text\n        print("PASS [1]: unsafe production config refused without secret leakage")\n    else:\n        raise AssertionError("unsafe production config was accepted")\n    os.environ["SCP_DEV_MODE"]="0"\n    os.environ["SCP_AUTH_PASSWORD"]="a-strong-test-password"\n    enforce_production_safety()\n    print("PASS [2]: safe explicit production config accepted")\nfinally:\n    for k,v in old.items():\n        if v is None: os.environ.pop(k,None)\n        else: os.environ[k]=v\nprint("✓ Reality test 4-d-026 PASSED")\n''',encoding='utf-8',newline='\n')
+print(f'backup={backup}')

@@ -1,0 +1,595 @@
+{
+  "schema_version": "mimosa-task-review/v2",
+  "run_id": "20260930T060200043Z-17504-ad1f6bda7995",
+  "run_status": "inconclusive",
+  "errors": [
+    {
+      "stage": "baseline-enumerate",
+      "target": ".pytest_cache",
+      "reason": "bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'"
+    },
+    {
+      "stage": "bash-discovery",
+      "target": "scp/core/db_manager_parts/_migrate_verdict_cache_schema.py",
+      "reason": "bash_discovery_truncated: changed-file discovery exceeded 80 files"
+    },
+    {
+      "stage": "candidate-select",
+      "target": "scp/data_sources/agriculture.py",
+      "reason": "candidate_limit_exceeded: 63 changed reviewable file(s) were not scanned because the limit is 20"
+    },
+    {
+      "stage": "baseline",
+      "target": ".",
+      "reason": "baseline_partial: baseline capture had enumeration or snapshot errors"
+    },
+    {
+      "stage": "scan",
+      "target": "scripts/ops/scp_ops_monitor.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "benchmark/golden_llm/download_datasets.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "benchmark/golden_llm/run_golden.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "dashboard/src/app/api/scp/status/route.ts",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "tools/cluster_operational_prober.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "tests/test_api.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "tests/T03_capability/test_sec_r1_remediation.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "tests/T00_integrity/test_acceptance_harness_isolation.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "scripts/run_full_audit.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "scripts/run_scp_acceptance.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    }
+  ],
+  "coverage": {
+    "schema_version": "mimosa-hook-coverage/v1",
+    "status": "partial",
+    "scope": "hook_observed_diff",
+    "baseline": {
+      "complete": false,
+      "captured_files": 1500,
+      "candidate_limit": 5000,
+      "truncated": false,
+      "enumeration_error_count": 1,
+      "snapshot_error_count": 0,
+      "compensated_target_count": 83
+    },
+    "change_tracking": {
+      "touched_observed": 4,
+      "touched_retained": 4,
+      "truncated": false,
+      "bash_mutation": true,
+      "bash_discovered": 80,
+      "bash_discovery_limit": 80,
+      "bash_discovery_truncated": true
+    },
+    "candidates": {
+      "eligible_files": 83,
+      "selected_files": 20,
+      "limit": 20,
+      "truncated": true
+    },
+    "scanning": {
+      "required_files": 10,
+      "scanned_files": 0,
+      "skipped_files": 0,
+      "failed_files": 10,
+      "project_checks_required": 0,
+      "project_checks_completed": 0
+    },
+    "notification": {
+      "eligible_findings": 0,
+      "detailed_findings": 0,
+      "detail_limit": 3,
+      "truncated": false
+    },
+    "reason_counts": {
+      "bash_discovery_incomplete": 1,
+      "bash_discovery_truncated": 1,
+      "candidate_limit_exceeded": 1,
+      "baseline_partial": 1,
+      "scanner_failed": 10,
+      "project_check_failed": 14
+    },
+    "reasons": [
+      {
+        "code": "bash_discovery_incomplete",
+        "stage": "baseline-enumerate",
+        "target": ".pytest_cache",
+        "detail": "EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+        "affects_completion": true
+      },
+      {
+        "code": "bash_discovery_truncated",
+        "stage": "bash-discovery",
+        "target": "scp/core/db_manager_parts/_migrate_verdict_cache_schema.py",
+        "detail": "changed-file discovery exceeded 80 files",
+        "affects_completion": true
+      },
+      {
+        "code": "candidate_limit_exceeded",
+        "stage": "candidate-select",
+        "target": "scp/data_sources/agriculture.py",
+        "detail": "63 changed reviewable file(s) were not scanned because the limit is 20",
+        "affects_completion": true
+      },
+      {
+        "code": "baseline_partial",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline capture had enumeration or snapshot errors",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "scripts/ops/scp_ops_monitor.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "benchmark/golden_llm/download_datasets.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "benchmark/golden_llm/run_golden.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "dashboard/src/app/api/scp/status/route.ts",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tools/cluster_operational_prober.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tests/test_api.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tests/T03_capability/test_sec_r1_remediation.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tests/T00_integrity/test_acceptance_harness_isolation.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "scripts/run_full_audit.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "scripts/run_scp_acceptance.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline-enumerate",
+        "target": ".pytest_cache",
+        "detail": "bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "bash-discovery",
+        "target": "scp/core/db_manager_parts/_migrate_verdict_cache_schema.py",
+        "detail": "bash_discovery_truncated: changed-file discovery exceeded 80 files",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "candidate-select",
+        "target": "scp/data_sources/agriculture.py",
+        "detail": "candidate_limit_exceeded: 63 changed reviewable file(s) were not scanned because the limit is 20",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline_partial: baseline capture had enumeration or snapshot errors",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "scripts/ops/scp_ops_monitor.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "benchmark/golden_llm/download_datasets.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "benchmark/golden_llm/run_golden.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "dashboard/src/app/api/scp/status/route.ts",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tools/cluster_operational_prober.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tests/test_api.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tests/T03_capability/test_sec_r1_remediation.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tests/T00_integrity/test_acceptance_harness_isolation.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "scripts/run_full_audit.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "scripts/run_scp_acceptance.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      }
+    ],
+    "reasons_truncated": false
+  },
+  "generated_at": "2026-09-30T06:02:00.043Z",
+  "session_id": "sess_79f2063f-9518-4c34-aa6a-6b7b9f9a6666",
+  "target": ".",
+  "revision": "6a5629c180dda42d3421e75424ed45a92fe489ea",
+  "rules_version": "unavailable",
+  "diff_hash": "f6aa423b6dfa60708ea963a8c6d632771f67266f0d26595c0d362c24862982a8",
+  "diff": {
+    "algorithm": "sha256",
+    "changed_file_count": 10,
+    "changed_files": [
+      {
+        "file": "benchmark/golden_llm/download_datasets.py",
+        "ranges": [
+          {
+            "start": 4,
+            "end": 4
+          },
+          {
+            "start": 19,
+            "end": 25
+          },
+          {
+            "start": 49,
+            "end": 52
+          },
+          {
+            "start": 100,
+            "end": 115
+          },
+          {
+            "start": 126,
+            "end": 127
+          },
+          {
+            "start": 129,
+            "end": 129
+          },
+          {
+            "start": 136,
+            "end": 136
+          }
+        ],
+        "before_hash": "7cb96f0b50cb83b080ca1c692566f3c3ab7e6af031116f28aa441043353b752b",
+        "after_hash": "50c6ec91c7b9e0950c3d30bd04f931f88417f6a7ae3d94dae52115917a520baf"
+      },
+      {
+        "file": "benchmark/golden_llm/run_golden.py",
+        "ranges": [
+          {
+            "start": 14,
+            "end": 14
+          },
+          {
+            "start": 31,
+            "end": 31
+          },
+          {
+            "start": 35,
+            "end": 40
+          },
+          {
+            "start": 192,
+            "end": 196
+          },
+          {
+            "start": 221,
+            "end": 234
+          },
+          {
+            "start": 292,
+            "end": 293
+          }
+        ],
+        "before_hash": "d77da27751d0d56c14a69ffa1500dd7e156c1ec0416c11a68cbf229b083911a5",
+        "after_hash": "9b9411f09e9401786763c64d9bc78bdbe8b5eca451df9056f9ee352dcac1208b"
+      },
+      {
+        "file": "dashboard/src/app/api/scp/status/route.ts",
+        "ranges": [
+          {
+            "start": 72,
+            "end": 72
+          },
+          {
+            "start": 79,
+            "end": 79
+          }
+        ],
+        "before_hash": "d280883dae87c907c7adabdeab95214123e84f0b07da2b2448cd73d818f7feb2",
+        "after_hash": "b2387228341c7bcedd74ad22db862147b78f97578013f8e4a13f619061a5b21a"
+      },
+      {
+        "file": "scripts/ops/scp_ops_monitor.py",
+        "ranges": [
+          {
+            "start": 30,
+            "end": 33
+          },
+          {
+            "start": 181,
+            "end": 183
+          }
+        ],
+        "before_hash": "75c65499cb2d1f180641565d760d9c9c24dc29427be3d9cf48b395c607a99683",
+        "after_hash": "479740aa16f08f14f23badc4c49806e542f0efda4d6b5e21c0bde0402a4d5d3d"
+      },
+      {
+        "file": "scripts/run_full_audit.py",
+        "ranges": [
+          {
+            "start": 233,
+            "end": 234
+          },
+          {
+            "start": 246,
+            "end": 246
+          }
+        ],
+        "before_hash": "ce2dd604beae77f5a8845ae1d521fa2d2e570a4f1a1f3bb39dae65f92e41a37c",
+        "after_hash": "8c1b2ccf1d363f954d3b767f0349de0ad92a7e4490a6a2521acb60a6126ba798"
+      },
+      {
+        "file": "scripts/run_scp_acceptance.py",
+        "ranges": [
+          {
+            "start": 18,
+            "end": 18
+          },
+          {
+            "start": 48,
+            "end": 53
+          },
+          {
+            "start": 263,
+            "end": 263
+          }
+        ],
+        "before_hash": "a1303735ff3a7052dbcd7ca5e150c7406177996448fd60afe8141a142ea122a3",
+        "after_hash": "b58a68dcee2bc4fe9a2a4ead398e2d8af2dbeb4c465a543e2f69165a13e87786"
+      },
+      {
+        "file": "tests/T00_integrity/test_acceptance_harness_isolation.py",
+        "ranges": [
+          {
+            "start": 5,
+            "end": 5
+          },
+          {
+            "start": 13,
+            "end": 23
+          },
+          {
+            "start": 26,
+            "end": 30
+          }
+        ],
+        "before_hash": "55e7b3c8ad494abf40aa11677e7052af7cbddb48fb48a7baaa897d68205873e6",
+        "after_hash": "f8aa358e5d38fa9ab77c0c1e64d482c3f23c53a30cb39ca8b192d6c87905c58f"
+      },
+      {
+        "file": "tests/T03_capability/test_sec_r1_remediation.py",
+        "ranges": [
+          {
+            "start": 164,
+            "end": 170
+          },
+          {
+            "start": 173,
+            "end": 173
+          }
+        ],
+        "before_hash": "aaf0418617b8a00201d88b925b1eb9683efc4e326c4ecc4d9b3ca5f3853b7455",
+        "after_hash": "6f012ab02c77ff63c5394bc6ae70d9c43c594a8cd3baf273f228e0d85283b486"
+      },
+      {
+        "file": "tests/test_api.py",
+        "ranges": [
+          {
+            "start": 24,
+            "end": 25
+          },
+          {
+            "start": 32,
+            "end": 34
+          }
+        ],
+        "before_hash": "3118f727e7353e291a3d128d9a27508c2658a8856dda468b4bea3ba52a23cd3d",
+        "after_hash": "86c4d06323956ad16aabc279832af96e8e85e4e090fb268720326179a4c97457"
+      },
+      {
+        "file": "tools/cluster_operational_prober.py",
+        "ranges": [
+          {
+            "start": 53,
+            "end": 72
+          },
+          {
+            "start": 177,
+            "end": 177
+          },
+          {
+            "start": 189,
+            "end": 189
+          },
+          {
+            "start": 201,
+            "end": 201
+          },
+          {
+            "start": 421,
+            "end": 421
+          }
+        ],
+        "before_hash": "20f8461c829bbd20225b63adc337707544f9ff1aa4b0c8d1bd48bf254a08b327",
+        "after_hash": "5699db0aa1debb416cc93821d9ba04fe029a003fec5338dbf307bf89503f9df2"
+      }
+    ]
+  },
+  "timing": {
+    "started_at": "2026-09-30T06:01:53.557Z",
+    "completed_at": "2026-09-30T06:02:00.043Z",
+    "duration_ms": 6486,
+    "measurement": "hook_wall_clock"
+  },
+  "tokens": {
+    "input": 0,
+    "output": 0,
+    "total": 0,
+    "model_calls": 0,
+    "measurement": "known-zero"
+  },
+  "telemetry": {
+    "schemaVersion": "mimosa-gate-telemetry/v1",
+    "profile": "gate",
+    "operation": "Stop",
+    "outcome": "partial/INCONCLUSIVE",
+    "latencyMs": 6486,
+    "peakMemoryBytes": 111845376,
+    "memoryMeasurement": "max-observed-process-rss",
+    "scannedFiles": 0,
+    "cache": {
+      "hits": 0,
+      "misses": 0,
+      "measurement": "not-applicable"
+    },
+    "denyCount": 0,
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "total": 0,
+      "modelCalls": 0,
+      "measurement": "known-zero"
+    }
+  },
+  "finding_count": 0,
+  "rewake_finding_count": 0,
+  "evidence_boundary": {
+    "scan": "candidate",
+    "static_fix_verification": "observed_static_only",
+    "runtime_verification": "not_performed"
+  },
+  "finding_events": [],
+  "findings": [],
+  "artifacts": {
+    "immutable_report": ".mimosa/reports/task-review-sess_79f2063f-9518-4c34-aa6a-6b7b9f9a6666-20260930T060200043Z-17504-ad1f6bda7995.json",
+    "latest_report": ".mimosa/reports/task-review-sess_79f2063f-9518-4c34-aa6a-6b7b9f9a6666.json",
+    "history_summary": ".mimosa/history/run-20260930T060200043Z-17504-ad1f6bda7995.json"
+  }
+}

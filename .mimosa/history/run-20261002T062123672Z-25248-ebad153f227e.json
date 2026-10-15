@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "mimosa-finding-history/v1",
+  "runId": "20261002T062123672Z-25248-ebad153f227e",
+  "runStatus": "inconclusive",
+  "errors": [
+    "baseline-enumerate:.pytest_cache: bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+    "baseline:.: baseline_partial: baseline capture had enumeration or snapshot errors",
+    "scan:dashboard/next-env.d.ts: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+  ],
+  "target": ".",
+  "revision": "c35421ae1f76562323e75ea3ba5656bc449e0fdf",
+  "diffHash": "ea7638b48fe79f81efd0a0c8f6882077a3eaf8e8cc372054a7da41d709e47ccb",
+  "rulesVersion": "unavailable",
+  "recordedAt": "2026-10-02T06:21:23.672Z",
+  "timing": {
+    "startedAt": "2026-10-02T06:21:18.167Z",
+    "completedAt": "2026-10-02T06:21:23.672Z",
+    "durationMs": 5505
+  },
+  "tokens": {
+    "input": 0,
+    "output": 0,
+    "total": 0,
+    "modelCalls": 0,
+    "measurement": "known-zero"
+  },
+  "findings": {
+    "total": 0,
+    "bySeverity": {},
+    "byStatus": {}
+  },
+  "coverage": {
+    "status": "partial",
+    "reasonCounts": {
+      "bash_discovery_incomplete": 1,
+      "baseline_partial": 1,
+      "scanner_failed": 1,
+      "project_check_failed": 3
+    }
+  },
+  "evidenceBoundary": "static_only",
+  "immutableReport": ".mimosa/reports/task-review-sess_01ba8183-90be-42a8-9a94-244f5ab921ed-20261002T062123672Z-25248-ebad153f227e.json"
+}

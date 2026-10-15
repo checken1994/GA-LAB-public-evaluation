@@ -1,0 +1,160 @@
+interface ResearchSummary {
+  /** Một câu tiếng Việt trả lời trực tiếp phần bạn phụ trách. */
+  oneLiner: string;
+  /** Tóm tắt nội dung tìm thấy, 5-10 câu, tiếng Việt. */
+  summary: string;
+  /** Các ý chính, mỗi ý một câu, tiếng Việt. */
+  keyPoints: string[];
+  /** Đường dẫn các file đã đọc làm bằng chứng. */
+  sources: string[];
+  /** Những gì không tìm thấy hoặc chưa rõ — nói rõ, đừng bịa. */
+  gaps: string;
+}
+
+interface ReaderFeedback {
+  /** Những chỗ bản nháp chưa rõ hoặc dễ hiểu sai, tiếng Việt; mảng rỗng nếu không có. */
+  unclear: string[];
+  /** Những câu hỏi người đọc sẽ hỏi tiếp mà bản nháp chưa trả lời, tiếng Việt; mảng rỗng nếu không có. */
+  missingAnswers: string[];
+}
+
+interface RevisedDoc {
+  /** Bản markdown đã chỉnh, hoàn chỉnh từ đầu tới cuối, tiếng Việt. */
+  markdown: string;
+  /** Một câu tóm tắt những gì đã sửa. */
+  changes: string;
+}
+
+interface Finding {
+  /** File nguồn xác nhận ý này. */
+  where: string;
+  /** Ý chính, một câu tiếng Việt. */
+  what: string;
+  /** Bằng chứng: file đã đọc. */
+  evidence: string;
+  /** "verified" khi người tra đã đọc trực tiếp tài liệu nguồn. */
+  status: "verified" | "unconfirmed";
+  /** Mức độ quan trọng; đây là giải thích nên để "low". */
+  severity: "low" | "medium" | "high";
+}
+
+interface WorkflowReport {
+  /** Trả lời trực tiếp câu hỏi "cái này là gì", 2-3 câu tiếng Việt. */
+  conclusion: string;
+  findings: Finding[];
+  /** Những gì run này đã kiểm chứng và cách kiểm chứng. */
+  verified: string[];
+  /** Những gì run này không xem hoặc không kiểm chứng được, và lý do. */
+  notCovered: string[];
+}
+
+phase("Tra cứu song song tài liệu và định nghĩa lệnh");
+
+log("Đi hai đường tra cứu song song: tài liệu dynamic-workflows và định nghĩa lệnh /workflow.");
+
+const [docs, cmd] = await Promise.all([
+  agent("Tra tài liệu dynamic-workflows", {
+    system:
+      "Bạn là người tra cứu tài liệu kỹ thuật, chỉ đọc và tóm tắt, không sửa file nào. " +
+      "Nếu không đọc được một file, nói rõ trong gaps thay vì bịa nội dung.",
+  }).ask<ResearchSummary>(
+    "Đọc file D:/ZCode/resources/glm/packages/bundled-skills/skills/dynamic-workflows/SKILL.md " +
+      "— tài liệu chính thức của tính năng dynamic workflows trong ZCode. " +
+      "Tóm tắt bằng tiếng Việt: (1) dynamic workflows là gì và để làm gì; (2) khi nào nên dùng nó thay vì nhờ agent chính làm trực tiếp; " +
+      "(3) cách hoạt động: subagent là gì, phase là gì, artifact là gì, sửa và chạy lại (AmendWorkflow) ra sao; " +
+      "(4) chi phí và lưu ý. Giữ nguyên thuật ngữ kỹ thuật tiếng Anh khi cần.",
+  ),
+  agent("Tra định nghĩa lệnh workflow", {
+    system:
+      "Bạn là người tra cứu mã nguồn, chỉ đọc và tìm kiếm, không sửa file nào. " +
+      "Nếu không tìm thấy định nghĩa, trả lời điều đó trong gaps thay vì bịa.",
+  }).ask<ResearchSummary>(
+    "Tìm định nghĩa của custom command tên là \"workflow\" (command source: system/zcode) trong bộ cài ZCode. " +
+      "Gợi ý chỗ tìm: dưới D:/ZCode/resources/glm — dùng Grep/Glob với các cụm như \"Run custom command\", " +
+      "\"Required skills\", hoặc tên file/thư mục chứa định nghĩa các lệnh hệ thống. " +
+      "Khi tìm thấy, đọc file định nghĩa đó và tóm tắt bằng tiếng Việt: lệnh /workflow làm gì khi người dùng gõ, " +
+      "nó nhận đầu vào gì, nó bắt buộc những gì trước khi thực thi. Nếu không tìm thấy định nghĩa, trả lời điều đó trong gaps.",
+  ),
+]);
+
+report({ lane: "Tài liệu dynamic-workflows", summary: docs.summary, keyPoints: docs.keyPoints, sources: docs.sources, gaps: docs.gaps });
+report({ lane: "Định nghĩa lệnh workflow", summary: cmd.summary, keyPoints: cmd.keyPoints, sources: cmd.sources, gaps: cmd.gaps });
+
+phase("Soạn bản giải thích rồi cho người đọc thử soát");
+
+const docEvidence = docs.sources.length > 0 ? docs.sources.join("; ") : "không ghi nguồn";
+const cmdEvidence = cmd.sources.length > 0 ? cmd.sources.join("; ") : "không ghi nguồn";
+
+const draft = [
+  "# Lệnh /workflow là gì?",
+  "",
+  "## Tóm tắt nhanh",
+  "",
+  docs.oneLiner,
+  cmd.oneLiner,
+  "",
+  "## Dynamic workflows — tính năng đứng sau lệnh",
+  "",
+  docs.summary,
+  "",
+  ...docs.keyPoints.map((p) => `- ${p}`),
+  "",
+  "## Lệnh /workflow cụ thể làm gì",
+  "",
+  cmd.summary,
+  "",
+  ...cmd.keyPoints.map((p) => `- ${p}`),
+].join("\n");
+
+const feedback = await agent("Người đọc thử", {
+  system:
+    "Bạn đọc như một người đọc lần đầu, chỉ dựa vào văn bản được đưa, không đi kiểm chứng trong repo, không sửa file nào. " +
+    "Phản biện là động tác dễ nhất: chỉ ra chỗ chưa rõ và câu hỏi còn bỏ ngỏ.",
+}).ask<ReaderFeedback>(
+  "Đây là bản nháp giải thích cho câu hỏi \"cái này là gì?\" về lệnh /workflow của ZCode:\n\n" +
+    draft +
+    "\n\nChỉ ra: những chỗ chưa rõ hoặc dễ hiểu sai; những câu hỏi người đọc sẽ hỏi tiếp mà bản nháp chưa trả lời. Mảng rỗng nếu không có gì.",
+);
+
+let finalMarkdown = draft;
+let revisionNote = "Người đọc thử không có góp ý nào — giữ nguyên bản nháp.";
+if (feedback.unclear.length > 0 || feedback.missingAnswers.length > 0) {
+  const revised = await agent("Người chỉnh bản giải thích", {
+    system:
+      "Bạn chỉnh văn bản giải thích cho dễ hiểu, giữ đúng các sự kiện đã có trong bản nháp, " +
+      "không thêm nhận định mới chưa có nguồn, không sửa file nào. Trả về bản markdown hoàn chỉnh.",
+  }).ask<RevisedDoc>(
+    "Bản nháp:\n\n" +
+      draft +
+      "\n\nPhản hồi của người đọc thử:\n" +
+      JSON.stringify(feedback, null, 2) +
+      "\n\nChỉnh bản nháp để xử lý từng điểm phản hồi, viết tiếng Việt, giữ nguyên thuật ngữ kỹ thuật tiếng Anh.",
+  );
+  finalMarkdown = revised.markdown;
+  revisionNote = revised.changes;
+}
+
+await artifact.markdown("explainer", finalMarkdown, {
+  title: "Giải thích: lệnh /workflow là gì",
+  description: "Dynamic workflows — tính năng mà lệnh /workflow gọi ra — cùng cách lệnh hoạt động khi bạn gõ nó.",
+  primary: true,
+});
+
+const result: WorkflowReport = {
+  conclusion: docs.oneLiner + " " + cmd.oneLiner,
+  findings: [
+    ...docs.keyPoints.map((p): Finding => ({ where: docEvidence, what: p, evidence: docEvidence, status: "verified", severity: "low" })),
+    ...cmd.keyPoints.map((p): Finding => ({ where: cmdEvidence, what: p, evidence: cmdEvidence, status: "verified", severity: "low" })),
+  ],
+  verified: [
+    "Người tra tài liệu đã đọc trực tiếp SKILL.md của dynamic-workflows: " + docEvidence,
+    "Người tra lệnh đã tìm và đọc định nghĩa lệnh /workflow: " + cmdEvidence,
+    "Bản giải thích đã được một người đọc thử độc lập soát một lượt trước khi đăng: " + revisionNote,
+  ],
+  notCovered: [
+    "Chưa chạy thử một workflow thật để mô tả hành vi runtime từ quan sát trực tiếp — mô tả dựa trên tài liệu và mã nguồn.",
+    ...(docs.gaps ? ["Tra tài liệu ghi rõ: " + docs.gaps] : []),
+    ...(cmd.gaps ? ["Tra định nghĩa lệnh ghi rõ: " + cmd.gaps] : []),
+  ],
+};
+return result;

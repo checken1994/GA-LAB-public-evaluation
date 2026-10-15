@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "mimosa-hook-status/v1",
+  "recordedAt": "2026-10-02T06:33:25.464Z",
+  "sessionId": "sess_01ba8183-90be-42a8-9a94-244f5ab921ed",
+  "event": "PostToolUse",
+  "toolName": "Write",
+  "file": "C:/Users/check/AppData/Local/Temp/scp_shutdown.ps1",
+  "outcome": "clear",
+  "coverage": "complete",
+  "findingCount": 0,
+  "durationMs": 5,
+  "hostState": "hook_complete",
+  "reportHint": ".mimosa/reports/"
+}

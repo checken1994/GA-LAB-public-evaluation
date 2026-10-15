@@ -1,0 +1,92 @@
+{
+ "campaign": "SCP multi-agent audit+fix Vong 3",
+ "coordinator": "AutoCoder (OpenClaw multi-agent orchestration)",
+ "final_head": "d9d984a412ad",
+ "audit_rounds": [
+  {
+   "round": 1,
+   "report": "reports/audit/audit-20260929-011124.json",
+   "commit": "5ca303e5",
+   "verdict": "AUDIT_FAILED",
+   "open_findings": 1,
+   "note": "unidecode undeclared -> fixed d1d062ed"
+  },
+  {
+   "round": 2,
+   "report": "reports/audit/audit-20260929-013303.json",
+   "commit": "89a81e55",
+   "verdict": "AUDIT_READY",
+   "open_findings": 0,
+   "note": "same-SHA verified"
+  },
+  {
+   "round": "3-interim",
+   "report": "reports/audit/audit-20260929-042739.json",
+   "commit": "acdf6d3a",
+   "verdict": "AUDIT_FAILED",
+   "open_findings": 4,
+   "note": "UTF-8 BOM in agent test files -> fixed f261b463"
+  },
+  {
+   "round": "3-final",
+   "report": "reports/audit/audit-20260929-045225.json",
+   "commit": "20e42ff9",
+   "verdict": "AUDIT_READY",
+   "open_findings": 0,
+   "note": "pytest 2515 passed / 0 failed; same-SHA verified"
+  }
+ ],
+ "product_bugs_fixed": [
+  {
+   "id": "B1",
+   "commit": "d1d062ed",
+   "title": "unidecode import undeclared — silent homoglyph-defense loss",
+   "evidence": "audit-20260929-011124 import_manifest FAIL; transliteration verified live"
+  },
+  {
+   "id": "B2",
+   "commit": "77d44816",
+   "title": "backpressure admission counted HUMAN_REVIEW — /ask choked forever at cap 200 (199 withheld backlog)",
+   "evidence": "live_flow_proof blocked at 01:5x; kernel DB inspected: HUMAN_REVIEW=199, zero load"
+  },
+  {
+   "id": "B3",
+   "commit": "d30aa307",
+   "title": "A12 acceptance oracle compared in_flight_count to review set — gate could never pass after B2 fix",
+   "evidence": "old-oracle pinned by test_admission_semantics_77d44816.py"
+  },
+  {
+   "id": "B4",
+   "commit": "1def66c1",
+   "title": "numeric IPv4 spellings dodged cloud-metadata egress block (IMDS path)",
+   "evidence": "probe scripts/probe_egress_numeric_spelling_old_code.py exit 0; archive .openclaw/probes/egress_prefix_9d1efc81.py"
+  },
+  {
+   "id": "B5",
+   "commit": "ff5ef4f1",
+   "title": "ledger split-brain: /ask writer used CWD-relative data/, /v3/trace reader used SCP_DATA_DIR",
+   "evidence": "test_unified_ledger_runtime_dir.py: 2 failed on old, 2 passed on new (stash-verified)"
+  }
+ ],
+ "kernel_contract_fixes": [
+  {
+   "commit": "f370c0ff",
+   "title": "transition-map authority: commit_failed/set_task_kill may not journal out-of-law edges; RETRY_SCHEDULED added to map",
+   "verified": "T04 332 passed / 23 skipped"
+  }
+ ],
+ "agent5_delta_verdicts": {
+  "CONFIRMED_OK": 7,
+  "FAKE_OR_WEAKENED": 1,
+  "REGRESSION_RISK": 1,
+  "resolution": "all resolved in 527c3895 (probe moved out of testpaths + archive tracked; octal/n-part inet_aton normalization; byte-counter measures binary reads: OLD 11,167,764 vs NEW 4,194,304 bytes)"
+ },
+ "final_evidence": {
+  "full_audit": "AUDIT_READY 7/7 @ 20e42ff9 (pytest 2515 passed / 27 skipped / 0 failed; reality 76/76; fitness 1.0/0.0; auth 401/429; injection withheld+KILL)",
+  "live_e2e_allow": "boot->/ask PASS/UPHOLD conf 0.965; kernel COMPLETED 10 events incl TASK_COMPLETED + CHECKPOINT_FINALIZED; integrity ok; shutdown clean (@ d9d984a4)",
+  "live_e2e_deny": "boot->/ask withheld/KILL fail-closed under SCP_EGRESS_MODE=deny; kernel HUMAN_REVIEW; integrity ok",
+  "acceptance_12": "scripts/run_scp_acceptance.py: 12/12 PASS same-SHA d9d984a4 (reports/scp_acceptance_ci/acceptance.json)",
+  "stack_4_services": "8000 /health 200 /ready 200; 8081 version 0.5.7-bridge; 3030 200; 3000 200 (10225 bytes)"
+ },
+ "t00_meta_audit": "0 new regressions (run after every batch; last exit 0)"
+}

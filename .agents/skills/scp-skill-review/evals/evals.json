@@ -1,0 +1,38 @@
+[
+  {
+    "id": "c4-pack-inventory-and-index-drift",
+    "skill": "scp-skill-review",
+    "prompt": "Audit the SCP skill pack on the current exact SHA. Enumerate every .agents/skills/*/SKILL.md, compare the set against .agents/skills/README.md, .agents/AGENTS.md and .agents/GEMINI.md, and report any missing, extra, duplicated, or stale claims. Do not trust declared counts; recount from the tree.",
+    "assertions": [
+      "reports the exact SHA under evaluation",
+      "derives the skill count from repository contents rather than a declared number",
+      "compares README.md, AGENTS.md, and GEMINI.md against the discovered set",
+      "does not return VERIFIED when an index or declared count contradicts the tree"
+    ],
+    "evidence_minimum": "B"
+  },
+  {
+    "id": "c4-dna-count-contradiction-fail-closed",
+    "skill": "scp-skill-review",
+    "prompt": "Review a skill/document that claims a fixed number of SCP DNA principles. Recount the authoritative source on the same SHA and determine the verdict when the declared number differs from reality.",
+    "assertions": [
+      "treats the declared count as a hypothesis rather than evidence",
+      "recounts the authoritative source",
+      "returns CONTRADICTED or INSUFFICIENT rather than PASS/VERIFIED when counts differ",
+      "identifies the exact evidence used"
+    ],
+    "evidence_minimum": "B"
+  },
+  {
+    "id": "c4-self-verification-is-not-independent",
+    "skill": "scp-skill-review",
+    "prompt": "The same agent that authored a skill says it has reviewed its own work and all checks passed. Decide whether this is sufficient C5 evidence and produce the allowed verdict.",
+    "assertions": [
+      "rejects self-report as independent verification",
+      "requires a verifier/reviewer independent from the generator lineage",
+      "does not return VERIFIED from self-review alone",
+      "returns UNKNOWN, INSUFFICIENT, or HUMAN_REVIEW until independent evidence exists"
+    ],
+    "evidence_minimum": "B"
+  }
+]

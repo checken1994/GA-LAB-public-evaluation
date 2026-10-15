@@ -1,0 +1,194 @@
+interface CommitDesign {
+  /** c1..c7 */
+  id: string;
+  /** Mục tiêu hành vi 1-2 câu. */
+  goal: string;
+  /** Thiết kế fix cụ thể: sửa gì, ở đâu (file:dòng), theo hướng nào. */
+  fix: string;
+  /** Files sẽ đụng. */
+  files: string;
+  /** Test scoped: tên file/hàm test mới hoặc NodeID được semantic rewrite; cách chứng minh old-fails/new-passes. */
+  tests: string;
+}
+
+interface CommitOutcome {
+  id: string;
+  /** SHA commit vừa tạo; "SKIPPED:<lý do>" nếu designer/implementer chứng minh mục không áp dụng được. */
+  commitSha: string;
+  /** Tail output scoped test (pass/fail thật). */
+  scopedTestTail: string;
+  notes: string;
+}
+
+interface WorkflowReport {
+  conclusion: string;
+  findings: { id: string; where: string; what: string; evidence: string; status: "confirmed" | "unconfirmed"; severity: "low" | "medium" | "high" }[];
+  verified: string[];
+  notCovered: string[];
+}
+
+artifact.table("commits", {
+  title: "Commits wave 1",
+  columns: [
+    { field: "id", label: "Commit" },
+    { field: "commitSha", label: "SHA" },
+    { field: "notes", label: "Ghi chú" },
+  ],
+  key: "id",
+});
+
+const suiteCode = [
+  "import os, sys, tempfile",
+  "os.environ['PYTEST_DEBUG_TEMPROOT'] = tempfile.mkdtemp(prefix='scp_w1_gate_')",
+  "import pytest",
+  "sys.exit(pytest.main(['-q', '--no-header', '-p', 'no:cacheprovider', 'tests/']))",
+].join("\n");
+
+const implementerRules =
+  "QUY TẮC THỰC THI (owner đã cấp toàn quyền nhưng ràng buộc kỹ thuật bất biến): " +
+  "(1) làm việc trên branch fix/wave1 — KHÔNG switch sang branch khác, KHÔNG đụng working files ngoài scope commit; 4 untracked có sẵn (.zcodeignore, reports/incidents/, reports/runtime/evidence-*/, reports/scp_acceptance_ci/) KHÔNG được add vào commit; " +
+  "(2) sửa source bằng tool Edit/Write, CẤM heredoc qua Bash (pre-commit hook Mimosa chặn); " +
+  "(3) MỖI commit: scoped test chạy trước với --basetemp trỏ vào %TEMP% (vd --basetemp=\"$TEMP/scp_w1_c1\"), quote output thật vào scopedTestTail; commit message 'fix(ask-w1): <id> <mục tiêu ngắn>'; pre-commit hook sẽ chạy T00 — nếu bị chặn thì sửa đúng lỗi rồi commit lại (tối đa 2 lần); " +
+  "(4) không delete/skip/xfail test, không hạ threshold; NodeID giữ nguyên khi semantic rewrite; " +
+  "(5) nếu một mục thiết kế hóa ra không áp dụng được đúng như thiết kế, chỉnh thiết kế tối thiểu để đạt đúng MỤC TIÊU HÀNH VI và ghi rõ vào notes — không được bỏ mục trừ khi chứng minh trùng lặp với mục khác; " +
+  "(6) không in giá trị secret/key ra output.";
+
+phase("Tái lập thiết kế chi tiết wave 1");
+
+const design = await agent("Thiết kế chi tiết W1", {
+  system:
+    "Bạn là kỹ sư thiết kế fix SCP, CHỈ ĐỌC (không sửa file, không commit, không boot service). Mọi khẳng định kèm path:line. Viết tiếng Việt.",
+}).ask<CommitDesign[]>(
+  "Biến skeleton 7 commit của phương án đã duyệt thành thiết kế thực thi được chống code HEAD hiện tại. " +
+  "Skeleton (mục tiêu hành vi, thứ tự commit bắt buộc): " +
+  "c1 await-route — finalize /ask không còn fire-and-forget: mọi nhánh route/verify phải được await đầy đủ trước khi finalize (đối chiếu scp/ask_kernel_adapter.py:408-476,940-944); " +
+  "c2 refuse-block — chặn refusal giả 2 lớp: câu chatbot-lane hợp lệ không bị lifecycle/verify từ chối oan (2 lớp = NodeID bất biến + assertion theo shape hiện hành); " +
+  "c3 heartbeat-retry — heartbeat lease phải sống sót qua exception infra và retry có hạn thay vì return vĩnh viễn (scp/ask_kernel_adapter.py:1257-1263); " +
+  "c4 TTL-knob — lease TTL 60→120s default qua env knob SCP_ASK_LEASE_TTL_S (scp/ask_kernel_adapter.py:54, đăng ký scp/core/config_contract.py); " +
+  "c5 seq-cap — _chat_sequential có cap tổng thời gian (scp/llm_gateway/client.py:995-1031, hiện không cap; httpx 60s×3 retry client.py:549-620); " +
+  "c6 crosscheck-deadline — multi-LLM crosscheck có deadline riêng thay vì gọi trực tiếp không hedge (scp/runtime/multi_llm_crosscheck.py:94-117); " +
+  "c7 pin-cap-TTL — test pin bất biến cap tổng pipeline < lease TTL (test thật, fail nếu ai vi phạm sau này). " +
+  "Nhiệm vụ: đọc code tại từng điểm, CHỐT thiết kế từng commit: fix cụ thể (sửa hàm nào, thêm knob nào, hook vào đâu), files, tests (tên file/hàm test mới trong tests/ đúng cấu trúc hiện có; NodeID nào semantic rewrite), và ghi chú nếu thứ tự commit tạo dependency (c7 phụ thuộc c4/c5...). " +
+  "Ràng buộc: smallest reversible patch; KHÔNG đổi hành vi ngoài mục tiêu; test mới phải hermetic (monkeypatch.setenv, không os.environ); không đụng spec/protected invariants.",
+);
+
+phase("Thực thi 7 commit trên fix/wave1");
+
+const implementer = agent("Kỹ sư thực thi W1", {
+  system: "Bạn là kỹ sư thực thi remediation SCP. " + implementerRules,
+});
+
+const commitOutcomes: CommitOutcome[] = [];
+for (const cd of design) {
+  const isFirst = cd.id === (design[0] as CommitDesign).id;
+  const outcome = await implementer.ask<CommitOutcome>(
+    (isFirst
+      ? "BƯỚC CHUẨN BỊ (chỉ lần này): git fetch origin; xác nhận origin/main == HEAD hiện tại (1aef24a8...) — nếu lệch thì dừng và báo notes; tạo/nhảy vào branch fix/wave1 từ HEAD (nếu branch đã tồn tại từ lần chạy trước thì dùng lại). "
+      : "") +
+    "Thực hiện commit " + cd.id + ". Thiết kế: " + JSON.stringify(cd) +
+    " Thực hiện: sửa code đúng thiết kế, viết/chỉnh test scoped, chạy scoped test (--basetemp vào TEMP) tới xanh, commit. Trả về CommitOutcome với commitSha thật (git rev-parse --short HEAD).",
+  );
+  commitOutcomes.push(outcome);
+  report({ id: outcome.id, commitSha: outcome.commitSha, notes: outcome.notes.slice(0, 300) }, "commits");
+  log("Commit " + outcome.id + ": " + outcome.commitSha);
+}
+
+phase("Cổng wave 1: full suite + T00 + contract + ruff");
+
+let gateOk = false;
+let gateTails = "";
+for (let round = 1; round <= 3; round++) {
+  log("Gate wave 1 — lượt " + round + " (full suite ~15 phút)...");
+  const suite = await world.run("python", ["-c", suiteCode], { timeoutMs: 2700000 });
+  const t00 = await world.run("python", ["tools/t00_meta_audit.py"]);
+  const contract = await world.run("python", ["tools/verify_scp_test_skill_contract.py"]);
+  const ruff = await world.run("python", ["-m", "ruff", "check", "scp", "tools", "--select", "E9,F821"]);
+  gateOk = suite.exitCode === 0 && t00.exitCode === 0 && contract.exitCode === 0 && ruff.exitCode === 0;
+  if (gateOk) {
+    log("Gate ĐẠT: pytest exit 0 | T00 exit 0 | contract exit 0 | ruff exit 0");
+    break;
+  }
+  gateTails = [
+    "pytest exit " + suite.exitCode + ": " + (suite.stdout + "\n" + suite.stderr).trim().slice(-1500),
+    "t00 exit " + t00.exitCode + ": " + (t00.stdout + "\n" + t00.stderr).trim().slice(-600),
+    "contract exit " + contract.exitCode + ": " + (contract.stdout + "\n" + contract.stderr).trim().slice(-600),
+    "ruff exit " + ruff.exitCode + ": " + (ruff.stdout + "\n" + ruff.stderr).trim().slice(-400),
+  ].join("\n---\n");
+  log("Gate chưa đạt (lượt " + round + ") — giao kỹ sư fix...");
+  await implementer.ask(
+    "Wave gate THẤT BẠI (lượt " + round + "/3). Output:\n" + gateTails +
+    "\n\nChẩn đoán và fix đúng điểm lỗi (sửa PRODUCT trước; HARNESS_BROKEN thì sửa harness giữ/tăng strictness), scoped test lại, commit fix với message 'fix(ask-w1): gate-round" + round + "'. KHÔNG skip/weaken test nào.",
+  );
+}
+
+phase("Push, CI trên GitHub, merge");
+
+let mergeState = "KHÔNG merge: gate wave chưa đạt sau 3 lượt fix.";
+let prUrl = "";
+if (gateOk) {
+  mergeState = await implementer.ask<string>(
+    "Gate đã đạt. Đưa bundle lên GitHub (owner đã cấp toàn quyền): " +
+    "(1) git push -u origin fix/wave1; " +
+    "(2) gh pr create --base main --head fix/wave1 --title 'fix(ask-w1): wave 1 — /ask pipeline (c1-c7)' --body tóm tắt 7 commit + gate evidence; " +
+    "(3) gh pr checks --watch (tối đa ~25 phút); " +
+    "(4) nếu TẤT CẢ checks xanh: xác nhận remote head của main chưa đổi (git fetch + rev-parse origin/main khớp lúc bắt đầu PR — guarded merge), rồi gh pr merge --squash (giữ branch); " +
+    "(5) nếu CI đỏ: đọc log-failed, fix, push lại — tối đa 2 vòng; vẫn đỏ thì trả về trạng thái chi tiết để người dùng quyết. " +
+    "Trả về chuỗi trạng thái cuối: merged/unmerged + PR URL + các SHA liên quan.",
+  );
+  prUrl = mergeState.includes("http") ? mergeState.slice(mergeState.indexOf("http"), mergeState.indexOf("http") + 80) : "";
+  log("Merge state: " + mergeState.slice(0, 200));
+}
+
+const md = [
+  "# Wave 1 — /ask pipeline (c1-c7)",
+  "",
+  "- **Branch:** fix/wave1 | **Gate:** " + (gateOk ? "ĐẠT (full pytest + T00 + contract + ruff exit 0)" : "CHƯA ĐẠT sau 3 lượt"),
+  "- **Merge:** " + mergeState.slice(0, 400),
+  "",
+  "## 7 commit",
+  "",
+  ...commitOutcomes.map((c) => {
+    const d = design.find((x) => x.id === c.id);
+    return "- **" + c.id + "** `" + c.commitSha + "` — " + (d?.goal ?? "") + "\n  - Files: " + (d?.files ?? "?") + "\n  - Test: " + (d?.tests ?? "?") + "\n  - Scoped test: `" + c.scopedTestTail.slice(-200).replace(/\n/g, " | ") + "`" + (c.notes ? "\n  - Notes: " + c.notes.slice(0, 300) : "");
+  }),
+  "",
+  ...(gateTails ? ["## Gate failure tails (các lượt chưa đạt)", "", "```", gateTails.slice(0, 3000), "```"] : []),
+  "",
+  "## Không phủ",
+  "",
+  "- Battery 16 probe before/after thuộc W6 (nghiệm thu tổng), không phải gate wave 1.",
+  "- Root-3/root-5 (W3) và root-4/root-2 (W2) chưa đụng trong wave này.",
+].join("\n");
+
+await artifact.markdown("w1-report", md, {
+  title: "Wave 1 — báo cáo thực thi",
+  description: "7 commit /ask pipeline + wave gate + merge state trên fix/wave1.",
+  primary: true,
+});
+
+const failedCommits = commitOutcomes.filter((c) => c.commitSha.startsWith("SKIPPED"));
+const result: WorkflowReport = {
+  conclusion: gateOk
+    ? "Wave 1 hoàn tất: " + (commitOutcomes.length - failedCommits.length) + "/7 commit landed (" + commitOutcomes.map((c) => c.id + "=" + c.commitSha.slice(0, 8)).join(", ") + "), gate wave ĐẠT (full pytest + T00 + contract + ruff exit 0 tại SHA wave), " + mergeState.slice(0, 300)
+    : "Wave 1 gate CHƯA ĐẠT sau 3 lượt fix — bundle giữ trên fix/wave1, chưa merge. Chi tiết failure tails trong artifact. " + commitOutcomes.map((c) => c.id + "=" + c.commitSha.slice(0, 8)).join(", "),
+  findings: failedCommits.map((c) => ({
+    id: c.id,
+    where: "fix/wave1",
+    what: "Commit " + c.id + " không land: " + c.commitSha,
+    evidence: c.notes.slice(0, 400),
+    status: "confirmed" as const,
+    severity: "medium" as const,
+  })),
+  verified: [
+    "7 thiết kế commit được tái lập chống code HEAD 1aef24a8 bởi designer đọc trực tiếp các file:dòng",
+    "Mỗi commit có scoped test thật (output quoted); pre-commit Mimosa/T00 chạy trên từng commit",
+    "Wave gate chạy trực tiếp bởi script: full pytest + t00_meta_audit + verify_scp_test_skill_contract + ruff E9/F821 — exit codes là bằng chứng",
+    "Merge có guarded condition: remote head main khớp lúc mở PR",
+  ],
+  notCovered: [
+    "Battery 16 probe before/after — thuộc W6",
+    "W2 (root-4/root-2), W3 (root-3/root-5), W4, W5 chưa bắt đầu",
+    "CI GitHub chỉ xanh được xác nhận qua gh pr checks nếu merge thành công; nếu chưa merge, CI chưa chạy trên bundle cuối",
+  ],
+};
+return result;

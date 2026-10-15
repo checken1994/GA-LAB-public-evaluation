@@ -1,0 +1,574 @@
+name: SCP RC Promotion and Customer Handoff
+
+on:
+  push:
+    branches:
+      - integration/experiment-god-split-and-providers
+      - main
+  workflow_dispatch:
+    inputs:
+      runner_backend:
+        description: 'Execution backend for exact-SHA release authority'
+        required: true
+        default: github-hosted
+        type: choice
+        options:
+          - github-hosted
+      approve_main_merge:
+        description: 'Explicitly approve merging the frozen integration SHA into main after all gates pass'
+        required: false
+        default: false
+        type: boolean
+      handoff_merge_sha:
+        description: 'Exact resulting main merge SHA; required for dispatched customer handoff'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  group: scp-release-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SCP_JWT_SECRET: rc-ci-jwt-secret-0123456789abcdef0123456789
+  SCP_ADMIN_KEY: rc-ci-admin-key-0123456789
+  # [H-01 fix 2026-10-01] Scan oracle for the RC-2 no-hardcoded-token test —
+  # unset env made that test skip forever. CI-only value, not a real secret;
+  # appears in no source file, so the scan stays meaningful.
+  SCP_AUTH_TOKEN_SECRET: "ci-only-runtime-placeholder"
+  SCP_PRODUCTION_MODE: '0'
+  SCP_SKIP_STARTUP_GATE: '0'
+  SCP_EGRESS_MODE: deny
+  SCP_PORT: '8000'
+  PORT: '8000'
+  PYTHONUTF8: '1'
+
+jobs:
+  platform-gates:
+    name: platform-gates (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+          - os: windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+
+      - name: Prove exact SHA checkout
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify Python 3.12 runtime
+        shell: bash
+        run: python -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version; print(sys.executable); print(sys.version)"
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '20'
+
+      - name: Verify Node 20 runtime
+        shell: bash
+        run: node -e "if (process.versions.node.split('.')[0] !== '20') { throw new Error(process.version) } console.log(process.execPath); console.log(process.version)"
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: "1.3.14"
+
+      - name: Install Python dependencies
+        shell: bash
+        run: |
+          python -m pip install -r scp/requirements-dev.txt
+          python -m pip check
+
+      - name: Compile and import gate
+        shell: bash
+        env:
+          # GAP-09: importing scp.api_server fail-closes without a capability
+          # signing secret. A per-run random value is sufficient for an import
+          # smoke gate — no key material is persisted or logged.
+          SCP_CAPABILITY_SECRET: ${{ secrets.SCP_CAPABILITY_SECRET || format('import-gate-{0}{1}', github.run_id, github.run_attempt) }}
+        run: |
+          python -m compileall -q scp scripts tools tests
+          python -c "import scp; import scp.api_server; import scp.llm_gateway; import scp.task_kernel; print('IMPORT_OK')"
+
+      - name: Mandatory SCP Skill and DNA contract
+        shell: bash
+        run: |
+          python tools/verify_scp_test_skill_contract.py --output reports/test_skill_contract.json
+          python -m pytest -q tests/T11_release/test_scp_skill_dna_contract.py tests/T11_release/test_scp_test_skill_contract.py --tb=short
+
+      - name: Semantic parity and provider contracts
+        shell: bash
+        run: >-
+          python -m pytest -q
+          tests/T02_contract/test_god_split_semantic_parity.py
+          tests/T05_gateway/test_provider_failover.py
+          tests/T05_gateway/test_provider_timeout_recovery.py
+          tests/T05_gateway/test_llm_egress_policy.py
+          tests/T05_gateway/test_multi_llm_crosscheck.py
+          tests/T05_gateway/test_multi_llm_crosscheck_concurrency.py
+          tests/external_audit/test_cascade.py
+          --tb=short
+
+      - name: Install dashboard dependencies for integration suite
+        # The full suite includes bun -e dashboard-contract tests and the live
+        # cluster e2e (next dev on :3000); they need node_modules present
+        # before the suite runs, not only at the later dashboard build step.
+        shell: bash
+        working-directory: dashboard
+        run: npm ci --ignore-scripts --no-audit
+
+      - name: Full unit and integration suite
+        shell: bash
+        run: python -m pytest -q --tb=short
+
+      - name: SCP behavioral acceptance
+        shell: bash
+        run: python scripts/run_scp_acceptance_ci.py --output-dir "reports/scp_acceptance_${{ runner.os }}"
+
+      - name: Portable reality suite
+        shell: bash
+        run: python scripts/run_reality_tests_portable.py
+
+      - name: Bounded full-system runtime smoke
+        shell: bash
+        run: python tools/run_bounded_system_smoke.py --output-dir "reports/bounded_system_smoke_${{ runner.os }}"
+
+      - name: Dashboard install, security audit, and build
+        shell: bash
+        working-directory: dashboard
+        env:
+          SCP_AUDIT_NPM_CLI: ${{ runner.temp }}/scp-audit-npm/node_modules/npm/bin/npm-cli.js
+        run: |
+          npm install --prefix "$RUNNER_TEMP/scp-audit-npm" --ignore-scripts --no-audit --no-fund npm@11.19.1
+          test "$(node "$SCP_AUDIT_NPM_CLI" --version)" = "11.19.1"
+          npm ci --ignore-scripts --no-audit
+          python ../tools/run_dashboard_audit.py --output "../reports/dashboard_audit_${{ runner.os }}"
+          npm run build
+
+      - name: Upload platform evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scp-platform-evidence-${{ runner.os }}-${{ github.sha }}
+          path: |
+            reports/test_skill_contract.json
+            reports/scp_acceptance_${{ runner.os }}/
+            reports/bounded_system_smoke_${{ runner.os }}/
+            reports/dashboard_audit_${{ runner.os }}/
+            reports/reality/
+          if-no-files-found: error
+          retention-days: 30
+
+  security-and-durability:
+    name: security-mutation-durability
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+
+      - name: Prove exact SHA checkout
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4
+        with:
+          node-version: '20'
+
+      - name: Verify Python 3.12 runtime
+        shell: bash
+        run: python -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version; print(sys.executable); print(sys.version)"
+
+      - name: Verify Node 20 runtime
+        shell: bash
+        run: node -e "if (process.versions.node.split('.')[0] !== '20') { throw new Error(process.version) } console.log(process.version)"
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: "1.3.14"
+
+      - name: Install Python dependencies
+        shell: bash
+        run: |
+          python -m pip install -r scp/requirements-dev.txt
+          python -m pip check
+
+      - name: Install dashboard dependencies for strict audit suite
+        # The strict audit's full pytest includes the bun -e dashboard-contract
+        # tests and the live cluster e2e (next dev on :3000); both need
+        # dashboard node_modules before the suite runs.
+        shell: bash
+        working-directory: dashboard
+        run: npm ci --ignore-scripts --no-audit
+
+      - name: Mandatory SCP Skill and DNA contract
+        run: |
+          python tools/verify_scp_test_skill_contract.py --output reports/test_skill_contract_mutation.json
+          python -m pytest -q tests/T11_release/test_scp_skill_dna_contract.py tests/T11_release/test_scp_test_skill_contract.py --tb=short
+
+      - name: Live mutation testing gate
+        id: mutation
+        shell: bash
+        run: python scripts/run_mutation_ci.py --max-mutants 15 --min-score 0.40 --report reports/mutation/mutation_report.json
+
+      - name: Compile and lint executable surfaces
+        shell: bash
+        run: |
+          python -m py_compile scp/runtime/judge.py scp/api_server.py scp/__main__.py scp/security/auth.py scp/security/production_guard.py scp/security/secret_loader.py scp/autofix/llm_fix.py scp/autofix/runner_phases/ast_scan.py scp/autofix/restricted_exec.py scp/runtime/safe_math.py scp/history/migration.py tools/summarize_bandit_report.py tools/verify_snapshot_manifest.py tools/check_bandit_policy.py tools/verify_scp_test_skill_contract.py
+          python -m ruff check scp/autofix/llm_fix.py scp/autofix/property_validator.py scp/autofix/realtime_verifier.py scp/autofix/runner_phases/post_fix_verify.py scp/autofix/restricted_exec.py scp/core/knowledge_io.py scp/core/policy_materializer.py scp/history/migration.py scp/runtime/safe_math.py scp/security/cisa_kev.py tests/T11_release/test_scp_skill_dna_contract.py tests/T11_release/test_scp_test_skill_contract.py tools/summarize_bandit_report.py tools/verify_snapshot_manifest.py tools/check_bandit_policy.py tools/verify_scp_test_skill_contract.py --select E9,F
+
+      - name: Bandit production policy
+        shell: bash
+        run: |
+          set +e
+          python -m bandit -r scp -x scp/examples,scp/tools,scp/venv -f json -o bandit-prod.json
+          bandit_exit=$?
+          set -e
+          python tools/summarize_bandit_report.py bandit-prod.json --output bandit-prod-summary.json
+          python tools/check_bandit_policy.py bandit-prod-summary.json --max-medium 9
+          if [ "$bandit_exit" -gt 1 ]; then exit "$bandit_exit"; fi
+
+      - name: Strict fail-closed security test
+        shell: bash
+        run: python -m pytest -q tests/T03_capability/test_auth_fail_closed_contract.py tests/T03_capability/test_capability_token_mutation_contract.py tests/T03_capability/test_risk_intelligence_contract.py tests/T03_capability/test_xff_guard_contract.py tests/T03_capability/test_drift_guard.py tests/T03_capability/test_privacy_write_gate.py tests/T03_capability/test_os_sandbox.py tests/T03_capability/test_internet_safety_firewall.py --tb=short
+
+      - name: Provider failover timeout and breaker recovery gate
+        shell: bash
+        run: python -m pytest -q tests/T05_gateway/test_provider_failover.py tests/T05_gateway/test_provider_fallback.py tests/T05_gateway/test_provider_timeout_recovery.py tests/T05_gateway/test_circuit_breaker_mutation_contract.py tests/T05_gateway/test_zero_cost_guard.py tests/T05_gateway/test_llm_egress_policy.py tests/T05_gateway/test_budget_routing.py --tb=short
+
+      - name: Task Kernel durability and recovery contract gate
+        shell: bash
+        run: python -m pytest -q tests/T04_kernel/test_task_kernel_mutation_contract.py tests/T04_kernel/test_transition_lease_fencing.py tests/T04_kernel/test_lease_fencing_idempotency.py tests/T04_kernel/test_kernel_crash_consistency.py tests/T04_kernel/test_kernel_storage.py tests/T10_recovery/test_kernel_chaos_recovery.py tests/T10_recovery/test_reconciliation_outcome_contract.py tests/T10_recovery/test_adversarial_chaos_matrix.py --tb=short
+
+      - name: Full portable reality suite
+        shell: bash
+        run: python scripts/run_reality_tests_portable.py
+
+      - name: Full system runtime audit and readiness gate
+        shell: bash
+        env:
+          # run_system_audit_strict -> bounded smoke boots `python -m scp`;
+          # GAP-09 fail-closes the boot without a capability signing secret.
+          SCP_CAPABILITY_SECRET: ${{ secrets.SCP_CAPABILITY_SECRET || format('audit-{0}{1}', github.run_id, github.run_attempt) }}
+        run: python -m scripts.run_system_audit_strict
+
+      - name: Upload security and durability evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scp-security-durability-${{ github.sha }}
+          path: |
+            reports/test_skill_contract_mutation.json
+            reports/mutation/mutation_report.json
+            bandit-prod.json
+            bandit-prod-summary.json
+            reports/reality/
+            reports/system_audit_strict/
+          if-no-files-found: error
+          retention-days: 30
+
+  manifest-provenance:
+    name: manifest-provenance
+    if: ${{ always() && needs.platform-gates.result == 'success' && needs.security-and-durability.result == 'success' }}
+    needs: [platform-gates, security-and-durability]
+    runs-on: ubuntu-latest
+    outputs:
+      ready: ${{ steps.manifest.outputs.ready }}
+      candidate_sha: ${{ steps.manifest.outputs.candidate_sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify Python 3.12 runtime
+        shell: bash
+        run: python -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version; print(sys.executable); print(sys.version)"
+
+      - name: Verify provenance or create manifest-only freeze commit
+        id: manifest
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          mkdir -p reports/release
+          if python tools/verify_snapshot_manifest.py reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json | tee reports/release/manifest-verification.json; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+            echo "candidate_sha=$GITHUB_SHA" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
+            echo "main SHA has invalid provenance; handoff is blocked" >&2
+            exit 1
+          fi
+          test "$GITHUB_REF" = "refs/heads/integration/experiment-god-split-and-providers"
+          BRANCH_SHA="$(gh api 'repos/${{ github.repository }}/git/ref/heads/integration/experiment-god-split-and-providers' --jq '.object.sha')"
+          test "$BRANCH_SHA" = "$GITHUB_SHA"
+
+          python tools/create_snapshot_manifest.py --commit "$GITHUB_SHA" --output reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json
+          git add reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json
+          CHANGED="$(git diff --cached --name-only)"
+          test "$CHANGED" = "reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json"
+          git config user.name "scp-release-bot"
+          git config user.email "scp-release-bot@users.noreply.github.com"
+          git commit -m "chore(release): freeze manifest for $GITHUB_SHA"
+          NEW_SHA="$(git rev-parse HEAD)"
+          git push origin HEAD:integration/experiment-god-split-and-providers
+          REMOTE_SHA="$(gh api 'repos/${{ github.repository }}/git/ref/heads/integration/experiment-god-split-and-providers' --jq '.object.sha')"
+          test "$REMOTE_SHA" = "$NEW_SHA"
+          echo "ready=false" >> "$GITHUB_OUTPUT"
+          echo "candidate_sha=$NEW_SHA" >> "$GITHUB_OUTPUT"
+          gh workflow run scp-rc-promotion.yml --repo '${{ github.repository }}' --ref integration/experiment-god-split-and-providers -f runner_backend=github-hosted
+
+      - name: Upload provenance evidence
+        if: ${{ steps.manifest.outputs.ready == 'true' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scp-manifest-provenance-${{ github.sha }}
+          path: |
+            reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json
+            reports/release/manifest-verification.json
+          if-no-files-found: error
+          retention-days: 90
+
+  rc-verdict:
+    name: final-release-verdict
+    if: ${{ always() && github.ref == 'refs/heads/integration/experiment-god-split-and-providers' && needs.platform-gates.result == 'success' && needs.security-and-durability.result == 'success' && needs.manifest-provenance.result == 'success' && needs.manifest-provenance.outputs.ready == 'true' }}
+    needs: [platform-gates, security-and-durability, manifest-provenance]
+    runs-on: ubuntu-latest
+    outputs:
+      frozen_sha: ${{ steps.freeze.outputs.frozen_sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify Python 3.12 runtime
+        shell: bash
+        run: python -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version; print(sys.executable); print(sys.version)"
+
+      - name: Freeze exact candidate SHA and require blocker zero
+        id: freeze
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          ACTUAL="$(git rev-parse HEAD)"
+          test "$ACTUAL" = "$GITHUB_SHA"
+          BRANCH_SHA="$(gh api 'repos/${{ github.repository }}/git/ref/heads/integration/experiment-god-split-and-providers' --jq '.object.sha')"
+          test "$BRANCH_SHA" = "$GITHUB_SHA"
+          python tools/verify_snapshot_manifest.py reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json
+          mkdir -p reports/release
+          python - <<'PY'
+          import json, os
+          payload = {
+              'sha': os.environ['GITHUB_SHA'],
+              'required_gates': {
+                  'compile_import': 'PASS',
+                  'unit_integration': 'PASS',
+                  'semantic_parity': 'PASS',
+                  'skill_scp_dna_contract': 'PASS',
+                  'acceptance': 'PASS',
+                  'fail_closed': 'PASS',
+                  'bandit_security': 'PASS',
+                  'mutation': 'PASS',
+                  'provider_failover_timeout': 'PASS',
+                  'taskkernel_durability_recovery': 'PASS',
+                  'reality_tests': 'PASS',
+                  'bounded_runtime_smoke': 'PASS',
+                  'dashboard_build_audit': 'PASS',
+                  'manifest_provenance': 'PASS',
+              },
+              'blockers': 0,
+              'verdict': 'RC_DONE',
+          }
+          with open('reports/release/rc-verdict.json', 'w', encoding='utf-8') as f:
+              json.dump(payload, f, indent=2, sort_keys=True)
+              f.write('\n')
+          PY
+          echo "frozen_sha=$GITHUB_SHA" >> "$GITHUB_OUTPUT"
+
+      - name: Upload frozen RC verdict
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scp-rc-verdict-${{ github.sha }}
+          path: reports/release/rc-verdict.json
+          if-no-files-found: error
+          retention-days: 90
+
+  promote-to-main:
+    name: guarded-integration-to-main
+    needs: [rc-verdict]
+    if: ${{ needs.rc-verdict.result == 'success' && github.ref == 'refs/heads/integration/experiment-god-split-and-providers' && github.event_name == 'workflow_dispatch' && inputs.approve_main_merge == true }}
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      FROZEN_SHA: ${{ needs.rc-verdict.outputs.frozen_sha }}
+    steps:
+      - name: Verify promotion CLI toolchain
+        shell: bash
+        run: |
+          git --version
+          gh --version
+          jq --version
+
+      - name: Create/find PR and merge only the frozen head SHA after explicit approval
+        shell: bash
+        run: |
+          set -euo pipefail
+          CURRENT="$(gh api 'repos/${{ github.repository }}/git/ref/heads/integration/experiment-god-split-and-providers' --jq '.object.sha')"
+          test "$CURRENT" = "$FROZEN_SHA"
+          PR="$(gh pr list --repo '${{ github.repository }}' --base main --head integration/experiment-god-split-and-providers --state open --json number --jq '.[0].number // empty')"
+          if [ -z "$PR" ]; then
+            PR_URL="$(gh pr create --repo '${{ github.repository }}' --base main --head integration/experiment-god-split-and-providers --title "RC $FROZEN_SHA: integration -> main" --body "RC promotion after explicit human merge approval. Every mandatory gate passed on frozen SHA $FROZEN_SHA; blockers=0. Customer handoff still requires fresh main-SHA verification after merge.")"
+            PR="$(gh pr view "$PR_URL" --repo '${{ github.repository }}' --json number --jq '.number')"
+          fi
+          PR_HEAD="$(gh pr view "$PR" --repo '${{ github.repository }}' --json headRefOid --jq '.headRefOid')"
+          test "$PR_HEAD" = "$FROZEN_SHA"
+          # The main ruleset requires linear history; SHA-guarded squash keeps
+          # that policy intact. Handoff also verifies full frozen/main tree parity.
+          MERGE_JSON="$(gh api --method PUT 'repos/${{ github.repository }}/pulls/'"$PR"'/merge' -f merge_method=squash -f sha="$FROZEN_SHA")"
+          test "$(printf '%s' "$MERGE_JSON" | jq -r '.merged')" = "true"
+          MERGE_SHA="$(printf '%s' "$MERGE_JSON" | jq -r '.sha')"
+          test -n "$MERGE_SHA"
+          MAIN_SHA="$(gh api 'repos/${{ github.repository }}/git/ref/heads/main' --jq '.object.sha')"
+          test "$MAIN_SHA" = "$MERGE_SHA"
+          # GITHUB_TOKEN writes do not trigger push workflows. Explicit dispatch
+          # binds a NEW complete verification round to this immutable merge SHA.
+          gh workflow run scp-rc-promotion.yml --repo '${{ github.repository }}' --ref main -f runner_backend=github-hosted -f handoff_merge_sha="$MERGE_SHA"
+
+  main-lineage-authority:
+    name: main-lineage-authority
+    if: ${{ (github.ref == 'refs/heads/main' && github.event_name == 'push') || (github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.handoff_merge_sha != '') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+
+      - name: Verify lineage CLI toolchain
+        shell: bash
+        run: |
+          git --version
+          gh --version
+          jq --version
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify main lineage integrity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HANDOFF_MERGE_SHA: ${{ inputs.handoff_merge_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          python tools/verify_main_handoff.py
+
+      - name: Upload immutable main lineage
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scp-main-lineage-${{ github.sha }}
+          path: reports/release/main-lineage.json
+          if-no-files-found: error
+          retention-days: 90
+
+  customer-handoff-verdict:
+    name: customer-handoff-verdict
+    if: ${{ always() && github.ref == 'refs/heads/main' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.handoff_merge_sha != '')) && needs.main-lineage-authority.result == 'success' && needs.platform-gates.result == 'success' && needs.security-and-durability.result == 'success' && needs.manifest-provenance.result == 'success' && needs.manifest-provenance.outputs.ready == 'true' }}
+    needs: [main-lineage-authority, platform-gates, security-and-durability, manifest-provenance]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify local Python 3.12 runtime
+        shell: bash
+        run: python -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version; print(sys.executable); print(sys.version)"
+
+      - name: Emit fresh customer handoff verdict for main SHA
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.sha }}"
+          python tools/verify_snapshot_manifest.py reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json
+          mkdir -p reports/release
+          python - <<'PY'
+          import json, os
+          payload = {
+              'main_sha': os.environ['GITHUB_SHA'],
+              'required_gates': {
+                  'compile_import': 'PASS',
+                  'unit_integration': 'PASS',
+                  'semantic_parity': 'PASS',
+                  'skill_scp_dna_contract': 'PASS',
+                  'acceptance': 'PASS',
+                  'fail_closed': 'PASS',
+                  'bandit_security': 'PASS',
+                  'mutation': 'PASS',
+                  'provider_failover_timeout': 'PASS',
+                  'taskkernel_durability_recovery': 'PASS',
+                  'reality_tests': 'PASS',
+                  'bounded_runtime_smoke': 'PASS',
+                  'dashboard_build_audit': 'PASS',
+                  'manifest_provenance': 'PASS',
+              },
+              'handoff_authority': {'main_lineage_authority': 'PASS', 'event': os.environ['GITHUB_EVENT_NAME']},
+              'blockers': 0,
+              'fresh_full_system_verification': True,
+              'verdict': 'CUSTOMER_HANDOFF_PASS',
+          }
+          with open('reports/release/customer-handoff-verdict.json', 'w', encoding='utf-8') as f:
+              json.dump(payload, f, indent=2, sort_keys=True)
+              f.write('\n')
+          PY
+
+      - name: Upload customer handoff evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scp-customer-handoff-${{ github.sha }}
+          path: reports/release/customer-handoff-verdict.json
+          if-no-files-found: error
+          retention-days: 90

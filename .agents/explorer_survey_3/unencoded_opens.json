@@ -1,0 +1,182 @@
+[
+  {
+    "file": "scp\\api\\routes\\forecast_routes.py",
+    "line": 102,
+    "code": "fd = _os.open(str(registry_file), _os.O_WRONLY | _os.O_CREAT | _os.O_APPEND, 0o600)"
+  },
+  {
+    "file": "scp\\api\\routes\\v106_routes.py",
+    "line": 44,
+    "code": "open(_FOUNDATION / \"governance.sqlite\", 'a').close()"
+  },
+  {
+    "file": "scp\\autofix\\shadow_snapshot.py",
+    "line": 184,
+    "code": "with tmp_restore.open(\"wb\") as rf:"
+  },
+  {
+    "file": "scp\\autofix\\speculative_branching.py",
+    "line": 32,
+    "code": "with resolved_target.open(\"w\") as f:"
+  },
+  {
+    "file": "scp\\autofix\\speculative_branching.py",
+    "line": 46,
+    "code": "with resolved_target.open(\"w\") as f:"
+  },
+  {
+    "file": "scp\\autofix\\runner_phases\\diff_rescan.py",
+    "line": 58,
+    "code": "with Path(path).open(\"rb\") as f:"
+  },
+  {
+    "file": "scp\\benchmark\\compare_results.py",
+    "line": 80,
+    "code": "with open(scp_file) as f:"
+  },
+  {
+    "file": "scp\\benchmark\\compare_results.py",
+    "line": 82,
+    "code": "with open(baseline_file) as f:"
+  },
+  {
+    "file": "scp\\benchmark\\compare_results.py",
+    "line": 183,
+    "code": "with _output_path.open(\"w\") as f:"
+  },
+  {
+    "file": "scp\\benchmark\\run_benchmark.py",
+    "line": 80,
+    "code": "with open(filepath) as f:"
+  },
+  {
+    "file": "scp\\benchmark\\run_benchmark.py",
+    "line": 135,
+    "code": "with open(filepath) as f:"
+  },
+  {
+    "file": "scp\\core\\data_partitioner.py",
+    "line": 213,
+    "code": "with old_bypass.open(\"w\") as f:"
+  },
+  {
+    "file": "scp\\core\\environment_snapshot.py",
+    "line": 26,
+    "code": "with path.open(\"rb\") as handle:"
+  },
+  {
+    "file": "scp\\core\\policy_materializer.py",
+    "line": 65,
+    "code": "with path.open(\"rb\") as handle:"
+  },
+  {
+    "file": "scp\\core\\startup_optimizer.py",
+    "line": 298,
+    "code": "with Path(test_jsonl).open(\"w\") as f:"
+  },
+  {
+    "file": "scp\\core\\startup_optimizer.py",
+    "line": 304,
+    "code": "with open(test_jsonl) as f:"
+  },
+  {
+    "file": "scp\\core\\url_fetcher.py",
+    "line": 264,
+    "code": "with opener.open(req, timeout=timeout) as resp:"
+  },
+  {
+    "file": "scp\\epistemic\\evidence_store.py",
+    "line": 159,
+    "code": "with staging.open(\"rb+\") as handle:"
+  },
+  {
+    "file": "scp\\forecast\\ledger.py",
+    "line": 47,
+    "code": "with path.open(\"rb\") as handle:"
+  },
+  {
+    "file": "scp\\forecast\\ledger.py",
+    "line": 178,
+    "code": "fd = os.open(self.ledger_path, flags, 0o600)"
+  },
+  {
+    "file": "scp\\hands\\hands_executor.py",
+    "line": 89,
+    "code": "with path.open(\"rb\") as handle:"
+  },
+  {
+    "file": "scp\\hands\\planner.py",
+    "line": 101,
+    "code": "fd = os.open(str(lease_path), os.O_WRONLY | os.O_CREAT | os.O_EXCL)"
+  },
+  {
+    "file": "scp\\history\\migration.py",
+    "line": 54,
+    "code": "with path.open(\"rb\") as handle:"
+  },
+  {
+    "file": "scp\\meta\\external_trust.py",
+    "line": 120,
+    "code": "content = constitution_path.read_text()"
+  },
+  {
+    "file": "scp\\runtime\\storage_manager.py",
+    "line": 328,
+    "code": "Path(db_path).open(\"wb\") as dst:"
+  },
+  {
+    "file": "scp\\security\\attack_crawler.py",
+    "line": 162,
+    "code": "cache = json.loads(cache_file.read_text())"
+  },
+  {
+    "file": "scp\\security\\auto_payload_generator.py",
+    "line": 237,
+    "code": "with pool_file.open(\"w\") as f:"
+  },
+  {
+    "file": "scp\\security\\counter_response.py",
+    "line": 559,
+    "code": "with open(log_file, \"a\") as f:"
+  },
+  {
+    "file": "scp\\security\\counter_response.py",
+    "line": 577,
+    "code": "with open(alert_file, \"a\") as f:"
+  },
+  {
+    "file": "scp\\security\\counter_response.py",
+    "line": 593,
+    "code": "with open(review_file, \"a\") as f:"
+  },
+  {
+    "file": "scp\\security\\counter_response.py",
+    "line": 672,
+    "code": "with open(audit_file, \"a\") as f:"
+  },
+  {
+    "file": "scp\\security\\counter_response.py",
+    "line": 682,
+    "code": "with open(audit_file, \"a\") as f:"
+  },
+  {
+    "file": "scp\\security\\escalation.py",
+    "line": 394,
+    "code": "with self.escalation_log_path.open(\"a\") as log_file:"
+  },
+  {
+    "file": "scp\\security\\image_voice_detector.py",
+    "line": 105,
+    "code": "img = Image.open(io.BytesIO(image_bytes))"
+  },
+  {
+    "file": "scp\\security\\image_voice_detector.py",
+    "line": 107,
+    "code": "img = Image.open(image_path)"
+  },
+  {
+    "file": "scp\\security\\os_sandbox.py",
+    "line": 256,
+    "code": "with abs_path.open(\"wb\") as f:"
+  }
+]

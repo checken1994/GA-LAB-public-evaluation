@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "mimosa-finding-history/v1",
+  "runId": "20261006T171055490Z-10668-a07fdd8c83b4",
+  "runStatus": "inconclusive",
+  "errors": [
+    "baseline-enumerate:.pytest_cache: bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+    "baseline:.: baseline_partial: baseline capture had enumeration or snapshot errors",
+    "scan:reports/system_audit_20261006/probes/ask_limiter_boundary_probe.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:reports/system_audit_20261006/probes/rate_limit_probes.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:reports/system_audit_20261006/probes/runtime_probes.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+  ],
+  "target": ".",
+  "revision": "2fefcbc54b22502e48265cef284a46e67b07c62e",
+  "diffHash": "c70a41c11d39ed419f4a59e45c0f81e451aaab26e4b7e5272f09ca8d89045862",
+  "rulesVersion": "unavailable",
+  "recordedAt": "2026-10-06T17:10:55.490Z",
+  "timing": {
+    "startedAt": "2026-10-06T17:10:52.005Z",
+    "completedAt": "2026-10-06T17:10:55.490Z",
+    "durationMs": 3485
+  },
+  "tokens": {
+    "input": 0,
+    "output": 0,
+    "total": 0,
+    "modelCalls": 0,
+    "measurement": "known-zero"
+  },
+  "findings": {
+    "total": 0,
+    "bySeverity": {},
+    "byStatus": {}
+  },
+  "coverage": {
+    "status": "partial",
+    "reasonCounts": {
+      "bash_discovery_incomplete": 1,
+      "baseline_partial": 1,
+      "scanner_failed": 3,
+      "project_check_failed": 5
+    }
+  },
+  "evidenceBoundary": "static_only",
+  "immutableReport": ".mimosa/reports/task-review-sess_bce1a0ae-c2f9-4a0d-b11a-68b66e1d4436-20261006T171055490Z-10668-a07fdd8c83b4.json"
+}

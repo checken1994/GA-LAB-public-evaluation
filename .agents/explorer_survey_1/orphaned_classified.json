@@ -1,0 +1,520 @@
+{
+  "truly_dead": [
+    {
+      "path": "scp/runtime/experts/chem_reality_astro.py",
+      "module": "scp.runtime.experts.chem_reality_astro",
+      "loc": 817,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/runtime/experts/misc.py",
+      "module": "scp.runtime.experts.misc",
+      "loc": 674,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/security/h8_redteam_bridge.py",
+      "module": "scp.security.h8_redteam_bridge",
+      "loc": 660,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/runtime/engine_parts/scpv14_process_mixin.py",
+      "module": "scp.runtime.engine_parts.scpv14_process_mixin",
+      "loc": 650,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/meta/calibration_engine.py",
+      "module": "scp.meta.calibration_engine",
+      "loc": 607,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/meta/adversary_verifier.py",
+      "module": "scp.meta.adversary_verifier",
+      "loc": 549,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/brain/error_store_index.py",
+      "module": "scp.brain.error_store_index",
+      "loc": 534,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/benchmark/run_benchmark_enhanced.py",
+      "module": "scp.benchmark.run_benchmark_enhanced",
+      "loc": 526,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "#!/usr/bin/env python3 \"\"\"SCP Enhanced Benchmark Runner \u2014 computes ALL 8 anti-hallucination metrics. "
+    },
+    {
+      "path": "scp/meta/question_tracker.py",
+      "module": "scp.meta.question_tracker",
+      "loc": 460,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/ai_patterns.py",
+      "module": "scp.ai_patterns",
+      "loc": 454,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/runtime/experts/numeric_data.py",
+      "module": "scp.runtime.experts.numeric_data",
+      "loc": 453,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/meta/verdict_predictor.py",
+      "module": "scp.meta.verdict_predictor",
+      "loc": 396,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/meta/self_questioning.py",
+      "module": "scp.meta.self_questioning",
+      "loc": 395,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/runtime/experts/math_biology.py",
+      "module": "scp.runtime.experts.math_biology",
+      "loc": 394,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/runtime/healing_v14.py",
+      "module": "scp.runtime.healing_v14",
+      "loc": 390,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/security/threat_intel.py",
+      "module": "scp.security.threat_intel",
+      "loc": 364,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/tests/external_audit/test_security.py",
+      "module": "scp.tests.external_audit.test_security",
+      "loc": 359,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\"Security regression tests \u2014 OWASP API5 BFLA (Broken Function Level Authorization). "
+    },
+    {
+      "path": "scp/knowledge/scheduled_crawler.py",
+      "module": "scp.knowledge.scheduled_crawler",
+      "loc": 341,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/meta/cognitive_engine.py",
+      "module": "scp.meta.cognitive_engine",
+      "loc": 334,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/core/real_question_fetcher.py",
+      "module": "scp.core.real_question_fetcher",
+      "loc": 326,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/knowledge/cwe_exploit_store.py",
+      "module": "scp.knowledge.cwe_exploit_store",
+      "loc": 298,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/benchmark/run_baseline.py",
+      "module": "scp.benchmark.run_baseline",
+      "loc": 296,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "#!/usr/bin/env python3 \"\"\"Baseline LLM Runner \u2014 runs same benchmark on raw LLM (GPT-4/Claude/Llama via OpenRouter). "
+    },
+    {
+      "path": "scp/core/auto_backup.py",
+      "module": "scp.core.auto_backup",
+      "loc": 293,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/meta/logical_auditor.py",
+      "module": "scp.meta.logical_auditor",
+      "loc": 278,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/meta/governance_v97.py",
+      "module": "scp.meta.governance_v97",
+      "loc": 271,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/security/auto_payload_generator.py",
+      "module": "scp.security.auto_payload_generator",
+      "loc": 251,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/tests/property/test_none_safety.py",
+      "module": "scp.tests.property.test_none_safety",
+      "loc": 251,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/security/memory_guard.py",
+      "module": "scp.security.memory_guard",
+      "loc": 229,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/security/rogue_ai_detector.py",
+      "module": "scp.security.rogue_ai_detector",
+      "loc": 227,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/core/react_agent.py",
+      "module": "scp.core.react_agent",
+      "loc": 214,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/core/github_backup.py",
+      "module": "scp.core.github_backup",
+      "loc": 197,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/meta/multi_llm_check.py",
+      "module": "scp.meta.multi_llm_check",
+      "loc": 197,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\"SCP Multi-LLM Cross-Check \u2014 combat consensus illusion (DNA #20). \"\"\" "
+    },
+    {
+      "path": "scp/benchmark/compare_results.py",
+      "module": "scp.benchmark.compare_results",
+      "loc": 188,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "#!/usr/bin/env python3 \"\"\"Compare SCP vs Baseline LLM \u2014 statistical comparison + significance test. "
+    },
+    {
+      "path": "scp/security/attack_classifier.py",
+      "module": "scp.security.attack_classifier",
+      "loc": 172,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/runtime/parallel_pipeline.py",
+      "module": "scp.runtime.parallel_pipeline",
+      "loc": 164,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/core/evidence_filter.py",
+      "module": "scp.core.evidence_filter",
+      "loc": 154,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\"Entity/value consistency filtering for SCP evidence. \"\"\" "
+    },
+    {
+      "path": "scp/core/healing_engine.py",
+      "module": "scp.core.healing_engine",
+      "loc": 141,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/runtime/experts/management.py",
+      "module": "scp.runtime.experts.management",
+      "loc": 136,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/core/environment_snapshot.py",
+      "module": "scp.core.environment_snapshot",
+      "loc": 129,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/runtime/timing_and_restart.py",
+      "module": "scp.runtime.timing_and_restart",
+      "loc": 127,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\"[G3-STUB \u2192 G4-FIX \u2192 G5-FIX] PhaseTimer + QueryTimeoutError. "
+    },
+    {
+      "path": "scp/security/quorum_why.py",
+      "module": "scp.security.quorum_why",
+      "loc": 125,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/observability/otel_exporter.py",
+      "module": "scp.observability.otel_exporter",
+      "loc": 118,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "# -*- coding: utf-8 -*- \"\"\"Step 4: OpenTelemetry exporter for SCP. \"\"\" "
+    },
+    {
+      "path": "scp/benchmark/benchmark_suite.py",
+      "module": "scp.benchmark.benchmark_suite",
+      "loc": 112,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "# -*- coding: utf-8 -*- \"\"\"Step 5: Benchmark suite for SCP LLM Gateway. \"\"\" "
+    },
+    {
+      "path": "scp/core/dependency_resolver.py",
+      "module": "scp.core.dependency_resolver",
+      "loc": 112,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" "
+    },
+    {
+      "path": "scp/tests/test_free_catalog.py",
+      "module": "scp.tests.test_free_catalog",
+      "loc": 110,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": ""
+    },
+    {
+      "path": "scp/security/kernel_patrol.py",
+      "module": "scp.security.kernel_patrol",
+      "loc": 75,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": ""
+    },
+    {
+      "path": "scp/core/memory_manager.py",
+      "module": "scp.core.memory_manager",
+      "loc": 73,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\"[V104.34 #34] memory_manager \u2014 wraps SmartCache via get_smart_cache(). "
+    },
+    {
+      "path": "scp/meta/curiosity_asker.py",
+      "module": "scp.meta.curiosity_asker",
+      "loc": 73,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\"[V104.39 #G] curiosity_asker \u2014 generates curiosity-driven follow-up questions. \"\"\" "
+    },
+    {
+      "path": "scp/meta/scp_meta.py",
+      "module": "scp.meta.scp_meta",
+      "loc": 72,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\"SCP-META \u2014 H\u1ed9i \u0111\u1ed3ng ph\u1ea3n bi\u1ec7n 'C\u00f3 c\u1ea7n l\u00e0m kh\u00f4ng?' (G\u00e0 \u00a710).\"\"\" # [G3-CONSOLIDATE RE-17] Meta namespace status: # - Th"
+    },
+    {
+      "path": "scp/security/red_team.py",
+      "module": "scp.security.red_team",
+      "loc": 70,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/core/file_mutex.py",
+      "module": "scp.core.file_mutex",
+      "loc": 69,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/api_server_parts/_trace_impl.py",
+      "module": "scp.api_server_parts._trace_impl",
+      "loc": 65,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\"Trace lookup router and implementation for SCP API (Milestone 3). \"\"\" "
+    },
+    {
+      "path": "scp/runtime/safe_math.py",
+      "module": "scp.runtime.safe_math",
+      "loc": 51,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\"Small, non-evaluating arithmetic parser for deterministic checks.\"\"\" "
+    },
+    {
+      "path": "scp/knowledge/issue_parser.py",
+      "module": "scp.knowledge.issue_parser",
+      "loc": 47,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": ""
+    },
+    {
+      "path": "scp/audit_engine/contract_adapter.py",
+      "module": "scp.audit_engine.contract_adapter",
+      "loc": 37,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/learning/continual.py",
+      "module": "scp.learning.continual",
+      "loc": 37,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "# -*- coding: utf-8 -*- \"\"\"Step 7: Continual Learning Pipeline (RL-HF style). \"\"\" "
+    },
+    {
+      "path": "scp/audit_engine/recorder.py",
+      "module": "scp.audit_engine.recorder",
+      "loc": 18,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\" \"\"\" "
+    },
+    {
+      "path": "scp/tests/golden_task.py",
+      "module": "scp.tests.golden_task",
+      "loc": 14,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "# -*- coding: utf-8 -*- \"\"\"P1: Golden Task Runtime Evidence. \"\"\" # Simulate a full lifecycle event "
+    },
+    {
+      "path": "scp/audit_engine/runner.py",
+      "module": "scp.audit_engine.runner",
+      "loc": 10,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "\"\"\"Schema for hermetic execution.\"\"\" "
+    },
+    {
+      "path": "scp/tests/chaos_recovery.py",
+      "module": "scp.tests.chaos_recovery",
+      "loc": 8,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "# -*- coding: utf-8 -*- \"\"\"P1: Chaos Recovery Test. \"\"\" "
+    },
+    {
+      "path": "scp/hands/process_probe.py",
+      "module": "scp.hands.process_probe",
+      "loc": 7,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json) "
+    },
+    {
+      "path": "scp/hello_bug.py",
+      "module": "scp.hello_bug",
+      "loc": 7,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": "# INTENTIONAL CANARY FIXTURE \u2014 DO NOT FIX, DO NOT MOVE, DO NOT DELETE. # Used by the /v105 autofix observe probe (ast_sc"
+    },
+    {
+      "path": "scp/core/self_improvement.py",
+      "module": "scp.core.self_improvement",
+      "loc": 6,
+      "test_mentions": [],
+      "has_tests": false,
+      "header": ""
+    }
+  ],
+  "tested_orphans": [
+    {
+      "path": "scp/benchmark/run_benchmark.py",
+      "module": "scp.benchmark.run_benchmark",
+      "loc": 262,
+      "test_mentions": [
+        "tests/T02_contract/test_god_split_semantic_parity.py"
+      ],
+      "has_tests": true,
+      "header": "#!/usr/bin/env python3 \"\"\"SCP Benchmark Runner \u2014 ch\u1ea1y full benchmark ho\u1eb7c sample. \"\"\" "
+    }
+  ]
+}

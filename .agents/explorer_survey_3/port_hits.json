@@ -1,0 +1,602 @@
+[
+  {
+    "file": "scp\\ai_patterns.py",
+    "line": 11,
+    "port": 3000,
+    "code": "Industry: Wang et al. 2022, cited 3000+"
+  },
+  {
+    "file": "scp\\ai_patterns.py",
+    "line": 78,
+    "port": 3000,
+    "code": "Reasoning in Language Models\" \u2014 cited 3000+."
+  },
+  {
+    "file": "scp\\api_server.py",
+    "line": 108,
+    "port": 8000,
+    "code": "_port = 8000"
+  },
+  {
+    "file": "scp\\api_server.py",
+    "line": 111,
+    "port": 8000,
+    "code": "_mode = \"production\" if _port == 8000 else \"test\" if _port == 8001 else \"unknown\""
+  },
+  {
+    "file": "scp\\api_server.py",
+    "line": 361,
+    "port": 3000,
+    "code": "_cors_origins_raw = os.environ.get(\"SCP_CORS_ORIGINS\", \"http://localhost:3000\")"
+  },
+  {
+    "file": "scp\\api_server.py",
+    "line": 365,
+    "port": 3000,
+    "code": "allow_origins=_cors_origins or [\"http://localhost:3000\"],"
+  },
+  {
+    "file": "scp\\api_server.py",
+    "line": 728,
+    "port": 8000,
+    "code": "uvicorn.run(\"scp.api_server:app\", host=\"127.0.0.1\", port=8000, reload=False, log_level=\"info\")"
+  },
+  {
+    "file": "scp\\__main__.py",
+    "line": 3,
+    "port": 8000,
+    "code": "Defaults to port 8000. Reads SCP_PORT env var if no arg is passed."
+  },
+  {
+    "file": "scp\\__main__.py",
+    "line": 5,
+    "port": 8000,
+    "code": "Caddy gateway on :81 reverse-proxies public traffic via ?XTransformPort=8000)."
+  },
+  {
+    "file": "scp\\__main__.py",
+    "line": 8,
+    "port": 8000,
+    "code": "python3 -m scp                 # 127.0.0.1:8000 (default)"
+  },
+  {
+    "file": "scp\\__main__.py",
+    "line": 9,
+    "port": 8080,
+    "code": "python3 -m scp 8080            # 127.0.0.1:8080"
+  },
+  {
+    "file": "scp\\__main__.py",
+    "line": 99,
+    "port": 8000,
+    "code": "print(\"Starts the SCP API on loopback; PORT defaults to SCP_PORT or 8000.\")"
+  },
+  {
+    "file": "scp\\__main__.py",
+    "line": 104,
+    "port": 8000,
+    "code": "else int(os.environ.get(\"SCP_PORT\", \"8000\"))"
+  },
+  {
+    "file": "scp\\api\\chat.py",
+    "line": 48,
+    "port": 8000,
+    "code": "MAX_CHAT_MESSAGE_CHARS = 8000"
+  },
+  {
+    "file": "scp\\api\\webhook.py",
+    "line": 49,
+    "port": 8000,
+    "code": "prompt: str = Field(..., min_length=1, max_length=8000, description=\"Prompt to analyze\")"
+  },
+  {
+    "file": "scp\\api\\routes\\audit_routes.py",
+    "line": 11,
+    "port": 8000,
+    "code": "After `python3 -m scp 8000` the 2 routes appear in `/openapi.json` and"
+  },
+  {
+    "file": "scp\\api\\routes\\batch_benchmark_routes.py",
+    "line": 83,
+    "port": 8000,
+    "code": "baseUrl: str = Field(default=\"http://127.0.0.1:8000\", min_length=10, max_length=200)"
+  },
+  {
+    "file": "scp\\api_server_parts\\helpers.py",
+    "line": 189,
+    "port": 8000,
+    "code": "question: str = Field(..., min_length=0, max_length=8000)  # [FIX-P0-8C] min_length=0 cho UNKNOWN handling"
+  },
+  {
+    "file": "scp\\api_server_parts\\lifespan.py",
+    "line": 131,
+    "port": 8000,
+    "code": "logger.info('[R20-ROOT-FIX-REAL] Yielding NOW \u2502\u0102\u00a2\u00e2\u20ac\\x9a\u00c2\u00ac\u0102\u00a2\u00e2\u201a\u00ac\u00c2\\x9d port 8000 binds immediately')"
+  },
+  {
+    "file": "scp\\autofix\\callgraph_delta.py",
+    "line": 116,
+    "port": 8000,
+    "code": "MAX_NODES_PER_FILE = 8000"
+  },
+  {
+    "file": "scp\\autofix\\engine.py",
+    "line": 381,
+    "port": 3000,
+    "code": "f\"--- MODULE SOURCE ({_module_path}) ---\\n{_source[:3000]}\\n\\n\""
+  },
+  {
+    "file": "scp\\benchmark\\run_benchmark.py",
+    "line": 7,
+    "port": 8000,
+    "code": "python run_benchmark.py --url http://127.0.0.1:8000 --token XXX"
+  },
+  {
+    "file": "scp\\benchmark\\run_benchmark.py",
+    "line": 26,
+    "port": 8000,
+    "code": "DEFAULT_URL = \"http://127.0.0.1:8000\""
+  },
+  {
+    "file": "scp\\benchmark\\run_benchmark_enhanced.py",
+    "line": 15,
+    "port": 8000,
+    "code": "python run_benchmark_enhanced.py --url http://127.0.0.1:8000 --token XXX"
+  },
+  {
+    "file": "scp\\benchmark\\run_benchmark_enhanced.py",
+    "line": 39,
+    "port": 8000,
+    "code": "DEFAULT_URL = os.environ.get(\"SCP_BASE_URL\", \"http://127.0.0.1:8000\")"
+  },
+  {
+    "file": "scp\\benchmark\\run_benchmark_v2.py",
+    "line": 28,
+    "port": 8000,
+    "code": "DEFAULT_URL = os.environ.get(\"SCP_BASE_URL\", \"http://127.0.0.1:8000\")"
+  },
+  {
+    "file": "scp\\data_sources\\environment.py",
+    "line": 51,
+    "port": 3000,
+    "code": "\"whale\": {\"population\": 3000, \"status\": \"Endangered\"},"
+  },
+  {
+    "file": "scp\\knowledge\\antibody_system.py",
+    "line": 467,
+    "port": 8000,
+    "code": "implausible values (e.g., \"8000 MPa\" in answer), but should_run()"
+  },
+  {
+    "file": "scp\\knowledge\\antibody_system.py",
+    "line": 469,
+    "port": 8000,
+    "code": "answer \"Steel tensile strength 8000 MPa\" never triggered"
+  },
+  {
+    "file": "scp\\tests\\test_free_catalog.py",
+    "line": 27,
+    "port": 8000,
+    "code": "return {\"id\": model_id, \"context_length\": 8000, \"output_modalities\": [modality], \"pricing\": pricing}"
+  },
+  {
+    "file": "scp\\tests\\external_audit\\test_security.py",
+    "line": 205,
+    "port": 9222,
+    "code": "\"http://127.0.0.1:9222/json/list\","
+  },
+  {
+    "file": "scp\\tests\\external_audit\\test_security.py",
+    "line": 281,
+    "port": 8000,
+    "code": "private_url = \"http://127.0.0.1:8000/internal\""
+  },
+  {
+    "file": "scp\\tests\\property\\test_none_safety.py",
+    "line": 251,
+    "port": 3000,
+    "code": "\"hypothesis suite (3000+ inputs).\")"
+  },
+  {
+    "file": "scp\\web_control\\browser_session.py",
+    "line": 28,
+    "port": 9222,
+    "code": "self.port = int(port or os.environ.get(\"SCP_BROWSER_DEBUG_PORT\", \"9222\"))"
+  },
+  {
+    "file": "dashboard\\package.json",
+    "line": 9,
+    "port": 3000,
+    "code": "\"dev\": \"next dev -p 3000\","
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\autofix\\route.ts",
+    "line": 31,
+    "port": 8000,
+    "code": "process.env.SCP_INTERNAL_URL ?? \"http://127.0.0.1:8000\""
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scanners\\route.ts",
+    "line": 21,
+    "port": 8000,
+    "code": "process.env.SCP_INTERNAL_URL ?? \"http://127.0.0.1:8000\""
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\ask\\route.ts",
+    "line": 41,
+    "port": 8000,
+    "code": "if (!question || question.length > 8000) {"
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\health\\route.ts",
+    "line": 7,
+    "port": 8000,
+    "code": "* Python backend on port 8000. So \"SCP online\" was a false-green whenever"
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\health\\route.ts",
+    "line": 8,
+    "port": 3030,
+    "code": "* the loop-scheduler (port 3030) or the llm-bridge (port 11434) was dead"
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\health\\route.ts",
+    "line": 19,
+    "port": 8000,
+    "code": "* SCP started via:    SCP_PORT=8000 python -m scp"
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\health\\route.ts",
+    "line": 35,
+    "port": 8000,
+    "code": "fastapi: \"Run: SCP_PORT=8000 python -m scp (in your scp folder)\","
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\loop\\route.ts",
+    "line": 5,
+    "port": 3030,
+    "code": "* runs on port 3030 and periodically calls SCP's"
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\loop\\route.ts",
+    "line": 13,
+    "port": 3030,
+    "code": "* actually fetch http://127.0.0.1:3030/ and surface whatever it returns."
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\loop\\route.ts",
+    "line": 23,
+    "port": 3030,
+    "code": "process.env.LOOP_SCHEDULER_URL ?? \"http://127.0.0.1:3030\""
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\loop\\trigger\\route.ts",
+    "line": 5,
+    "port": 3030,
+    "code": "* POST \u2192 POST http://127.0.0.1:3030/trigger"
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\loop\\trigger\\route.ts",
+    "line": 41,
+    "port": 3030,
+    "code": "process.env.LOOP_SCHEDULER_URL ?? \"http://127.0.0.1:3030\""
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\routes\\route.ts",
+    "line": 196,
+    "port": 8000,
+    "code": "gatewayPattern: \"Append ?XTransformPort=8000 to route through Caddy :81 gateway\","
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\status\\route.ts",
+    "line": 45,
+    "port": 8000,
+    "code": "process.env.SCP_INTERNAL_URL ?? \"http://127.0.0.1:8000\""
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\status\\route.ts",
+    "line": 47,
+    "port": 8000,
+    "code": "const START_HINT = \"Run: SCP_PORT=8000 python -m scp (in your scp folder)\""
+  },
+  {
+    "file": "dashboard\\src\\app\\api\\scp\\status\\route.ts",
+    "line": 219,
+    "port": 3000,
+    "code": "const timeout = setTimeout(() => controller.abort(), 3000)"
+  },
+  {
+    "file": "dashboard\\src\\components\\dashboard\\live-activity-stream.tsx",
+    "line": 93,
+    "port": 3000,
+    "code": "}, 3000)"
+  },
+  {
+    "file": "dashboard\\src\\components\\dashboard\\live-activity-stream.tsx",
+    "line": 148,
+    "port": 3000,
+    "code": "setTimeout(() => void fetchActivity(), 3000)"
+  },
+  {
+    "file": "dashboard\\src\\components\\dashboard\\scp-control-panel.tsx",
+    "line": 126,
+    "port": 3030,
+    "code": "* (port 3030). Calls /api/scp/loop (Next.js proxy \u2192 127.0.0.1:3030) on every"
+  },
+  {
+    "file": "dashboard\\src\\components\\dashboard\\scp-control-panel.tsx",
+    "line": 196,
+    "port": 3030,
+    "code": "title={loop?.hint ?? \"mini-services/loop-scheduler on port 3030\"}"
+  },
+  {
+    "file": "dashboard\\src\\components\\dashboard\\scp-control-panel.tsx",
+    "line": 475,
+    "port": 8000,
+    "code": "Live status c\u1ee7a SCP Python FastAPI server (port 8000). Dashboard"
+  },
+  {
+    "file": "dashboard\\src\\components\\dashboard\\scp-control-panel.tsx",
+    "line": 477,
+    "port": 8000,
+    "code": "\u2192 proxy t\u1edbi <code className=\"rounded bg-muted px-1.5 py-0.5 text-xs\">http://127.0.0.1:8000/health</code>."
+  },
+  {
+    "file": "dashboard\\src\\components\\dashboard\\scp-control-panel.tsx",
+    "line": 641,
+    "port": 8000,
+    "code": "<code className=\"ml-1 rounded bg-muted px-1.5 py-0.5\">?XTransformPort=8000</code>"
+  },
+  {
+    "file": "dashboard\\src\\lib\\scp-backend-url.ts",
+    "line": 26,
+    "port": 8000,
+    "code": "const DEFAULT_SCP_BACKEND_BASE = \"http://127.0.0.1:8000\""
+  },
+  {
+    "file": "dashboard\\src\\lib\\scp-backend-url.ts",
+    "line": 85,
+    "port": 8000,
+    "code": "fastapi: normalizeBase(process.env.SCP_INTERNAL_URL, \"http://127.0.0.1:8000\"),"
+  },
+  {
+    "file": "dashboard\\src\\lib\\scp-backend-url.ts",
+    "line": 86,
+    "port": 3030,
+    "code": "loopScheduler: normalizeBase(process.env.LOOP_SCHEDULER_URL, \"http://127.0.0.1:3030\"),"
+  },
+  {
+    "file": "dashboard\\src\\lib\\audit-data\\round9.ts",
+    "line": 92,
+    "port": 8000,
+    "code": "\"1. Start SCP. 2. Open 2nd terminal: `watch -n 1 'curl -s http://localhost:8000/health | jq .status'` (should return ok "
+  },
+  {
+    "file": "dashboard\\src\\lib\\audit-data\\round9.ts",
+    "line": 125,
+    "port": 8000,
+    "code": "\"1. Start SCP. Set SCP_AUTO_APPROVE_TIER3=1. 2. `curl http://localhost:8000/health` \u2192 returns ok in <50ms. 3. `curl -X P"
+  },
+  {
+    "file": "dashboard\\src\\lib\\audit-data\\round9.ts",
+    "line": 166,
+    "port": 8000,
+    "code": "\"1. Start SCP with attack_crawler initialized. 2. `curl http://localhost:8000/health` \u2192 fast. 3. `curl -X POST http://lo"
+  },
+  {
+    "file": "dashboard\\src\\lib\\audit-data\\round9.ts",
+    "line": 225,
+    "port": 8000,
+    "code": "\"1. Start SCP with Ollama running. 2. Open 2 terminals both running: `watch -n 1 'curl -s http://localhost:8000/health |"
+  },
+  {
+    "file": "mini-services\\llm-bridge\\core.ts",
+    "line": 1017,
+    "port": 3000,
+    "code": "?? \"http://localhost:3000,http://127.0.0.1:3000\").split(\",\").map((s) => s.trim());"
+  },
+  {
+    "file": "mini-services\\loop-scheduler\\index.ts",
+    "line": 17,
+    "port": 3030,
+    "code": "*   3. Exposes a small HTTP dashboard on port 3030:"
+  },
+  {
+    "file": "mini-services\\loop-scheduler\\index.ts",
+    "line": 46,
+    "port": 8000,
+    "code": "*   SCP_BASE_URL       \u2014 SCP base URL (default http://127.0.0.1:8000)"
+  },
+  {
+    "file": "mini-services\\loop-scheduler\\index.ts",
+    "line": 49,
+    "port": 3030,
+    "code": "*   LOOP_SCHEDULER_PORT \u2014 port to listen on (default 3030)"
+  },
+  {
+    "file": "mini-services\\loop-scheduler\\index.ts",
+    "line": 118,
+    "port": 3030,
+    "code": "const PORT = Number(process.env.LOOP_SCHEDULER_PORT ?? \"3030\");"
+  },
+  {
+    "file": "mini-services\\loop-scheduler\\index.ts",
+    "line": 320,
+    "port": 3000,
+    "code": "signal: AbortSignal.timeout(3000),"
+  },
+  {
+    "file": "mini-services\\loop-scheduler\\index.ts",
+    "line": 339,
+    "port": 3000,
+    "code": "signal: AbortSignal.timeout(3000),"
+  },
+  {
+    "file": "mini-services\\loop-scheduler\\index.ts",
+    "line": 350,
+    "port": 8081,
+    "code": "\"http://127.0.0.1:8081\","
+  },
+  {
+    "file": "mini-services\\loop-scheduler\\package.json",
+    "line": 6,
+    "port": 3030,
+    "code": "\"description\": \"Closed-loop scheduler mini-service for SCP. Periodically calls SCP's /v105/autofix/run-audit endpoint, l"
+  },
+  {
+    "file": "tools\\create_and_run_standard_batch.py",
+    "line": 20,
+    "port": 8000,
+    "code": "RET.write_text('\\n'.join(json.dumps(x,ensure_ascii=False) for x in retr)+'\\n',encoding='utf-8');p={'questions':items,'ba"
+  },
+  {
+    "file": "tools\\create_and_run_standard_batch.py",
+    "line": 22,
+    "port": 8000,
+    "code": "time.sleep(2);s=safe_get('http://127.0.0.1:8000/v3/hands/benchmark/batch/'+job,timeout=20,allow_internal=True).json()['j"
+  },
+  {
+    "file": "tools\\refine_independent_ground_truth.py",
+    "line": 18,
+    "port": 3000,
+    "code": "r['ground_truth']=f'[ground_truth_source={url}] ' + ' '.join(chosen)[:3000]"
+  },
+  {
+    "file": "tools\\run_bounded_system_smoke.py",
+    "line": 3,
+    "port": 8000,
+    "code": "This deliberately binds only to 127.0.0.1:8000, denies external egress, uses"
+  },
+  {
+    "file": "tools\\run_bounded_system_smoke.py",
+    "line": 25,
+    "port": 8000,
+    "code": "BASE = \"http://127.0.0.1:8000\""
+  },
+  {
+    "file": "tools\\run_bounded_system_smoke.py",
+    "line": 59,
+    "port": 8000,
+    "code": "if port_open(8000):"
+  },
+  {
+    "file": "tools\\run_bounded_system_smoke.py",
+    "line": 60,
+    "port": 8000,
+    "code": "raise RuntimeError(\"refused: port 8000 already in use\")"
+  },
+  {
+    "file": "tools\\run_bounded_system_smoke.py",
+    "line": 67,
+    "port": 8000,
+    "code": "\"SCP_PORT\": \"8000\","
+  },
+  {
+    "file": "tools\\run_bounded_system_smoke.py",
+    "line": 85,
+    "port": 8000,
+    "code": "[sys.executable, \"-m\", \"scp\", \"8000\"],"
+  },
+  {
+    "file": "tools\\run_bounded_system_smoke.py",
+    "line": 169,
+    "port": 8000,
+    "code": "\"port\": 8000,"
+  },
+  {
+    "file": "tools\\run_bounded_system_smoke.py",
+    "line": 170,
+    "port": 8000,
+    "code": "\"port_8000_used\": False,"
+  },
+  {
+    "file": "tools\\run_bounded_system_smoke.py",
+    "line": 192,
+    "port": 8000,
+    "code": "\"port_8000_free\": not port_open(8000),"
+  },
+  {
+    "file": "tools\\run_bounded_system_smoke.py",
+    "line": 195,
+    "port": 8000,
+    "code": "if not cleanup[\"port_8000_free\"]:"
+  },
+  {
+    "file": "tools\\run_canonical_1000_abstain_pipeline.py",
+    "line": 6,
+    "port": 8000,
+    "code": "SCP_INTERNAL_URL=os.environ.get(\"SCP_INTERNAL_URL\", \"http://127.0.0.1:8000\").rstrip(\"/\")"
+  },
+  {
+    "file": "tools\\run_scp_full_runtime_rag_1000_resilient_v2.py",
+    "line": 14,
+    "port": 8000,
+    "code": "SCP_INTERNAL_URL = os.environ.get(\"SCP_INTERNAL_URL\", \"http://127.0.0.1:8000\").rstrip(\"/\")"
+  },
+  {
+    "file": "tools\\run_scp_full_runtime_rag_1000_resilient_v3.py",
+    "line": 14,
+    "port": 8000,
+    "code": "SCP_INTERNAL_URL = os.environ.get(\"SCP_INTERNAL_URL\", \"http://127.0.0.1:8000\").rstrip(\"/\")"
+  },
+  {
+    "file": "tools\\run_scp_full_runtime_rag_1000_v1.py",
+    "line": 6,
+    "port": 8000,
+    "code": "SCP_INTERNAL_URL=os.environ.get('SCP_INTERNAL_URL','http://127.0.0.1:8000').rstrip('/')"
+  },
+  {
+    "file": "tools\\run_standard_rag_pipeline.py",
+    "line": 6,
+    "port": 8000,
+    "code": "SCP_INTERNAL_URL=os.environ.get(\"SCP_INTERNAL_URL\", \"http://127.0.0.1:8000\").rstrip(\"/\")"
+  },
+  {
+    "file": "tools\\run_standard_rag_pipeline_parallel.py",
+    "line": 7,
+    "port": 8000,
+    "code": "SCP_INTERNAL_URL=os.environ.get(\"SCP_INTERNAL_URL\", \"http://127.0.0.1:8000\").rstrip(\"/\")"
+  },
+  {
+    "file": "tools\\scp_dashboard_bridge.py",
+    "line": 40,
+    "port": 3000,
+    "code": "raw = BRIDGE_ENV.get(\"SCP_DASHBOARD_ORIGINS\", \"https://3000-imd47l5cxjk5hxor72yjq-165646b0.sg1.manus.computer,https://cf"
+  },
+  {
+    "file": "tools\\scp_dashboard_bridge.py",
+    "line": 53,
+    "port": 8000,
+    "code": "host, port = SCP_ENV.get(\"SCP_HOST\", \"127.0.0.1\"), SCP_ENV.get(\"SCP_PORT\", \"8000\")"
+  },
+  {
+    "file": "tools\\scp_eval.py",
+    "line": 35,
+    "port": 8000,
+    "code": "DEFAULT_BASE_URL = os.environ.get(\"SCP_BASE_URL\", \"http://127.0.0.1:8000\")"
+  },
+  {
+    "file": "tools\\test_scp_dashboard_bridge.py",
+    "line": 15,
+    "port": 3000,
+    "code": "bridge.BRIDGE_ENV = {\"SCP_DASHBOARD_ORIGINS\": \"https://dashboard.example,http://localhost:3000\"}"
+  },
+  {
+    "file": "tools\\probes\\e2e_live_test.py",
+    "line": 5,
+    "port": 8000,
+    "code": "API_BASE = 'http://127.0.0.1:8000'"
+  },
+  {
+    "file": "tools\\probes\\probe_challenger_m3_env_concurrency.py",
+    "line": 108,
+    "port": 3000,
+    "code": "sig_fmt = compute_token_signature(fmt_secret, \"hands:pc.fmt\", 0, \"tok-fmt\", 3000.0)"
+  },
+  {
+    "file": "tools\\probes\\probe_challenger_m3_env_concurrency.py",
+    "line": 109,
+    "port": 3000,
+    "code": "assert verify_token_signature(fmt_secret, \"hands:pc.fmt\", 0, \"tok-fmt\", 3000.0, sig_fmt) is True"
+  }
+]

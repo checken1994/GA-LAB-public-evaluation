@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "mimosa-finding-history/v1",
+  "runId": "20260930T195118635Z-20232-feb9cfa50d9a",
+  "runStatus": "inconclusive",
+  "errors": [
+    "baseline-enumerate:.pytest_cache: bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+    "baseline:.: baseline_partial: baseline capture had enumeration or snapshot errors",
+    "scan:tests/integration/test_critical_chain_severed.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:scp/web_control/internet_search.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:dashboard/src/lib/scp-service-auth.ts: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:dashboard/src/components/dashboard/live-activity-stream.tsx: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:dashboard/src/components/dashboard/scp-overview.tsx: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:dashboard/src/app/api/scp/ask/route.ts: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+  ],
+  "target": ".",
+  "revision": "ab2aa8e3cfdd77fb0de36b539c1af33b80981420",
+  "diffHash": "7fdf37a4d3a740bf7b83df7ecbfb42da34cf5c71db35bd7dafc0d58e630858f8",
+  "rulesVersion": "unavailable",
+  "recordedAt": "2026-09-30T19:51:18.635Z",
+  "timing": {
+    "startedAt": "2026-09-30T19:51:14.916Z",
+    "completedAt": "2026-09-30T19:51:18.635Z",
+    "durationMs": 3719
+  },
+  "tokens": {
+    "input": 0,
+    "output": 0,
+    "total": 0,
+    "modelCalls": 0,
+    "measurement": "known-zero"
+  },
+  "findings": {
+    "total": 0,
+    "bySeverity": {},
+    "byStatus": {}
+  },
+  "coverage": {
+    "status": "partial",
+    "reasonCounts": {
+      "bash_discovery_incomplete": 1,
+      "baseline_partial": 1,
+      "scanner_failed": 6,
+      "project_check_failed": 8
+    }
+  },
+  "evidenceBoundary": "static_only",
+  "immutableReport": ".mimosa/reports/task-review-sess_79f2063f-9518-4c34-aa6a-6b7b9f9a6666-20260930T195118635Z-20232-feb9cfa50d9a.json"
+}

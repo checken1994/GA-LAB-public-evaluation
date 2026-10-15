@@ -1,0 +1,261 @@
+{
+  "schema_version": "mimosa-task-review/v2",
+  "run_id": "20261006T171055490Z-10668-a07fdd8c83b4",
+  "run_status": "inconclusive",
+  "errors": [
+    {
+      "stage": "baseline-enumerate",
+      "target": ".pytest_cache",
+      "reason": "bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'"
+    },
+    {
+      "stage": "baseline",
+      "target": ".",
+      "reason": "baseline_partial: baseline capture had enumeration or snapshot errors"
+    },
+    {
+      "stage": "scan",
+      "target": "reports/system_audit_20261006/probes/ask_limiter_boundary_probe.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "reports/system_audit_20261006/probes/rate_limit_probes.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "reports/system_audit_20261006/probes/runtime_probes.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    }
+  ],
+  "coverage": {
+    "schema_version": "mimosa-hook-coverage/v1",
+    "status": "partial",
+    "scope": "hook_observed_diff",
+    "baseline": {
+      "complete": false,
+      "captured_files": 1518,
+      "candidate_limit": 5000,
+      "truncated": false,
+      "enumeration_error_count": 1,
+      "snapshot_error_count": 0,
+      "compensated_target_count": 3
+    },
+    "change_tracking": {
+      "touched_observed": 3,
+      "touched_retained": 3,
+      "truncated": false,
+      "bash_mutation": true,
+      "bash_discovered": 3,
+      "bash_discovery_limit": 80,
+      "bash_discovery_truncated": false
+    },
+    "candidates": {
+      "eligible_files": 3,
+      "selected_files": 3,
+      "limit": 20,
+      "truncated": false
+    },
+    "scanning": {
+      "required_files": 3,
+      "scanned_files": 0,
+      "skipped_files": 0,
+      "failed_files": 3,
+      "project_checks_required": 0,
+      "project_checks_completed": 0
+    },
+    "notification": {
+      "eligible_findings": 0,
+      "detailed_findings": 0,
+      "detail_limit": 3,
+      "truncated": false
+    },
+    "reason_counts": {
+      "bash_discovery_incomplete": 1,
+      "baseline_partial": 1,
+      "scanner_failed": 3,
+      "project_check_failed": 5
+    },
+    "reasons": [
+      {
+        "code": "bash_discovery_incomplete",
+        "stage": "baseline-enumerate",
+        "target": ".pytest_cache",
+        "detail": "EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+        "affects_completion": true
+      },
+      {
+        "code": "baseline_partial",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline capture had enumeration or snapshot errors",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "reports/system_audit_20261006/probes/ask_limiter_boundary_probe.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "reports/system_audit_20261006/probes/rate_limit_probes.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "reports/system_audit_20261006/probes/runtime_probes.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline-enumerate",
+        "target": ".pytest_cache",
+        "detail": "bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline_partial: baseline capture had enumeration or snapshot errors",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "reports/system_audit_20261006/probes/ask_limiter_boundary_probe.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "reports/system_audit_20261006/probes/rate_limit_probes.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "reports/system_audit_20261006/probes/runtime_probes.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      }
+    ],
+    "reasons_truncated": false
+  },
+  "generated_at": "2026-10-06T17:10:55.490Z",
+  "session_id": "sess_bce1a0ae-c2f9-4a0d-b11a-68b66e1d4436",
+  "target": ".",
+  "revision": "2fefcbc54b22502e48265cef284a46e67b07c62e",
+  "rules_version": "unavailable",
+  "diff_hash": "c70a41c11d39ed419f4a59e45c0f81e451aaab26e4b7e5272f09ca8d89045862",
+  "diff": {
+    "algorithm": "sha256",
+    "changed_file_count": 3,
+    "changed_files": [
+      {
+        "file": "reports/system_audit_20261006/probes/ask_limiter_boundary_probe.py",
+        "ranges": [
+          {
+            "start": 14,
+            "end": 20
+          },
+          {
+            "start": 31,
+            "end": 31
+          }
+        ],
+        "before_hash": "ac60f3a0b427e5b751f817418720aaa151855fb61eda60d96d03bfb451a051f2",
+        "after_hash": "908843447a5d4634bbdd865e77817661a5a0f3bbb03b4608c4322ad973afcd5b"
+      },
+      {
+        "file": "reports/system_audit_20261006/probes/rate_limit_probes.py",
+        "ranges": [
+          {
+            "start": 19,
+            "end": 24
+          },
+          {
+            "start": 37,
+            "end": 37
+          }
+        ],
+        "before_hash": "04ebf8ce2a3955e5270b880fd1174b93b998d9e3cd26e534b27277f3d161e2e7",
+        "after_hash": "9f6bd045b88a660a320206c0292b630a635ad325df0dba161f32b76db25828d6"
+      },
+      {
+        "file": "reports/system_audit_20261006/probes/runtime_probes.py",
+        "ranges": [
+          {
+            "start": 30,
+            "end": 35
+          },
+          {
+            "start": 45,
+            "end": 45
+          }
+        ],
+        "before_hash": "9d59dc8ae8b3e30bc44efbe584c906ac34614cbaa6fb27af91a606fb3ad3e91b",
+        "after_hash": "1369e5440f49de04b2064df51ce9c9ce4c209f80b2acbe122e96c44ef12e5245"
+      }
+    ]
+  },
+  "timing": {
+    "started_at": "2026-10-06T17:10:52.005Z",
+    "completed_at": "2026-10-06T17:10:55.490Z",
+    "duration_ms": 3485,
+    "measurement": "hook_wall_clock"
+  },
+  "tokens": {
+    "input": 0,
+    "output": 0,
+    "total": 0,
+    "model_calls": 0,
+    "measurement": "known-zero"
+  },
+  "telemetry": {
+    "schemaVersion": "mimosa-gate-telemetry/v1",
+    "profile": "gate",
+    "operation": "Stop",
+    "outcome": "partial/INCONCLUSIVE",
+    "latencyMs": 3485,
+    "peakMemoryBytes": 106799104,
+    "memoryMeasurement": "max-observed-process-rss",
+    "scannedFiles": 0,
+    "cache": {
+      "hits": 0,
+      "misses": 0,
+      "measurement": "not-applicable"
+    },
+    "denyCount": 0,
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "total": 0,
+      "modelCalls": 0,
+      "measurement": "known-zero"
+    }
+  },
+  "finding_count": 0,
+  "rewake_finding_count": 0,
+  "evidence_boundary": {
+    "scan": "candidate",
+    "static_fix_verification": "observed_static_only",
+    "runtime_verification": "not_performed"
+  },
+  "finding_events": [],
+  "findings": [],
+  "artifacts": {
+    "immutable_report": ".mimosa/reports/task-review-sess_bce1a0ae-c2f9-4a0d-b11a-68b66e1d4436-20261006T171055490Z-10668-a07fdd8c83b4.json",
+    "latest_report": ".mimosa/reports/task-review-sess_bce1a0ae-c2f9-4a0d-b11a-68b66e1d4436.json",
+    "history_summary": ".mimosa/history/run-20261006T171055490Z-10668-a07fdd8c83b4.json"
+  }
+}

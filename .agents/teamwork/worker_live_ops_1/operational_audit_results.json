@@ -1,0 +1,181 @@
+{
+  "timestamp": "2026-10-04T10:45:49Z",
+  "baseline_commit": "1aef24a8",
+  "r1_boot_health": {
+    "bridge_readiness_latency_s": 0.53,
+    "server_health_latency_s": 4.79,
+    "judge_readiness_latency_s": 9.95,
+    "dashboard_readiness_latency_s": 10.54,
+    "endpoints": {
+      "/health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "service_identity": {
+            "service_name": "scp-backend",
+            "mode": "production",
+            "host": "127.0.0.1",
+            "configured_port": 8000,
+            "pid": 29300,
+            "commit": "1aef24a84dcdf801b05dbdf855dc62b457686f17"
+          },
+          "version": "14.0.0",
+          "release": {
+            "product": "SCP",
+            "version": "14.0.0",
+            "release": "SCP 14.0.0",
+            "model_id": "scp-14.0.0",
+            "legacy_model_ids": [
+              "scp-v99"
+            ],
+            "legacy_protocols": [
+              "v98",
+              "v100",
+              "v102",
+              "v103",
+              "v104",
+              "v105"
+            ],
+            "expert_term": "Domain Expert",
+            "ensemble_term": "Domain Expert Ensemble"
+          },
+          "routes": 39,
+          "modules": "136+ Python files",
+          "note": "minimal health — use /health/detailed for full status"
+        }
+      },
+      "/ready": {
+        "status": 200,
+        "body": {
+          "status": "ready",
+          "service": "scp-api",
+          "version": "14.0.0",
+          "checks": {
+            "judge": "ok",
+            "background_scheduler": "ok"
+          },
+          "reason": null
+        }
+      },
+      "/v98/status": {
+        "status": 200,
+        "active_modules_count": 11
+      },
+      "/health/detailed": {
+        "status": 200,
+        "data_size_mb": 200.56
+      },
+      "dashboard_/api/scp/status": {
+        "status": 200,
+        "scp_state": "online"
+      }
+    },
+    "verdict": "PASS"
+  },
+  "r2_conversational_retrieval": {
+    "chat_completions": {
+      "latency_s": 0.06,
+      "status": 200,
+      "content_preview": "I cannot comply with this request."
+    },
+    "conversational_ask": {
+      "latency_s": 6.57,
+      "status": 200,
+      "verdict": "PASS",
+      "not_withheld": true,
+      "final_answer_preview": "Tôi là SCP Agent OS - hệ điều hành tự trị an toàn cho các tác nhân AI."
+    },
+    "factual_retrieval_ask": {
+      "latency_s": 4.64,
+      "status": 200,
+      "trace_id": "trace-f2e4a8a362fe4d31abd7fa7b42531763",
+      "verdict": "PASS",
+      "facts_separated": false,
+      "transparency_badge": "Verified in Trace Record",
+      "domain": ""
+    },
+    "verdict": "PASS"
+  },
+  "r3_security_boundaries": {
+    "trace_admin_http": 200,
+    "secret_redaction_verified": true,
+    "trace_unauth_http": 401,
+    "trace_bad_auth_http": 401,
+    "v98_status_unauth_http": 401,
+    "bridge_unauth_http": 401,
+    "bridge_bad_token_http": 401,
+    "bridge_auth_stats_http": 200,
+    "bridge_public_tags_http": 200,
+    "dash_anti_spoofing_external_ip_http": 403,
+    "dash_anti_spoofing_multihop_http": 403,
+    "dash_bad_token_http": 401,
+    "dash_loopback_auth_http": 200,
+    "dash_dev_mode_inject_http": 200,
+    "dash_dev_mode_warning_present": true,
+    "verdict": "PASS"
+  },
+  "r4_task_lifecycle_ledger": {
+    "task_kernel": {
+      "task_id": "task-live-1791110773-777d3537",
+      "lease_id": "lease_c99c6e26b9e5a13d4899a936",
+      "initial_state": "CREATED",
+      "final_state": "COMPLETED",
+      "lease_renewed": true,
+      "idempotency_enforced": true
+    },
+    "trace_ledger": {
+      "path": "D:\\scp\\data\\trace_ledger.jsonl",
+      "hash_chain_valid": true,
+      "entries": 3982,
+      "max_seq": 3980
+    },
+    "ops_ledger": {
+      "entries": 10367,
+      "hash_chain_valid": true,
+      "errors": []
+    },
+    "logs_audit": {
+      "server_log_lines": 115,
+      "bridge_log_lines": 6,
+      "dash_log_lines": 20,
+      "unhandled_exceptions_count": 0,
+      "server_log_tail": [
+        "2026-10-04 17:46:06,934 | INFO    | scp.runtime.multi_llm_crosscheck | [MULTI-LLM] primary(openai_compat:nvidia/nemotron-3-super-120b-a12b:free)=PASS secondary(openrouter:nvidia/nemotron-3-super-120b-a12b:free)=PASS consensus=agree final=PASS",
+        "2026-10-04 17:46:07,014 | INFO    | scp.meta.why_gate | [WHY-GATE] Singleton initialized � WHY is now PRIMARY CONTROL GATE",
+        "2026-10-04 17:46:07,043 | INFO    | scp.ask_kernel_adapter | [ask-kernel] checkpoint cp_19197db0c21fc1d4bb4b finalized for ask-46d9c81cca1f69203b244eb8-a0add026: finalized (state=COMPLETED)",
+        "INFO:     127.0.0.1:57229 - \"POST /ask HTTP/1.1\" 200 OK",
+        "2026-10-04 17:46:08,468 | INFO    | httpx | HTTP Request: GET https://html.duckduckgo.com/html/?q=Th%E1%BB%A7+%C4%91%C3%B4+c%E1%BB%A7a+Vi%E1%BB%87t+Nam+l%C3%A0+g%C3%AC%3F \"HTTP/1.1 200 OK\"",
+        "2026-10-04 17:46:08,728 | INFO    | httpx | HTTP Request: GET https://www.bing.com/search?q=Th%E1%BB%A7+%C4%91%C3%B4+c%E1%BB%A7a+Vi%E1%BB%87t+Nam+l%C3%A0+g%C3%AC%3F \"HTTP/1.1 200 OK\"",
+        "2026-10-04 17:46:08,994 | INFO    | scp.api.background_jobs | [BackgroundJob] kernel_lease_expiry: started (interval=30s)",
+        "2026-10-04 17:46:09,002 | INFO    | scp.api.background_jobs | [BackgroundJob] kernel_lease_expiry: first execution completed",
+        "2026-10-04 17:46:09,449 | INFO    | httpx | HTTP Request: POST https://openrouter.ai/api/v1/chat/completions \"HTTP/1.1 200 OK\"",
+        "2026-10-04 17:46:11,341 | INFO    | httpx | HTTP Request: POST https://openrouter.ai/api/v1/chat/completions \"HTTP/1.1 200 OK\"",
+        "2026-10-04 17:46:11,773 | INFO    | scp.runtime.multi_llm_crosscheck | [MULTI-LLM] primary(openai_compat:nvidia/nemotron-3-super-120b-a12b:free)=PASS secondary(openrouter:nvidia/nemotron-3-super-120b-a12b:free)=PASS consensus=agree final=PASS",
+        "2026-10-04 17:46:11,885 | INFO    | scp.ask_kernel_adapter | [ask-kernel] checkpoint cp_ed6652e6bb39e43e7c96 finalized for ask-d6dcb7da44bcc813e5690500-5856f50b: finalized (state=COMPLETED)",
+        "INFO:     127.0.0.1:57229 - \"POST /ask HTTP/1.1\" 200 OK",
+        "INFO:     127.0.0.1:57229 - \"GET /v3/trace/trace-f2e4a8a362fe4d31abd7fa7b42531763 HTTP/1.1\" 200 OK",
+        "INFO:     127.0.0.1:57229 - \"GET /v3/trace/trace-f2e4a8a362fe4d31abd7fa7b42531763 HTTP/1.1\" 401 Unauthorized",
+        "INFO:     127.0.0.1:57229 - \"GET /v3/trace/trace-f2e4a8a362fe4d31abd7fa7b42531763 HTTP/1.1\" 401 Unauthorized",
+        "INFO:     127.0.0.1:57229 - \"GET /v98/status HTTP/1.1\" 401 Unauthorized",
+        "INFO:     127.0.0.1:58220 - \"GET /v3/trace/trace-f2e4a8a362fe4d31abd7fa7b42531763 HTTP/1.1\" 401 Unauthorized",
+        "INFO:     127.0.0.1:58220 - \"GET /v3/trace/trace-f2e4a8a362fe4d31abd7fa7b42531763 HTTP/1.1\" 200 OK",
+        "INFO:     127.0.0.1:58220 - \"GET /v3/trace/trace-f2e4a8a362fe4d31abd7fa7b42531763 HTTP/1.1\" 200 OK"
+      ]
+    },
+    "verdict": "PASS"
+  },
+  "r5_clean_teardown": {
+    "ports_verified_free": true,
+    "remaining_listeners": {
+      "8000": [],
+      "8081": [],
+      "3000": []
+    },
+    "target_ports": [
+      8000,
+      8081,
+      3000
+    ],
+    "verdict": "PASS"
+  }
+}

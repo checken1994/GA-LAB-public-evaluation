@@ -1,0 +1,14 @@
+# Optional semantic/vector search dependencies.
+# Install only when the corresponding SCP feature is intentionally enabled.
+# [A1] `cryptography` đã chuyển sang requirements.txt chính (hard runtime dep
+# của scp/security/bypass_encrypt.py — fail-closed khi thiếu).
+sentence-transformers==3.3.1
+numpy==2.1.3
+pillow
+datasets
+edge_tts
+huggingface_hub
+networkx
+pytesseract
+websockets
+openai-whisper

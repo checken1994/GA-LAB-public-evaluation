@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "stop-20261004T174034888Z-28932-f13cf9943fc6",
+  "runId": "20261004T174034888Z-28932-f13cf9943fc6",
+  "runStatus": "completed",
+  "coverage": {
+    "status": "complete",
+    "reasons": [
+      {
+        "code": "baseline_partial",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline capture had enumeration or snapshot errors",
+        "affectsCompletion": false
+      }
+    ]
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "Stop"
+  },
+  "revision": "f21907f5e7f4c26444eda8bf412d7d4c67836001",
+  "diffHash": "6cf2b4ca7487b30b45de4b92a1ed1a1bdbf74e85bf79194199228a40c0768f40",
+  "rulesVersion": "unavailable",
+  "sessionHash": "7a12b8f55c13354e2b10da4dc08a4e79531cd91ff74e1fd0340a263d68c0409f",
+  "reportRef": ".mimosa/reports/task-review-sess_f1b3935b-c5f3-4747-ab61-9d046689a7ce-20261004T174034888Z-28932-f13cf9943fc6.json",
+  "events": [],
+  "observedFindingIds": [],
+  "verifiedFiles": [
+    {
+      "file": "scp/runtime/question_router.py",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "scp/ask_kernel_adapter.py",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "scp/api_server_parts/_ask_impl.py",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "tests/T02_contract/test_w2_router_contract.py",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "tests/T02_contract/test_w2_fork_relevance.py",
+      "direct": "complete",
+      "projectContext": "partial"
+    }
+  ],
+  "recordedAt": "2026-10-04T17:40:35.304Z"
+}

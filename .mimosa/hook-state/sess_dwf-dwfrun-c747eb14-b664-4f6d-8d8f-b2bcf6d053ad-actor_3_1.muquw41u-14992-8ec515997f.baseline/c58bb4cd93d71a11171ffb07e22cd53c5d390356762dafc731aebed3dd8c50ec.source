@@ -1,0 +1,34 @@
+# SCP V105 FIXED — Development dependencies (lint, security, tests)
+# Audit Task 7-B: requirements-dev.txt creation (separation of concerns)
+#
+# Cài đặt: pip install -r requirements-dev.txt
+
+-r requirements.txt
+
+# === Linting ===
+# Verified: ruff 0.16.1 đã được cài trong sandbox, dùng cho cascade verification.
+ruff==0.16.1
+
+# === Security scanning ===
+# Verified: bandit 1.9.4 đã được cài, dùng cho B324/F821/E722 verification.
+bandit==1.9.4
+
+# === Testing ===
+# Verified: tests/external_audit/ dùng pytest. pytest-asyncio cho async tests.
+# [P3-1 FIX R16] Added hypothesis — was MISSING (Q14 dependency audit found this).
+# tests/property/test_none_safety.py imports hypothesis but it wasn't in requirements.
+# Without it, the test silently skips (import error caught) — false sense of safety.
+pytest==9.1.1
+pytest-asyncio==1.3.0
+pytest-cov==7.0.0
+pytest-metadata==3.1.1
+pytest-json-report==1.5.0
+Faker==40.1.2
+hypothesis==6.108.0
+
+# === Type checking (OPTIONAL — recommended cho CI) ===
+mypy==1.13.0
+types-requests==2.33.0.20260712
+
+# === Code coverage (OPTIONAL — cho CI badge) ===
+coverage==7.10.6

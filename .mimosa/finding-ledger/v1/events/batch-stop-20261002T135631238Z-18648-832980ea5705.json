@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "stop-20261002T135631238Z-18648-832980ea5705",
+  "runId": "20261002T135631238Z-18648-832980ea5705",
+  "runStatus": "completed",
+  "coverage": {
+    "status": "complete",
+    "reasons": [
+      {
+        "code": "baseline_partial",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline capture had enumeration or snapshot errors",
+        "affectsCompletion": false
+      }
+    ]
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "Stop"
+  },
+  "revision": "1aef24a84dcdf801b05dbdf855dc62b457686f17",
+  "diffHash": "00f42ebef1bf8e0dca3f65c0c171276df562869ef7ebf957604af073e78137df",
+  "rulesVersion": "unavailable",
+  "sessionHash": "7a12b8f55c13354e2b10da4dc08a4e79531cd91ff74e1fd0340a263d68c0409f",
+  "reportRef": ".mimosa/reports/task-review-sess_f1b3935b-c5f3-4747-ab61-9d046689a7ce-20261002T135631238Z-18648-832980ea5705.json",
+  "events": [],
+  "observedFindingIds": [],
+  "verifiedFiles": [
+    {
+      "file": ".zcode/workflow-drafts/W1--fix-ask-pipeline-7-commit--gate--merge.dwf.ts",
+      "direct": "complete",
+      "projectContext": "partial"
+    }
+  ],
+  "recordedAt": "2026-10-02T13:56:31.674Z"
+}

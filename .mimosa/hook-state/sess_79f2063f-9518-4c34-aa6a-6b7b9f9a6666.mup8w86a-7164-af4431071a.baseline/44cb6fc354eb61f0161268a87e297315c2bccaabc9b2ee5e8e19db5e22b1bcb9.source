@@ -1,0 +1,19 @@
+name: SCP Meta-Test Audit
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Run weekly on Sunday
+  workflow_dispatch: # Enable emergency manual runs
+
+jobs:
+  meta-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install pytest
+      - name: Run Meta-Audit (T00)
+        run: pytest tests/T00_integrity/test_meta_audit.py

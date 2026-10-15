@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "mimosa-hook-status/v1",
+  "recordedAt": "2026-09-30T20:28:51.561Z",
+  "sessionId": "sess_79f2063f-9518-4c34-aa6a-6b7b9f9a6666",
+  "event": "PostToolUse",
+  "toolName": "Write",
+  "file": "tools/anthropic_proxy.js",
+  "outcome": "static_verified",
+  "coverage": "complete",
+  "findingCount": 1,
+  "durationMs": 907,
+  "hostState": "hook_complete",
+  "reportHint": ".mimosa/reports/"
+}

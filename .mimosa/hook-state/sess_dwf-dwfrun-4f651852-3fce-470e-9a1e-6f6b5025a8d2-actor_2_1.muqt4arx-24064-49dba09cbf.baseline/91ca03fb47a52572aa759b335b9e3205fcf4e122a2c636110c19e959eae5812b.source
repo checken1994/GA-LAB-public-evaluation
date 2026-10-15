@@ -1,0 +1,302 @@
+interface RawFinding {
+  /** "src/x.py:42" hoặc tên khu vực/host. */
+  where: string;
+  /** Một câu: vấn đề/quan sát là gì. */
+  what: string;
+  /** Bằng chứng: lệnh + output thật. */
+  evidence: string;
+  /** "confirmed" khi là output lệnh đã chạy thật; "unconfirmed" khi là suy luận. */
+  status: "confirmed" | "unconfirmed";
+  /** Mức độ; "high" chỉ cho crash, mất dữ liệu, lỗ hổng thật. */
+  severity: "low" | "medium" | "high";
+  /** Lĩnh vực: runtime | ops | code | test | contract. */
+  area: string;
+}
+
+interface AuditFinding extends RawFinding {
+  /** Định danh ngắn, khóa bảng. */
+  id: string;
+}
+
+interface BootOutcome {
+  /** Các bước đã thực thi: lệnh + kết quả ngắn, theo thứ tự. */
+  steps: string[];
+  /** Tên chính xác các scheduled task đã Enable (để khôi phục). */
+  tasksEnabled: string[];
+  /** Container đã start. */
+  containersStarted: string[];
+  /** Body /health + status /ready + SHA code container đang chạy. */
+  healthEvidence: string;
+  /** Dòng log quan trọng (F-10 skip lines, ERROR/warning đáng kể). */
+  logEvidence: string[];
+  /** Bất thường khi boot — chỉ chẩn đoán, không sửa. */
+  anomalies: string[];
+  /** Mọi lệnh đã chạy, đủ chi tiết để khôi phục. */
+  evidenceLog: string[];
+}
+
+interface ObserveOutcome {
+  summary: string;
+  /** Quan sát theo từng lần sample: port, container, ledger growth, logs. */
+  observations: string[];
+  findings: RawFinding[];
+  gaps: string[];
+  evidenceLog: string[];
+}
+
+interface RestoreOutcome {
+  steps: string[];
+  tasksDisabled: string[];
+  /** Trạng thái cuối: containers/ports/tasks theo lệnh verify. */
+  finalState: string;
+  anomalies: string[];
+  evidenceLog: string[];
+}
+
+interface Synthesis {
+  /** Verdict theo scp-dna, có phạm vi, 3-6 câu tiếng Việt. */
+  verdict: string;
+  ranked: AuditFinding[];
+  /** Probe vòng 1 được nâng confirmed nhờ bằng chứng runtime vòng này (kèm nguồn). */
+  upgrades: string[];
+  /** Nhận xét tổng quan 2-3 câu tiếng Việt. */
+  overview: string;
+}
+
+interface WorkflowReport {
+  conclusion: string;
+  findings: AuditFinding[];
+  verified: string[];
+  notCovered: string[];
+}
+
+artifact.table("findings", {
+  title: "Findings audit SCP — vòng 2 runtime",
+  columns: [
+    { field: "severity", label: "Mức" },
+    { field: "status", label: "Trạng thái" },
+    { field: "area", label: "Lĩnh" },
+    { field: "what", label: "Vấn đề" },
+    { field: "where", label: "Vị trí" },
+  ],
+  key: "id",
+});
+
+phase("Kiểm tra tiền điều kiện trước khi boot");
+
+const head = await world.run("git", ["rev-parse", "HEAD"]);
+const sha = head.stdout.trim();
+const flagsCode = [
+  "import pathlib",
+  "for line in pathlib.Path('.env').read_text(encoding='utf-8', errors='replace').splitlines():",
+  "    if '=' in line:",
+  "        k, v = line.split('=', 1)",
+  "        if k in ('SCP_DEEP_AUDIT_BOOT_RUN', 'SCP_FAST_LEARNING_THREAD', 'SCP_EGRESS_MODE', 'SCP_DATA_DIR'):",
+  "            print(k + '=' + v)",
+].join("\n");
+const flags = await world.run("python", ["-c", flagsCode]);
+const ledgerCode = [
+  "import pathlib",
+  "p = pathlib.Path('data/trace_ledger.jsonl')",
+  "print(sum(1 for _ in p.open(encoding='utf-8', errors='replace')) if p.exists() else 0)",
+].join("\n");
+const ledgerBeforeRun = await world.run("python", ["-c", ledgerCode]);
+const ledgerBaseline = parseInt(ledgerBeforeRun.stdout.trim(), 10) || 0;
+const portsBefore = await world.run("powershell", ["-NoProfile", "-Command", "netstat -ano | Select-String -Pattern ':(8090|8091|8081|8000|8080)\\s'"]);
+const tasksBefore = await world.run("powershell", ["-NoProfile", "-Command", "schtasks /query /fo CSV | Select-String -SimpleMatch 'SCP-247'"]);
+const porcelainBefore = await world.run("git", ["status", "--porcelain"]);
+log("HEAD=" + sha + " | ports trước boot: " + (portsBefore.stdout.trim() || "trống") + " | ledger baseline: " + ledgerBaseline + " entries");
+
+phase("Boot hệ thống 24/7 và xác minh sức khỏe");
+
+const operator = agent("Kỹ thuật viên vận hành", {
+  system:
+    "Bạn là kỹ thuật viên vận hành SCP. Owner ĐÃ CHO PHÉP vòng này boot hệ thống để thu bằng chứng runtime — bạn được start container qua docker compose và enable scheduled task SCP-247 theo recipe của repo. " +
+    "Vẫn nghiêm cấm: sửa/tạo/xóa bất kỳ file code/docs nào, commit, in giá trị secret/token/key ra output (đọc .env chỉ được nêu tên key + giá trị của 4 flag SCP_DEEP_AUDIT_BOOT_RUN / SCP_FAST_LEARNING_THREAD / SCP_EGRESS_MODE / SCP_DATA_DIR), kill tiến trình KHÔNG do chính bạn khởi động trong round này. " +
+    "Mỗi bước ghi rõ lệnh + output. Nếu boot thất bại: chẩn đoán và ghi nguyên nhân khả nghi vào anomalies, KHÔNG sửa product/config để 'cứu' boot.",
+});
+const boot = await operator.ask<BootOutcome>(
+  "Nhiệm vụ: BOOT stack SCP 24/7 và thu bằng chứng sức khỏe. Trạng thái đã script xác nhận: HEAD=" + sha +
+  ", 3 task SCP-247-* Disabled (" + tasksBefore.stdout.trim().replace(/\r?\n/g, " ;; ") + "), ports 8090/8091/8081/8000/8080 trống, .env có SCP_DATA_DIR=data + SCP_EGRESS_MODE=allowlist, KHÔNG có SCP_DEEP_AUDIT_BOOT_RUN/SCP_FAST_LEARNING_THREAD (default-off). " +
+  "Các bước bắt buộc: " +
+  "(1) đọc docker-compose*.yml ở gốc repo: profile 'loop' gồm service nào + port API; đọc 3 task SCP-247-* (schtasks /query /tn <tên> /v) để phân biệt task giữ-stack-sống (Supervisor / Recovery-Watchdog) với monitor-only (Hourly-Monitor); " +
+  "(2) docker compose --profile loop up -d; poll GET /health (port từ compose, mặc định 8090) mỗi ~10s tới khi 200 hoặc hết ~3 phút; chụp body /health (commit/SCP_GIT_SHA — image có thể @ b085e241 vì KHÔNG rebuild: ghi RÕ SHA thật, đừng claim same-HEAD " + sha + ") + GET /ready; " +
+  "(3) Enable ĐÚNG các task giữ-stack-sống theo recipe (ghi chính xác tên vào tasksEnabled; nếu bị chặn quyền thì ghi anomalies và tiếp tục với compose-only); xác nhận llm-bridge (bun ~8081) sống trong ~90s sau khi Supervisor chạy; " +
+  "(4) docker ps + docker inspect container API (State, RestartCount, env SCP_GIT_SHA) + docker logs --tail 80: tìm dòng '[AUTO] Deep audit boot run skipped' và 'FastLearningEngine NOT started' (F-10 default-off chạy thật) + mọi ERROR/warning đáng kể; " +
+  "(5) KHÔNG tự golden /ask lên container — phần golden do live_flow_proof lo ở instance HEAD riêng. Ghi evidenceLog đủ chi tiết để khôi phục trạng thái tắt về sau.",
+);
+
+phase("Chạy proof tại HEAD và quan sát hệ thống sống");
+
+log("Chạy tools/live_flow_proof.py ở :8091 (instance HEAD, tự dọn process tree ở finally)...");
+const proofPromise = (async () => {
+  try {
+    return await world.run("python", ["tools/live_flow_proof.py", "8091"], { timeoutMs: 900000 });
+  } catch (e) {
+    return { exitCode: -1, stdout: "", stderr: "live_flow_proof không hoàn thành: " + String(e).slice(0, 300) };
+  }
+})();
+const observePromise = agent("Quan sát hệ thống sống", {
+  system:
+    "Bạn là quan sát viên runtime SCP, CHỈ QUAN SÁT không can thiệp. Không sửa/tạo/xóa file nào, không kill tiến trình, không restart dịch vụ. Mọi khẳng định kèm lệnh + output thật.",
+}).ask<ObserveOutcome>(
+  "Hệ thống vừa được boot (container API @ port từ compose + supervisor/llm-bridge) và live_flow_proof đang chạy instance HEAD riêng ở :8091 (tự kill ở finally). Quan sát CHỈ ĐỌC, sample 2-3 lần cách nhau ~60-90s (Start-Sleep trong shell của bạn): " +
+  "(1) netstat listener trên 8090/8081/8091 + PID đối chiếu tasklist; " +
+  "(2) docker logs --tail 40 mỗi lần sample — log có grows, ERROR mới, RestartCount container có tăng bất thường (docker inspect) không; " +
+  "(3) GET /health container lần nữa — body commit SHA; " +
+  "(4) đếm dòng data/trace_ledger.jsonl so với baseline " + ledgerBaseline + " (python đếm: sum(1 for _ in open(..., errors='replace'))) — tăng = ghi sống; " +
+  "(5) cuối cùng: bun.exe của bridge còn sống, python của proof ĐÃ dọn sạch (8091 không còn listener sau khi proof kết thúc — nếu còn là finding); " +
+  "(6) mọi ERROR/exception trong logs → finding (status=confirmed, evidence=output). Không can thiệp bất cứ thứ gì.",
+);
+const [proof, observe] = await Promise.all([proofPromise, observePromise]);
+
+const observeFindings: AuditFinding[] = observe.findings.map((f, i) => ({ ...f, id: "rt2-obs-" + (i + 1) }));
+observeFindings.forEach((f) => report(f, "findings"));
+
+phase("Khôi phục trạng thái tắt như owner đã đặt");
+
+const restore = await operator.ask<RestoreOutcome>(
+  "Khôi phục ĐÚNG trạng thái 'tắt chủ đích' trước round (3 task SCP-247-* Disabled, 0 container, 0 listener). Thứ tự: " +
+  "(1) với MỖI task bạn đã enable ở bước boot (xem tasksEnabled của bạn): 'schtasks /End /tn <tên>' để kết thúc process đang chạy, rồi 'Disable-ScheduledTask -TaskName <tên>'; " +
+  "(2) nếu bun/supervisor còn sót sau /End: kill CHỈ process tree mà task này khởi động (taskkill /PID <pid> /T với PID đối chiếu từ netstat/commandline; TUYỆT ĐỐI không blanket-kill python.exe/bun.exe — có thể trúng tiến trình của session khác); " +
+  "(3) docker compose --profile loop down; " +
+  "(4) verify cuối bằng lệnh thật: docker ps -a, netstat 4 port + 8081 + 8091, schtasks /query 3 task SCP-247-* — ghi vào finalState. Ghi anomalies nếu có gì không tắt được.",
+);
+
+const containersAfter = await world.run("docker", ["ps", "-a", "--format", "{{.Names}}|{{.Status}}"]);
+const portsAfter = await world.run("powershell", ["-NoProfile", "-Command", "netstat -ano | Select-String -Pattern ':(8090|8091|8081|8000|8080)\\s'"]);
+const tasksAfter = await world.run("powershell", ["-NoProfile", "-Command", "schtasks /query /fo CSV | Select-String -SimpleMatch 'SCP-247'"]);
+const ledgerAfterRun = await world.run("python", ["-c", ledgerCode]);
+const ledgerAfter = parseInt(ledgerAfterRun.stdout.trim(), 10) || 0;
+const ledgerDelta = ledgerAfter - ledgerBaseline;
+const porcelainAfter = await world.run("git", ["status", "--porcelain"]);
+const porcelainChanged = porcelainAfter.stdout !== porcelainBefore.stdout;
+log("Sau restore: containers=[" + (containersAfter.stdout.trim() || "0") + "] | ports=" + (portsAfter.stdout.trim() || "trống") + " | ledger " + ledgerBaseline + "→" + ledgerAfter + " (delta " + ledgerDelta + ")");
+
+phase("Tổng hợp verdict có bằng chứng runtime");
+
+const proofBlock = { exitCode: proof.exitCode, tail: (proof.stdout + "\n" + proof.stderr).trim().slice(-3000) };
+const postVerify = {
+  containers: containersAfter.stdout.trim() || "(0 dòng — không còn container)",
+  ports: portsAfter.stdout.trim() || "(trống)",
+  tasks: tasksAfter.stdout.trim().replace(/\r?\n/g, " ;; "),
+  ledgerDelta: ledgerDelta,
+  porcelainChanged: porcelainChanged,
+};
+
+const round1Carry = [
+  "Vòng 1 (chỉ đọc, cùng HEAD " + sha + "): PASS_WITHIN_SCOPE — full pytest 2726 passed/27 skipped exit 0, 2 tool hợp đồng exit 0, pip-audit product sạch, ruff E9/F821=0, 0 skip ngoài allowlist trong scope T00.",
+  "MEDIUM code-1 (confirmed): silent-except debt 179 findings ruff (142 BLE001/34 S110/3 S112), scp/ 8 chỗ tái giới thiệu sau B20 (blame e8cabdc5, 2026-09-28); instance thật scp/capabilities/tools.py:522.",
+  "MEDIUM contract-5 (confirmed): run 'SCP RC Promotion and Customer Handoff' 36973416465 fail-closed trên main docs-only → HEAD chưa có customer-handoff verdict.",
+  "LOW confirmed: stack tắt chủ đích (0 container/0 listener/3 task Disabled), TraceLedger active 2636 entries 0 lỗi, kernel journal 3696 events integrity ok, hygiene artifacts (data/'loop_runs.jsonl ' trailing-space, chat_memory.jsonl.lock 8KB).",
+  "Unconfirmed (probe static chờ bằng chứng runtime): code-6 breaker exactly-once, code-7 health negative-TTL cache, code-8 TraceLedger lock/CHAIN_RECOVERY, code-9 F-10 env-gates default-off, code-10 policy_gate mirror, code-11 deny-env + LANE_FACTUAL, code-12 SystemRandom policy; LOW debts code-2 (tools.py:522 silent except), code-3 (dashboard bridge S110), code-4 (probe in CapabilityToken), code-5 (comment stale run_system_audit_strict.py:459-463).",
+].join("\n");
+
+const synthesis = await agent("Tổng hợp vòng runtime", {
+  system:
+    "Bạn là kiểm toán viên tổng hợp SCP. Đọc .agents/skills/scp-dna/SKILL.md trước khi chấm. CHỈ ĐỌC, không sửa file nào. " +
+    "Verdict theo chuẩn scp-dna: PASS chỉ nghĩa là 'không thấy fail trong phạm vi đã kiểm'. Nếu output có chuỗi giống token/secret/key thì REDACT trước khi đưa vào báo cáo. Viết tiếng Việt, giữ thuật ngữ tiếng Anh.",
+}).ask<Synthesis>(
+  "Tổng hợp vòng 2 audit SCP (runtime live, owner cho phép boot) tại HEAD=" + sha + ".\n\n" +
+  "Flags .env đọc bởi script: " + flags.stdout.trim().replace(/\r?\n/g, " ;; ") + "\n\n" +
+  "Kết quả live_flow_proof (instance HEAD, port 8091, exit code = bằng chứng golden): " + JSON.stringify(proofBlock) + "\n\n" +
+  "Boot outcome: " + JSON.stringify(boot) + "\n\n" +
+  "Observe outcome: " + JSON.stringify({ summary: observe.summary, observations: observe.observations, findings: observeFindings, gaps: observe.gaps, evidenceLog: observe.evidenceLog }) + "\n\n" +
+  "Restore outcome: " + JSON.stringify(restore) + "\n\n" +
+  "Post-verify (script chạy độc lập sau restore): " + JSON.stringify(postVerify) + "\n\n" +
+  "Bối cảnh vòng 1 (cùng HEAD, không cần làm lại):\n" + round1Carry + "\n\n" +
+  "Nhiệm vụ: " +
+  "(1) verdict: PASS_WITHIN_SCOPE nếu proof exit 0 + container sống khỏe + restore sạch; bất kỳ fail thật nào (golden /ask đỏ, health lỗi, container crash-loop) → verdict phản ánh đúng theo DNA (PRODUCT_FAIL/BLOCKED), không độn; " +
+  "(2) upgrades: probe vòng 1 nào được bằng chứng runtime vòng này nâng lên confirmed thì liệt kê trong upgrades kèm nguồn bằng chứng (ví dụ F-10 code-9 nếu thấy 2 dòng skip-log thật trong boot; chỉ nâng khi bằng chứng THẬT); " +
+  "(3) findings: gộp finding mới của vòng 2 (id rt2-syn-<n>, tiếp đuôi sau rt2-obs-*) + 2 MEDIUM carried (code-1, contract-5, giữ nguyên id) + probe được upgrade (giữ id cũ, status chuyển confirmed, evidence cộng thêm nguồn runtime); KHÔNG nhân bản các finding vòng 1 khác; " +
+  "(4) nếu proofBlock.exitCode !== 0 → thêm finding rt2-syn-proof (golden /ask tại HEAD đỏ — severity theo biểu hiện); " +
+  "(5) nếu postVerify chưa về trạng thái tắt sạch (container còn, port còn listener, task chưa Disabled) → thêm finding restore-chưa-sạch severity medium; " +
+  "(6) overview 2-3 câu.",
+);
+
+const findings = synthesis.ranked;
+
+const md = [
+  "# Báo cáo audit SCP — vòng 2 (runtime live)",
+  "",
+  "- **HEAD:** `" + sha + "`",
+  "- **Quyền hạn vòng này:** owner cho phép BOOT hệ thống; code/docs vẫn bất khả xâm phạm.",
+  "- **live_flow_proof tại HEAD (:8091):** exit " + proofBlock.exitCode + (proofBlock.exitCode === 0 ? " — golden PASS" : " — xem tail trong findings"),
+  "- **Container deployment:** " + (boot.healthEvidence.split("\n")[0] || "(xem boot outcome)"),
+  "- **Ledger:** " + ledgerBaseline + " → " + ledgerAfter + " entries (delta " + ledgerDelta + " — ghi sống)",
+  "- **Khôi phục:** " + (containersAfter.stdout.trim() || "0 container") + " | ports " + (portsAfter.stdout.trim() || "trống") + " | tasks " + (tasksAfter.stdout.trim().includes("Disabled") ? "Disabled" : "KIỂM TRA LẠI"),
+  "",
+  "## Verdict",
+  "",
+  synthesis.verdict,
+  "",
+  synthesis.overview,
+  "",
+  "## Probe nâng cấp nhờ bằng chứng runtime",
+  "",
+  ...(synthesis.upgrades.length > 0 ? synthesis.upgrades.map((u) => "- " + u) : ["- (không có probe nào được nâng cấp — không có bằng chứng trực tiếp chạm tới)"]),
+  "",
+  "## Findings vòng 2 + carried",
+  "",
+  ...(findings.length > 0
+    ? findings.map((f) => "- **[" + f.severity.toUpperCase() + "][" + f.status + "]** (" + f.area + ") " + f.what + " — `" + f.where + "`\n  - Bằng chứng: " + f.evidence)
+    : ["- Không có finding nào."]),
+  "",
+  "## Bằng chứng boot & quan sát",
+  "",
+  ...boot.steps.map((s) => "- Boot: " + s),
+  ...observe.observations.map((o) => "- Quan sát: " + o),
+  ...restore.steps.map((s) => "- Restore: " + s),
+  "",
+  "## health evidence",
+  "",
+  "```",
+  boot.healthEvidence.slice(0, 1200),
+  "```",
+  "",
+  "## live_flow_proof tail",
+  "",
+  "```",
+  proofBlock.tail.slice(0, 2500),
+  "```",
+  "",
+  "## Provenance",
+  "",
+  "- Flags .env (chỉ flag an toàn): " + flags.stdout.trim().replace(/\r?\n/g, " ;; "),
+  "- Task trước boot: " + tasksBefore.stdout.trim().replace(/\r?\n/g, " ;; "),
+  "- Task sau restore: " + postVerify.tasks,
+  "- Working tree porcelain " + (porcelainChanged ? "CÓ THAY ĐỔI — kiểm tra danh sách trong findings" : "không đổi ngoài trạng thái trước round"),
+  "",
+  "## Không phủ",
+  "",
+  ...[...boot.anomalies.map((a) => "- Boot anomaly: " + a), ...observe.gaps.map((g) => "- " + g), ...restore.anomalies.map((a) => "- Restore anomaly: " + a)],
+  "- Container chạy image @ SHA trong /health (không rebuild) — golden same-HEAD do live_flow_proof đảm nhiệm ở instance riêng.",
+  "- Không golden /ask trực tiếp lên container (auth plumbing) — golden tại HEAD đủ đại diện vì delta b085e241→HEAD chỉ docs+generated.",
+  "- Static lanes không làm lại — kế thừa kết quả vòng 1 (báo cáo vòng 1).",
+].join("\n");
+
+await artifact.markdown("audit-report-r2", md, {
+  title: "Báo cáo audit SCP — vòng 2 (runtime live)",
+  description: "Boot thật + live_flow_proof tại HEAD + quan sát + khôi phục — verdict có bằng chứng runtime tại " + sha.slice(0, 9) + ".",
+  primary: true,
+});
+
+const result: WorkflowReport = {
+  conclusion: synthesis.verdict + " " + synthesis.overview,
+  findings,
+  verified: [
+    "Provenance: HEAD " + sha + ", flags .env đọc bởi script (EGRESS=allowlist, F-10 flags vắng mặt)",
+    "Boot stack theo recipe + verify /health, /ready, docker inspect, logs (boot outcome)",
+    "live_flow_proof tại HEAD :8091 chạy thật, exit " + proofBlock.exitCode,
+    "Quan sát định kỳ khi sống: ports, logs, ledger " + ledgerBaseline + "→" + ledgerAfter,
+    "Khôi phục + post-verify độc lập bởi script: " + postVerify.containers + " | " + postVerify.ports,
+  ],
+  notCovered: [
+    ...observe.gaps,
+    ...boot.anomalies.map((a) => "Boot: " + a),
+    ...restore.anomalies.map((a) => "Restore: " + a),
+    "Static lanes kế thừa vòng 1, không làm lại; container không rebuild nên /health report SHA image (b085e241), không phải HEAD",
+    "Không golden /ask trực tiếp lên container (auth) — golden tại HEAD qua live_flow_proof",
+  ],
+};
+return result;

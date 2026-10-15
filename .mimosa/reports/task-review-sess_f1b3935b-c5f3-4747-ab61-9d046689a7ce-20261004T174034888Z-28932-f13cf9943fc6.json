@@ -1,0 +1,287 @@
+{
+  "schema_version": "mimosa-task-review/v2",
+  "run_id": "20261004T174034888Z-28932-f13cf9943fc6",
+  "run_status": "completed",
+  "errors": [],
+  "coverage": {
+    "schema_version": "mimosa-hook-coverage/v1",
+    "status": "complete",
+    "scope": "hook_observed_diff",
+    "baseline": {
+      "complete": false,
+      "captured_files": 1488,
+      "candidate_limit": 5000,
+      "truncated": false,
+      "enumeration_error_count": 1,
+      "snapshot_error_count": 0,
+      "compensated_target_count": 5
+    },
+    "change_tracking": {
+      "touched_observed": 5,
+      "touched_retained": 5,
+      "truncated": false,
+      "bash_mutation": false,
+      "bash_discovered": 0,
+      "bash_discovery_limit": 80,
+      "bash_discovery_truncated": false
+    },
+    "candidates": {
+      "eligible_files": 5,
+      "selected_files": 5,
+      "limit": 20,
+      "truncated": false
+    },
+    "scanning": {
+      "required_files": 5,
+      "scanned_files": 5,
+      "skipped_files": 0,
+      "failed_files": 0,
+      "project_checks_required": 0,
+      "project_checks_completed": 0
+    },
+    "notification": {
+      "eligible_findings": 0,
+      "detailed_findings": 0,
+      "detail_limit": 3,
+      "truncated": false
+    },
+    "reason_counts": {
+      "baseline_partial": 1
+    },
+    "reasons": [
+      {
+        "code": "baseline_partial",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline capture had enumeration or snapshot errors",
+        "affects_completion": false
+      }
+    ],
+    "reasons_truncated": false
+  },
+  "generated_at": "2026-10-04T17:40:34.888Z",
+  "session_id": "sess_f1b3935b-c5f3-4747-ab61-9d046689a7ce",
+  "target": ".",
+  "revision": "f21907f5e7f4c26444eda8bf412d7d4c67836001",
+  "rules_version": "unavailable",
+  "diff_hash": "6cf2b4ca7487b30b45de4b92a1ed1a1bdbf74e85bf79194199228a40c0768f40",
+  "diff": {
+    "algorithm": "sha256",
+    "changed_file_count": 5,
+    "changed_files": [
+      {
+        "file": "scp/api_server_parts/_ask_impl.py",
+        "ranges": [
+          {
+            "start": 977,
+            "end": 977
+          }
+        ],
+        "before_hash": "c3281c34e094d7f9daa1050374f75e94dc9fa694b5ed96a512b09bb4318e419b",
+        "after_hash": "f56288d4e1a257189a8350a5269d92f55ce98c0c3a141fcccf2e29ed57a360de"
+      },
+      {
+        "file": "scp/ask_kernel_adapter.py",
+        "ranges": [
+          {
+            "start": 408,
+            "end": 420
+          },
+          {
+            "start": 489,
+            "end": 492
+          }
+        ],
+        "before_hash": "7c3af63c5950aa9b75af541389f1ad1d42a75554f0f3809fabfb0e6a19dc41bf",
+        "after_hash": "73bc4654f0ceb4d53a975a2b442972e1fb08aa487f8c166449caa3a91c68b296"
+      },
+      {
+        "file": "scp/runtime/question_router.py",
+        "ranges": [
+          {
+            "start": 177,
+            "end": 182
+          },
+          {
+            "start": 188,
+            "end": 190
+          },
+          {
+            "start": 220,
+            "end": 233
+          },
+          {
+            "start": 238,
+            "end": 241
+          },
+          {
+            "start": 246,
+            "end": 249
+          },
+          {
+            "start": 254,
+            "end": 256
+          },
+          {
+            "start": 258,
+            "end": 260
+          },
+          {
+            "start": 268,
+            "end": 269
+          },
+          {
+            "start": 271,
+            "end": 271
+          },
+          {
+            "start": 277,
+            "end": 278
+          },
+          {
+            "start": 280,
+            "end": 290
+          },
+          {
+            "start": 297,
+            "end": 297
+          },
+          {
+            "start": 323,
+            "end": 338
+          },
+          {
+            "start": 345,
+            "end": 345
+          },
+          {
+            "start": 380,
+            "end": 382
+          },
+          {
+            "start": 386,
+            "end": 386
+          },
+          {
+            "start": 395,
+            "end": 411
+          },
+          {
+            "start": 416,
+            "end": 416
+          },
+          {
+            "start": 425,
+            "end": 456
+          },
+          {
+            "start": 550,
+            "end": 554
+          },
+          {
+            "start": 560,
+            "end": 560
+          },
+          {
+            "start": 563,
+            "end": 563
+          },
+          {
+            "start": 592,
+            "end": 593
+          },
+          {
+            "start": 599,
+            "end": 599
+          },
+          {
+            "start": 602,
+            "end": 602
+          },
+          {
+            "start": 1036,
+            "end": 1049
+          },
+          {
+            "start": 1073,
+            "end": 1076
+          }
+        ],
+        "before_hash": "87999a84bc8185d46cf6944da99a14f0b3a0ea42b03abc0b0a6b01969c70b172",
+        "after_hash": "4fa4937d59de70a25b51d3fa2350ec28cc6e33d5526050f3d389ab6f691e3f4f"
+      },
+      {
+        "file": "tests/T02_contract/test_w2_fork_relevance.py",
+        "ranges": [
+          {
+            "start": 1,
+            "end": 128
+          }
+        ],
+        "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after_hash": "6739db36d14ae5dfd9d8bf396e4c12d3350ee4b0669b28d95dc777e2c349849b"
+      },
+      {
+        "file": "tests/T02_contract/test_w2_router_contract.py",
+        "ranges": [
+          {
+            "start": 1,
+            "end": 115
+          }
+        ],
+        "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after_hash": "14233eedc6716e8b433c7b9935b9eaef5f24bb96c684ea3d64d6087f777d98d0"
+      }
+    ]
+  },
+  "timing": {
+    "started_at": "2026-10-04T17:40:33.050Z",
+    "completed_at": "2026-10-04T17:40:34.888Z",
+    "duration_ms": 1838,
+    "measurement": "hook_wall_clock"
+  },
+  "tokens": {
+    "input": 0,
+    "output": 0,
+    "total": 0,
+    "model_calls": 0,
+    "measurement": "known-zero"
+  },
+  "telemetry": {
+    "schemaVersion": "mimosa-gate-telemetry/v1",
+    "profile": "gate",
+    "operation": "Stop",
+    "outcome": "complete",
+    "latencyMs": 1838,
+    "peakMemoryBytes": 157327360,
+    "memoryMeasurement": "max-observed-process-rss",
+    "scannedFiles": 5,
+    "cache": {
+      "hits": 0,
+      "misses": 0,
+      "measurement": "not-applicable"
+    },
+    "denyCount": 0,
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "total": 0,
+      "modelCalls": 0,
+      "measurement": "known-zero"
+    }
+  },
+  "finding_count": 0,
+  "rewake_finding_count": 0,
+  "evidence_boundary": {
+    "scan": "candidate",
+    "static_fix_verification": "observed_static_only",
+    "runtime_verification": "not_performed"
+  },
+  "finding_events": [],
+  "findings": [],
+  "artifacts": {
+    "immutable_report": ".mimosa/reports/task-review-sess_f1b3935b-c5f3-4747-ab61-9d046689a7ce-20261004T174034888Z-28932-f13cf9943fc6.json",
+    "latest_report": ".mimosa/reports/task-review-sess_f1b3935b-c5f3-4747-ab61-9d046689a7ce.json",
+    "history_summary": ".mimosa/history/run-20261004T174034888Z-28932-f13cf9943fc6.json"
+  }
+}

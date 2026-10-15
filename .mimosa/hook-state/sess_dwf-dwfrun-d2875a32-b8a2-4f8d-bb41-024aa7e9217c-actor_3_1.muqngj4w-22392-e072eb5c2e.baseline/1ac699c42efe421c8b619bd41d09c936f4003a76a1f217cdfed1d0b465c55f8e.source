@@ -1,0 +1,6 @@
+# Optional production observability profile for FastAPI traces.
+# Install only when an OTLP collector is configured with OTEL_EXPORTER_OTLP_ENDPOINT.
+opentelemetry-api==1.44.0
+opentelemetry-sdk==1.44.0
+opentelemetry-instrumentation-fastapi==0.65b0
+opentelemetry-exporter-otlp-proto-http==1.44.0

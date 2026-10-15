@@ -1,0 +1,330 @@
+--- a/scp/core/autonomous_ledger.py
++++ b/scp/core/autonomous_ledger.py
+@@ -1,8 +1,10 @@
+-"""Cryptographic Ledger Provenance for Agent OS Autonomous Steps."""
++"""Cryptographic Ledger Provenance for Agent OS Autonomous Steps with HMAC-SHA256 support."""
+ from __future__ import annotations
+ 
+ import hashlib
++import hmac
+ import json
++import os
+ import time
+ from dataclasses import asdict, dataclass
+ from pathlib import Path
+@@ -33,25 +35,53 @@
+         d.pop("block_hash", None)
+         return d
+ 
+-    def compute_hash(self) -> str:
++    def compute_hmac(self, key: bytes | str) -> str:
++        """Compute HMAC-SHA256 digest of the block canonical serialization."""
++        serialized = json.dumps(self.canonical_dict(), ensure_ascii=False, sort_keys=True, separators=(",", ":"))
++        k = key.encode("utf-8") if isinstance(key, str) else key
++        return "hmac-sha256:" + hmac.new(k, serialized.encode("utf-8"), hashlib.sha256).hexdigest()
++
++    def compute_hash(self, key: bytes | str | None = None) -> str:
++        """Compute block digest. Uses HMAC-SHA256 if key is provided; bare SHA-256 otherwise."""
++        if key is not None:
++            return self.compute_hmac(key)
+         serialized = json.dumps(self.canonical_dict(), ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+         return "sha256:" + hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+ 
+ 
+ class AutonomousAuditLedger:
+-    """Ledger recording two-phase tool provenance blocks into the append-only TraceLedger."""
+-
+-    def __init__(self, trace_ledger: TraceLedger | None = None, ledger_path: str | Path | None = None) -> None:
++    """Ledger recording two-phase tool provenance blocks into the append-only TraceLedger with HMAC-SHA256."""
++
++    def __init__(
++        self,
++        trace_ledger: TraceLedger | None = None,
++        ledger_path: str | Path | None = None,
++        hmac_key: str | bytes | None = None,
++    ) -> None:
+         if trace_ledger is not None:
+             self.trace_ledger = trace_ledger
+         else:
+             path = ledger_path or "data/trace_ledger.jsonl"
+             self.trace_ledger = TraceLedger(path)
+ 
++        if hmac_key is not None:
++            self.hmac_key: bytes | None = hmac_key.encode("utf-8") if isinstance(hmac_key, str) else hmac_key
++        else:
++            env_key = os.environ.get("SCP_LEDGER_HMAC_KEY")
++            self.hmac_key = env_key.encode("utf-8") if env_key else None
++
+     @staticmethod
+-    def _hash_value(val: Any) -> str:
++    def _hash_value(val: Any, key: bytes | str | None = None) -> str:
++        """Compute canonical digest of a value. Uses HMAC-SHA256 if key is provided, else SHA-256."""
+         raw = json.dumps(val, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
++        if key:
++            k = key.encode("utf-8") if isinstance(key, str) else key
++            return "hmac-sha256:" + hmac.new(k, raw.encode("utf-8"), hashlib.sha256).hexdigest()
+         return "sha256:" + hashlib.sha256(raw.encode("utf-8")).hexdigest()
++
++    def compute_digest(self, val: Any) -> str:
++        """Helper to compute digest using instance HMAC key if configured."""
++        return self._hash_value(val, self.hmac_key)
+ 
+     def commit_intent(
+         self,
+@@ -62,7 +92,7 @@
+         capability_token: Any,
+         parent_trace_id: str | None = None,
+     ) -> dict[str, Any]:
+-        """Commit Phase 1: Tool invocation intent with parameter digest."""
++        """Commit Phase 1: Tool invocation intent with parameter digest and optional HMAC signature."""
+         if isinstance(capability_token, dict):
+             token_id = str(capability_token.get("token_id", "") or params.get("token_id", ""))
+             token_sig = str(capability_token.get("signature", ""))
+@@ -70,20 +100,32 @@
+             token_id = str(getattr(capability_token, "token_id", "") or params.get("token_id", ""))
+             token_sig = str(getattr(capability_token, "signature", ""))
+ 
+-        token_hash = self._hash_value({"token_id": token_id, "signature": token_sig})
+-        input_hash = self._hash_value(redact_attributes(params))
+-
+-        entry = self.trace_ledger.append(
+-            event="AUTONOMOUS_TOOL_INTENT",
+-            task_id=task_id,
+-            step_id=step_id,
+-            tool_name=tool_name,
+-            input_sha256=input_hash,
+-            token_id=token_id,
+-            token_hash=token_hash,
+-            parent_trace_id=parent_trace_id or "",
+-            timestamp=time.time(),
+-        )
++        token_hash = self.compute_digest({"token_id": token_id, "signature": token_sig})
++        input_hash = self.compute_digest(redact_attributes(params))
++
++        fields: dict[str, Any] = {
++            "event": "AUTONOMOUS_TOOL_INTENT",
++            "task_id": task_id,
++            "step_id": step_id,
++            "tool_name": tool_name,
++            "input_sha256": input_hash,
++            "token_id": token_id,
++            "token_hash": token_hash,
++            "parent_trace_id": parent_trace_id or "",
++            "timestamp": time.time(),
++        }
++        if self.hmac_key:
++            canonical_intent = json.dumps({
++                "event": "AUTONOMOUS_TOOL_INTENT",
++                "task_id": task_id,
++                "step_id": step_id,
++                "tool_name": tool_name,
++                "input_sha256": input_hash,
++                "parent_trace_id": parent_trace_id or "",
++            }, sort_keys=True, separators=(",", ":"))
++            fields["hmac_sha256"] = hmac.new(self.hmac_key, canonical_intent.encode("utf-8"), hashlib.sha256).hexdigest()
++
++        entry = self.trace_ledger.append(**fields)
+         return entry
+ 
+     def commit_result(
+@@ -98,26 +140,89 @@
+         duration_ms: float,
+     ) -> dict[str, Any]:
+         """Commit Phase 2: Tool execution result with evidence and output digest."""
+-        output_hash = self._hash_value(redact_attributes(result_data))
+-        evidence_hash = self._hash_value(evidence)
+-
+-        entry = self.trace_ledger.append(
+-            event="AUTONOMOUS_TOOL_RESULT",
+-            task_id=task_id,
+-            step_id=step_id,
+-            tool_name=tool_name,
+-            intent_entry_hash=intent_entry_hash,
+-            output_sha256=output_hash,
+-            evidence_sha256=evidence_hash,
+-            status=status,
+-            duration_ms=duration_ms,
+-            timestamp=time.time(),
+-        )
++        output_hash = self.compute_digest(redact_attributes(result_data))
++        evidence_hash = self.compute_digest(evidence)
++
++        fields: dict[str, Any] = {
++            "event": "AUTONOMOUS_TOOL_RESULT",
++            "task_id": task_id,
++            "step_id": step_id,
++            "tool_name": tool_name,
++            "intent_entry_hash": intent_entry_hash,
++            "output_sha256": output_hash,
++            "evidence_sha256": evidence_hash,
++            "status": status,
++            "duration_ms": duration_ms,
++            "timestamp": time.time(),
++        }
++        if self.hmac_key:
++            canonical_result = json.dumps({
++                "event": "AUTONOMOUS_TOOL_RESULT",
++                "task_id": task_id,
++                "step_id": step_id,
++                "tool_name": tool_name,
++                "intent_entry_hash": intent_entry_hash,
++                "output_sha256": output_hash,
++                "evidence_sha256": evidence_hash,
++                "status": status,
++            }, sort_keys=True, separators=(",", ":"))
++            fields["hmac_sha256"] = hmac.new(self.hmac_key, canonical_result.encode("utf-8"), hashlib.sha256).hexdigest()
++
++        entry = self.trace_ledger.append(**fields)
+         return entry
+ 
+     def verify_provenance(self) -> dict[str, Any]:
+-        """Verify the immutable ledger hash chain for all autonomous steps."""
+-        return self.trace_ledger.verify()
++        """Verify the immutable ledger hash chain and HMAC signatures for all autonomous steps."""
++        verification = self.trace_ledger.verify()
++        if not self.hmac_key:
++            return verification
++
++        errors = list(verification.get("errors", []))
++        ledger_path = getattr(self.trace_ledger, "path", None)
++        if ledger_path and Path(ledger_path).exists():
++            lines = Path(ledger_path).read_text(encoding="utf-8").splitlines()
++            for i, line in enumerate(lines, 1):
++                if not line.strip():
++                    continue
++                try:
++                    e = json.loads(line)
++                    fields = e.get("fields", {})
++                    event = fields.get("event")
++                    recorded_hmac = fields.get("hmac_sha256")
++                    if recorded_hmac and event == "AUTONOMOUS_TOOL_INTENT":
++                        canonical = json.dumps({
++                            "event": "AUTONOMOUS_TOOL_INTENT",
++                            "task_id": fields.get("task_id", ""),
++                            "step_id": fields.get("step_id", ""),
++                            "tool_name": fields.get("tool_name", ""),
++                            "input_sha256": fields.get("input_sha256", ""),
++                            "parent_trace_id": fields.get("parent_trace_id", ""),
++                        }, sort_keys=True, separators=(",", ":"))
++                        expected = hmac.new(self.hmac_key, canonical.encode("utf-8"), hashlib.sha256).hexdigest()
++                        if not hmac.compare_digest(recorded_hmac, expected):
++                            errors.append(f"hmac_intent:{i}")
++                    elif recorded_hmac and event == "AUTONOMOUS_TOOL_RESULT":
++                        canonical = json.dumps({
++                            "event": "AUTONOMOUS_TOOL_RESULT",
++                            "task_id": fields.get("task_id", ""),
++                            "step_id": fields.get("step_id", ""),
++                            "tool_name": fields.get("tool_name", ""),
++                            "intent_entry_hash": fields.get("intent_entry_hash", ""),
++                            "output_sha256": fields.get("output_sha256", ""),
++                            "evidence_sha256": fields.get("evidence_sha256", ""),
++                            "status": fields.get("status", ""),
++                        }, sort_keys=True, separators=(",", ":"))
++                        expected = hmac.new(self.hmac_key, canonical.encode("utf-8"), hashlib.sha256).hexdigest()
++                        if not hmac.compare_digest(recorded_hmac, expected):
++                            errors.append(f"hmac_result:{i}")
++                except Exception:
++                    errors.append(f"parse_error:{i}")
++
++        return {
++            "entries": verification.get("entries", 0),
++            "hash_chain_valid": len(errors) == 0,
++            "errors": errors,
++        }
+ 
+ 
+ __all__ = [
+
+--- a/scp/hands/hands_executor.py
++++ b/scp/hands/hands_executor.py
+@@ -21,6 +21,7 @@
+ 
+ from .action_registry import ActionDefinition, ActionRegistry
+ from .process_manager import ManagedProcessManager
++from scp.core.autonomous_ledger import AutonomousAuditLedger
+ 
+ import logging
+ logger = logging.getLogger(__name__)
+@@ -43,7 +44,14 @@
+ class HandsExecutor:
+     """Execute only registered actions and produce evidence for every result."""
+ 
+-    def __init__(self, controller: PCController | None = None, navigator: WebNavigator | None = None, capability_authority: CapabilityAuthority | None = None, data_dir: Path | None = None) -> None:
++    def __init__(
++        self,
++        controller: PCController | None = None,
++        navigator: WebNavigator | None = None,
++        capability_authority: CapabilityAuthority | None = None,
++        data_dir: Path | None = None,
++        audit_ledger: AutonomousAuditLedger | None = None,
++    ) -> None:
+         project_root = Path(__file__).resolve().parents[2]
+         self.data_dir = Path(data_dir) if data_dir is not None else (project_root / "data" / "hands")
+         self.capability_authority = capability_authority or CapabilityAuthority(self.data_dir / "capability_state.json")
+@@ -58,6 +66,12 @@
+         self.backup_dir = self.data_dir / "backups"
+         self.data_dir.mkdir(parents=True, exist_ok=True)
+         self.backup_dir.mkdir(parents=True, exist_ok=True)
++
++        hmac_key = os.environ.get("SCP_LEDGER_HMAC_KEY") or getattr(self.capability_authority, "secret", None)
++        self.audit_ledger = audit_ledger or AutonomousAuditLedger(
++            ledger_path=self.data_dir / "autonomous_ledger.jsonl",
++            hmac_key=hmac_key,
++        )
+ 
+     def _audit(self, event: str, payload: dict[str, Any]) -> None:
+         record = {"timestamp": time.time(), "iso": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "event": event, **payload}
+@@ -176,7 +190,23 @@
+                 result = {"success": False, "action": action, "error": "Capability revoked before dispatch", "verification": {"passed": False}}
+                 self._audit("ACTION_BLOCKED_CAPABILITY_REVOKED", result)
+                 return result
+-            elif action == "pc.status":
++
++            # Phase 1: Intent Commit before physical tool execution
++            task_id = str(params.get("task_id") or params.get("taskId") or getattr(capability_token, "token_id", None) or f"task_{uuid.uuid4().hex[:12]}")
++            step_id = str(params.get("step_id") or params.get("stepId") or f"step_{action}_{int(time.time()*1000)}")
++            parent_trace_id = str(params.get("parent_trace_id") or params.get("trace_id") or "")
++
++            intent_entry = self.audit_ledger.commit_intent(
++                task_id=task_id,
++                step_id=step_id,
++                tool_name=action,
++                params=params,
++                capability_token=capability_token,
++                parent_trace_id=parent_trace_id,
++            )
++            intent_hash = intent_entry.get("hash", "")
++
++            if action == "pc.status":
+                 status_data = self.controller.status()
+                 result = {"success": True, "data": status_data, "evidence": {"controller": status_data.get("controller")}, "verification": {"passed": status_data.get("controller") == "online", "rule": definition.verifier}}
+             elif action == "pc.read_file":
+@@ -365,7 +395,27 @@
+                 result = {"success": False, "error": "Action implementation missing"}
+         except Exception as exc:
+             result = {"success": False, "error": f"Executor error: {exc}", "verification": {"passed": False}}
+-        result.update({"action": action, "durationMs": round((time.perf_counter() - started) * 1000), "policy": definition.public(), "capabilityEpoch": getattr(capability_token, "epoch", 0)})
++        duration_ms = round((time.perf_counter() - started) * 1000)
++        result.update({"action": action, "durationMs": duration_ms, "policy": definition.public(), "capabilityEpoch": getattr(capability_token, "epoch", 0)})
++
++        # Phase 2: Outcome Commit after physical tool execution
++        status = "SUCCESS" if result.get("success") else "FAILED"
++        evidence = result.get("evidence") if isinstance(result.get("evidence"), dict) else {}
++
++        outcome_entry = self.audit_ledger.commit_result(
++            task_id=task_id,
++            step_id=step_id,
++            tool_name=action,
++            intent_entry_hash=intent_hash,
++            result_data=result,
++            evidence=evidence,
++            status=status,
++            duration_ms=float(duration_ms),
++        )
++        result["intentHash"] = intent_hash
++        result["outcomeHash"] = outcome_entry.get("hash", "")
++        result["ledgerSeq"] = outcome_entry.get("seq", 0)
++
+         self._audit("ACTION_EXECUTED" if result.get("success") else "ACTION_FAILED", result)
+         return result
+ 

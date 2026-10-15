@@ -1,0 +1,310 @@
+{
+  "schema_version": "mimosa-task-review/v2",
+  "run_id": "20261002T025228772Z-23580-18441898cfe9",
+  "run_status": "inconclusive",
+  "errors": [
+    {
+      "stage": "baseline-enumerate",
+      "target": ".pytest_cache",
+      "reason": "bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'"
+    },
+    {
+      "stage": "bash-discovery",
+      "target": "dashboard/src/app/api/scp/call/session/route.ts",
+      "reason": "bash_discovery_truncated: changed-file discovery exceeded 80 files"
+    },
+    {
+      "stage": "candidate-select",
+      "target": "tests/T03_capability/test_zonefix_hands_bounds.py",
+      "reason": "candidate_limit_exceeded: 60 changed reviewable file(s) were not scanned because the limit is 20"
+    },
+    {
+      "stage": "baseline",
+      "target": ".",
+      "reason": "baseline_partial: baseline capture had enumeration or snapshot errors"
+    },
+    {
+      "stage": "scan",
+      "target": "tests/T04_kernel/test_ask_trace_ledger_final_decision.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "tests/T04_kernel/test_gap13_state_machine_boundaries.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "agent-check",
+      "target": ".",
+      "reason": "stop_budget_exhausted: focused agent configuration check was not run before the gate budget"
+    }
+  ],
+  "coverage": {
+    "schema_version": "mimosa-hook-coverage/v1",
+    "status": "partial",
+    "scope": "hook_observed_diff",
+    "baseline": {
+      "complete": false,
+      "captured_files": 1472,
+      "candidate_limit": 5000,
+      "truncated": false,
+      "enumeration_error_count": 1,
+      "snapshot_error_count": 0,
+      "compensated_target_count": 80
+    },
+    "change_tracking": {
+      "touched_observed": 0,
+      "touched_retained": 0,
+      "truncated": false,
+      "bash_mutation": true,
+      "bash_discovered": 80,
+      "bash_discovery_limit": 80,
+      "bash_discovery_truncated": true
+    },
+    "candidates": {
+      "eligible_files": 80,
+      "selected_files": 20,
+      "limit": 20,
+      "truncated": true
+    },
+    "scanning": {
+      "required_files": 2,
+      "scanned_files": 0,
+      "skipped_files": 0,
+      "failed_files": 2,
+      "project_checks_required": 1,
+      "project_checks_completed": 0
+    },
+    "notification": {
+      "eligible_findings": 0,
+      "detailed_findings": 0,
+      "detail_limit": 3,
+      "truncated": false
+    },
+    "reason_counts": {
+      "bash_discovery_incomplete": 1,
+      "bash_discovery_truncated": 1,
+      "candidate_limit_exceeded": 1,
+      "baseline_partial": 1,
+      "scanner_failed": 2,
+      "stop_budget_exhausted": 1,
+      "project_check_failed": 7
+    },
+    "reasons": [
+      {
+        "code": "bash_discovery_incomplete",
+        "stage": "baseline-enumerate",
+        "target": ".pytest_cache",
+        "detail": "EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+        "affects_completion": true
+      },
+      {
+        "code": "bash_discovery_truncated",
+        "stage": "bash-discovery",
+        "target": "dashboard/src/app/api/scp/call/session/route.ts",
+        "detail": "changed-file discovery exceeded 80 files",
+        "affects_completion": true
+      },
+      {
+        "code": "candidate_limit_exceeded",
+        "stage": "candidate-select",
+        "target": "tests/T03_capability/test_zonefix_hands_bounds.py",
+        "detail": "60 changed reviewable file(s) were not scanned because the limit is 20",
+        "affects_completion": true
+      },
+      {
+        "code": "baseline_partial",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline capture had enumeration or snapshot errors",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tests/T04_kernel/test_ask_trace_ledger_final_decision.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tests/T04_kernel/test_gap13_state_machine_boundaries.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "stop_budget_exhausted",
+        "stage": "agent-check",
+        "target": ".",
+        "detail": "focused agent configuration check was not run before the gate budget",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline-enumerate",
+        "target": ".pytest_cache",
+        "detail": "bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "bash-discovery",
+        "target": "dashboard/src/app/api/scp/call/session/route.ts",
+        "detail": "bash_discovery_truncated: changed-file discovery exceeded 80 files",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "candidate-select",
+        "target": "tests/T03_capability/test_zonefix_hands_bounds.py",
+        "detail": "candidate_limit_exceeded: 60 changed reviewable file(s) were not scanned because the limit is 20",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline_partial: baseline capture had enumeration or snapshot errors",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tests/T04_kernel/test_ask_trace_ledger_final_decision.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tests/T04_kernel/test_gap13_state_machine_boundaries.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "agent-check",
+        "target": ".",
+        "detail": "stop_budget_exhausted: focused agent configuration check was not run before the gate budget",
+        "affects_completion": true
+      }
+    ],
+    "reasons_truncated": false
+  },
+  "generated_at": "2026-10-02T02:52:28.772Z",
+  "session_id": "sess_01ba8183-90be-42a8-9a94-244f5ab921ed",
+  "target": ".",
+  "revision": "13975a318c75e390ce7b30d1e716d7a9e5af8702",
+  "rules_version": "unavailable",
+  "diff_hash": "63c35e529494786f6a122c5c1d752dadff122c2951944e52cb21bef9acf64383",
+  "diff": {
+    "algorithm": "sha256",
+    "changed_file_count": 3,
+    "changed_files": [
+      {
+        "file": "AGENTS.md",
+        "ranges": [
+          {
+            "start": 45,
+            "end": 46
+          },
+          {
+            "start": 89,
+            "end": 89
+          }
+        ],
+        "before_hash": "b380978be1d7cb40e79b9d56395300561ac1f747e27ae9313d328ff5d0a2e6d3",
+        "after_hash": "db5f82937ccf8607a76a581a75c5ac14d3f6417a0d24bdd24455f3b8b1b039e2"
+      },
+      {
+        "file": "tests/T04_kernel/test_ask_trace_ledger_final_decision.py",
+        "ranges": [
+          {
+            "start": 66,
+            "end": 76
+          },
+          {
+            "start": 96,
+            "end": 96
+          },
+          {
+            "start": 127,
+            "end": 127
+          },
+          {
+            "start": 184,
+            "end": 184
+          },
+          {
+            "start": 211,
+            "end": 211
+          }
+        ],
+        "before_hash": "6b9fa768274aa061edd10e41c9d9b9dcbea4020eec189e02df637a124db1724f",
+        "after_hash": "c464cabf60daaf6d89928838cc8b1a497a3d27e863c136061b75acb16fd566d1"
+      },
+      {
+        "file": "tests/T04_kernel/test_gap13_state_machine_boundaries.py",
+        "ranges": [
+          {
+            "start": 17,
+            "end": 32
+          }
+        ],
+        "before_hash": "3a9eaf96f0d3725c2dee080b6f36adc5ac0fb3a988029b6c7329640b3e57543e",
+        "after_hash": "7d04ecf0c660f960bed7973fd73a0085b779c943748c5745b336c529a2cade08"
+      }
+    ]
+  },
+  "timing": {
+    "started_at": "2026-10-02T02:52:24.244Z",
+    "completed_at": "2026-10-02T02:52:28.772Z",
+    "duration_ms": 4528,
+    "measurement": "hook_wall_clock"
+  },
+  "tokens": {
+    "input": 0,
+    "output": 0,
+    "total": 0,
+    "model_calls": 0,
+    "measurement": "known-zero"
+  },
+  "telemetry": {
+    "schemaVersion": "mimosa-gate-telemetry/v1",
+    "profile": "gate",
+    "operation": "Stop",
+    "outcome": "partial/INCONCLUSIVE",
+    "latencyMs": 4528,
+    "peakMemoryBytes": 113926144,
+    "memoryMeasurement": "max-observed-process-rss",
+    "scannedFiles": 0,
+    "cache": {
+      "hits": 0,
+      "misses": 0,
+      "measurement": "not-applicable"
+    },
+    "denyCount": 0,
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "total": 0,
+      "modelCalls": 0,
+      "measurement": "known-zero"
+    }
+  },
+  "finding_count": 0,
+  "rewake_finding_count": 0,
+  "evidence_boundary": {
+    "scan": "candidate",
+    "static_fix_verification": "observed_static_only",
+    "runtime_verification": "not_performed"
+  },
+  "finding_events": [],
+  "findings": [],
+  "artifacts": {
+    "immutable_report": ".mimosa/reports/task-review-sess_01ba8183-90be-42a8-9a94-244f5ab921ed-20261002T025228772Z-23580-18441898cfe9.json",
+    "latest_report": ".mimosa/reports/task-review-sess_01ba8183-90be-42a8-9a94-244f5ab921ed.json",
+    "history_summary": ".mimosa/history/run-20261002T025228772Z-23580-18441898cfe9.json"
+  }
+}

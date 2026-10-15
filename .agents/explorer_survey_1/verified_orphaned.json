@@ -1,0 +1,258 @@
+[
+  {
+    "path": "scp/ai_patterns.py",
+    "module": "scp.ai_patterns"
+  },
+  {
+    "path": "scp/api_server_parts/_trace_impl.py",
+    "module": "scp.api_server_parts._trace_impl"
+  },
+  {
+    "path": "scp/audit_engine/contract_adapter.py",
+    "module": "scp.audit_engine.contract_adapter"
+  },
+  {
+    "path": "scp/audit_engine/recorder.py",
+    "module": "scp.audit_engine.recorder"
+  },
+  {
+    "path": "scp/audit_engine/runner.py",
+    "module": "scp.audit_engine.runner"
+  },
+  {
+    "path": "scp/benchmark/benchmark_suite.py",
+    "module": "scp.benchmark.benchmark_suite"
+  },
+  {
+    "path": "scp/benchmark/compare_results.py",
+    "module": "scp.benchmark.compare_results"
+  },
+  {
+    "path": "scp/benchmark/run_baseline.py",
+    "module": "scp.benchmark.run_baseline"
+  },
+  {
+    "path": "scp/benchmark/run_benchmark.py",
+    "module": "scp.benchmark.run_benchmark"
+  },
+  {
+    "path": "scp/benchmark/run_benchmark_enhanced.py",
+    "module": "scp.benchmark.run_benchmark_enhanced"
+  },
+  {
+    "path": "scp/brain/error_store_index.py",
+    "module": "scp.brain.error_store_index"
+  },
+  {
+    "path": "scp/core/auto_backup.py",
+    "module": "scp.core.auto_backup"
+  },
+  {
+    "path": "scp/core/dependency_resolver.py",
+    "module": "scp.core.dependency_resolver"
+  },
+  {
+    "path": "scp/core/environment_snapshot.py",
+    "module": "scp.core.environment_snapshot"
+  },
+  {
+    "path": "scp/core/evidence_filter.py",
+    "module": "scp.core.evidence_filter"
+  },
+  {
+    "path": "scp/core/file_mutex.py",
+    "module": "scp.core.file_mutex"
+  },
+  {
+    "path": "scp/core/github_backup.py",
+    "module": "scp.core.github_backup"
+  },
+  {
+    "path": "scp/core/healing_engine.py",
+    "module": "scp.core.healing_engine"
+  },
+  {
+    "path": "scp/core/memory_manager.py",
+    "module": "scp.core.memory_manager"
+  },
+  {
+    "path": "scp/core/react_agent.py",
+    "module": "scp.core.react_agent"
+  },
+  {
+    "path": "scp/core/real_question_fetcher.py",
+    "module": "scp.core.real_question_fetcher"
+  },
+  {
+    "path": "scp/core/self_improvement.py",
+    "module": "scp.core.self_improvement"
+  },
+  {
+    "path": "scp/hands/process_probe.py",
+    "module": "scp.hands.process_probe"
+  },
+  {
+    "path": "scp/hello_bug.py",
+    "module": "scp.hello_bug"
+  },
+  {
+    "path": "scp/knowledge/cwe_exploit_store.py",
+    "module": "scp.knowledge.cwe_exploit_store"
+  },
+  {
+    "path": "scp/knowledge/issue_parser.py",
+    "module": "scp.knowledge.issue_parser"
+  },
+  {
+    "path": "scp/knowledge/scheduled_crawler.py",
+    "module": "scp.knowledge.scheduled_crawler"
+  },
+  {
+    "path": "scp/learning/continual.py",
+    "module": "scp.learning.continual"
+  },
+  {
+    "path": "scp/meta/adversary_verifier.py",
+    "module": "scp.meta.adversary_verifier"
+  },
+  {
+    "path": "scp/meta/calibration_engine.py",
+    "module": "scp.meta.calibration_engine"
+  },
+  {
+    "path": "scp/meta/cognitive_engine.py",
+    "module": "scp.meta.cognitive_engine"
+  },
+  {
+    "path": "scp/meta/curiosity_asker.py",
+    "module": "scp.meta.curiosity_asker"
+  },
+  {
+    "path": "scp/meta/governance_v97.py",
+    "module": "scp.meta.governance_v97"
+  },
+  {
+    "path": "scp/meta/logical_auditor.py",
+    "module": "scp.meta.logical_auditor"
+  },
+  {
+    "path": "scp/meta/multi_llm_check.py",
+    "module": "scp.meta.multi_llm_check"
+  },
+  {
+    "path": "scp/meta/question_tracker.py",
+    "module": "scp.meta.question_tracker"
+  },
+  {
+    "path": "scp/meta/scp_meta.py",
+    "module": "scp.meta.scp_meta"
+  },
+  {
+    "path": "scp/meta/self_questioning.py",
+    "module": "scp.meta.self_questioning"
+  },
+  {
+    "path": "scp/meta/verdict_predictor.py",
+    "module": "scp.meta.verdict_predictor"
+  },
+  {
+    "path": "scp/observability/otel_exporter.py",
+    "module": "scp.observability.otel_exporter"
+  },
+  {
+    "path": "scp/runtime/engine_parts/scpv14_process_mixin.py",
+    "module": "scp.runtime.engine_parts.scpv14_process_mixin"
+  },
+  {
+    "path": "scp/runtime/experts/chem_reality_astro.py",
+    "module": "scp.runtime.experts.chem_reality_astro"
+  },
+  {
+    "path": "scp/runtime/experts/management.py",
+    "module": "scp.runtime.experts.management"
+  },
+  {
+    "path": "scp/runtime/experts/math_biology.py",
+    "module": "scp.runtime.experts.math_biology"
+  },
+  {
+    "path": "scp/runtime/experts/misc.py",
+    "module": "scp.runtime.experts.misc"
+  },
+  {
+    "path": "scp/runtime/experts/numeric_data.py",
+    "module": "scp.runtime.experts.numeric_data"
+  },
+  {
+    "path": "scp/runtime/healing_v14.py",
+    "module": "scp.runtime.healing_v14"
+  },
+  {
+    "path": "scp/runtime/parallel_pipeline.py",
+    "module": "scp.runtime.parallel_pipeline"
+  },
+  {
+    "path": "scp/runtime/safe_math.py",
+    "module": "scp.runtime.safe_math"
+  },
+  {
+    "path": "scp/runtime/timing_and_restart.py",
+    "module": "scp.runtime.timing_and_restart"
+  },
+  {
+    "path": "scp/security/attack_classifier.py",
+    "module": "scp.security.attack_classifier"
+  },
+  {
+    "path": "scp/security/auto_payload_generator.py",
+    "module": "scp.security.auto_payload_generator"
+  },
+  {
+    "path": "scp/security/h8_redteam_bridge.py",
+    "module": "scp.security.h8_redteam_bridge"
+  },
+  {
+    "path": "scp/security/kernel_patrol.py",
+    "module": "scp.security.kernel_patrol"
+  },
+  {
+    "path": "scp/security/memory_guard.py",
+    "module": "scp.security.memory_guard"
+  },
+  {
+    "path": "scp/security/quorum_why.py",
+    "module": "scp.security.quorum_why"
+  },
+  {
+    "path": "scp/security/red_team.py",
+    "module": "scp.security.red_team"
+  },
+  {
+    "path": "scp/security/rogue_ai_detector.py",
+    "module": "scp.security.rogue_ai_detector"
+  },
+  {
+    "path": "scp/security/threat_intel.py",
+    "module": "scp.security.threat_intel"
+  },
+  {
+    "path": "scp/tests/chaos_recovery.py",
+    "module": "scp.tests.chaos_recovery"
+  },
+  {
+    "path": "scp/tests/external_audit/test_security.py",
+    "module": "scp.tests.external_audit.test_security"
+  },
+  {
+    "path": "scp/tests/golden_task.py",
+    "module": "scp.tests.golden_task"
+  },
+  {
+    "path": "scp/tests/property/test_none_safety.py",
+    "module": "scp.tests.property.test_none_safety"
+  },
+  {
+    "path": "scp/tests/test_free_catalog.py",
+    "module": "scp.tests.test_free_catalog"
+  }
+]

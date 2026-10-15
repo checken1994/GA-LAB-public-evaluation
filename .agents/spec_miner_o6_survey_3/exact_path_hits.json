@@ -1,0 +1,182 @@
+{
+  "reports/PORT_BACKLOG_SCP_AGENT_TO_GA_LAB_20260826.json": [
+    "docs/TOP_AGENT_LESSONS_20260826.md:24:`ARCHITECTURE_CANONICAL_ROOT.md`, `reports/PORT_BACKLOG_SCP_AGENT_TO_GA_LAB_20260826.json` v\u00e0 `tools/verify_canonical_root.py` bi\u1ebfn quy\u1ebft \u0111\u1ecbnh m\u1ed9t th\u01b0 m\u1ee5c g\u1ed1c th\u00e0nh policy c\u00f3 th\u1ec3 ki\u1ec3m tra. Code t\u1eeb repo ph\u1ee5 kh\u00f4ng \u0111\u01b0\u1ee3c copy to\u00e0n b\u1ed9; trace implementation c\u0169 b\u1ecb thay th\u1ebf b\u1eb1ng native port c\u00f3 lock/fsync c\u1ee7a GA-LAB.",
+    "docs/architecture/ARCHITECTURE_CANONICAL_ROOT.md:13:Danh s\u00e1ch port c\u00f3 ki\u1ec3m so\u00e1t n\u1eb1m t\u1ea1i `reports/PORT_BACKLOG_SCP_AGENT_TO_GA_LAB_20260826.json`. M\u1ed7i m\u1ee5c ph\u1ea3i c\u00f3 quy\u1ebft \u0111\u1ecbnh ri\u00eang v\u1ec1 t\u01b0\u01a1ng th\u00edch, license/provenance, test focused, CI v\u00e0 runtime evidence. Kh\u00f4ng d\u00f9ng copy to\u00e0n b\u1ed9, kh\u00f4ng d\u00f9ng `git reset`, v\u00e0 kh\u00f4ng thay th\u1ebf kernel/Hands/ledger hi\u1ec7n t\u1ea1i b\u1eb1ng code ch\u01b0a ki\u1ec3m ch\u1ee9ng."
+  ],
+  "reports/SCP_KERNEL_ASK_INTEGRATION_REPORT_20260825.md": [
+    "tools/create_snapshot_manifest.py:22:    \"reports/SCP_KERNEL_ASK_INTEGRATION_REPORT_20260825.md\","
+  ],
+  "reports/benchmark-2026-09-12/bench_combined_seed2026.json": [
+    "scp/ask_kernel_adapter.py:977:            # reports/benchmark-2026-09-12/bench_combined_seed2026.json).",
+    "scp/runtime/question_router.py:5:(b\u1eb1ng ch\u1ee9ng: reports/benchmark-2026-09-12/bench_combined_seed2026.json)."
+  ],
+  "docs/evidence-summary/INVENTORY/M4.txt": [
+    "tests/T03_capability/test_flow_04_control_hands_scp_standard.py:34:# (docs/evidence-summary/INVENTORY/M4.txt). All six rewritten tests below"
+  ],
+  "docs/evidence-summary/M01-closure.json": [
+    "scp/api/background_jobs.py:1:# SCP CIRCUIT: M1 Boot & Background \u2014 STATUS: CLOSED (closure: docs/evidence-summary/M01-closure.json)",
+    "scp/api_server.py:1:# SCP CIRCUIT: M1 Boot & Background \u2014 STATUS: CLOSED (closure: docs/evidence-summary/M01-closure.json)",
+    "scp/api_server_parts/lifespan.py:2:# SCP CIRCUIT: M1 Boot & Background \u2014 STATUS: CLOSED (closure: docs/evidence-summary/M01-closure.json)",
+    "scp/policy/retry_policy.py:2:# SCP CIRCUIT: M1 Boot & Background \u2014 STATUS: CLOSED (closure: docs/evidence-summary/M01-closure.json)"
+  ],
+  "docs/evidence-summary/M02-closure.json": [
+    "prev_ask_impl.py:1:# SCP CIRCUIT: M02 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M02-closure.json)",
+    "scp/api/chat.py:1:# SCP CIRCUIT: M02 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M02-closure.json)",
+    "scp/api/routes/calibration_routes.py:1:# SCP CIRCUIT: M02 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M02-closure.json)",
+    "scp/api/routes/forecast_routes.py:1:# SCP CIRCUIT: M02 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M02-closure.json)",
+    "scp/api/routes/history_routes.py:1:# SCP CIRCUIT: M02 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M02-closure.json)",
+    "scp/api/routes/world_state_routes.py:1:# SCP CIRCUIT: M02 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M02-closure.json)",
+    "scp/api_server_parts/_ask_impl.py:1:# SCP CIRCUIT: M02 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M02-closure.json)",
+    "scp/api_server_parts/helpers.py:1:# SCP CIRCUIT: M02 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M02-closure.json)",
+    "scp/ask_kernel_adapter.py:1:# SCP CIRCUIT: M02 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M02-closure.json)"
+  ],
+  "docs/evidence-summary/M03-closure.json": [
+    "scp/api/routes/openai_compat.py:1:# SCP CIRCUIT: M03 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M03-closure.json)",
+    "scp/api/routes/v105_routes.py:1:# SCP CIRCUIT: M03 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M03-closure.json)",
+    "tests/T02_contract/test_flow_03_openai_compat_scp_standard.py:14:docs/evidence-summary/M03-closure.json):"
+  ],
+  "docs/evidence-summary/M03-evidence/_probe_failure_triggers.py": [
+    "tests/T02_contract/test_flow_03_openai_compat_scp_standard.py:470:        docs/evidence-summary/M03-evidence/_probe_failure_triggers.py \u2014"
+  ],
+  "docs/evidence-summary/M04-closure.json": [
+    "scp/api/routes/control_routes.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/api/routes/hands_routes.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/api/routes/pc_controller_routes.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/api/routes/web_control_routes.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/hands/__init__.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/hands/action_registry.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/hands/goal_parser.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/hands/hands_executor.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/hands/planner.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/hands/process_manager.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/hands/process_probe.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/hands/task_kernel_bridge.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/mcp_server/server.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/pc_control/pc_controller.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "scp/security/capability_epoch.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "tests/T03_capability/test_mcp_server.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)",
+    "tests/T03_capability/test_playwright_backend.py:1:# SCP CIRCUIT: M04 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M04-closure.json)"
+  ],
+  "docs/evidence-summary/M05-closure.json": [
+    "scp/api/routes/agent_routes.py:1:# SCP CIRCUIT: M05 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M05-closure.json)",
+    "scp/api/routes/call_routes.py:1:# SCP CIRCUIT: M05 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M05-closure.json)",
+    "scp/core/agent_orchestrator.py:1:# SCP CIRCUIT: M05 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M05-closure.json)",
+    "scp/core/call_session_hub.py:1:# SCP CIRCUIT: M05 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M05-closure.json)",
+    "scp/core/request_run_ledger.py:1:# SCP CIRCUIT: M05 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M05-closure.json)"
+  ],
+  "docs/evidence-summary/M06-closure.json": [
+    "scp/api/routes/prediction_routes.py:1:# SCP CIRCUIT: M06 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M06-closure.json)",
+    "scp/prediction/predictive.py:1:# SCP CIRCUIT: M06 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M06-closure.json)"
+  ],
+  "docs/evidence-summary/M07-closure.json": [
+    "scp/autofix/classifier.py:1:# SCP CIRCUIT: M07 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M07-closure.json)",
+    "scp/autofix/engine.py:1:# SCP CIRCUIT: M07 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M07-closure.json)",
+    "scp/autofix/permission.py:1:# SCP CIRCUIT: M07 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M07-closure.json)",
+    "scp/autofix/policy_gate.py:1:# SCP CIRCUIT: M07 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M07-closure.json)",
+    "scp/autofix/runner.py:1:# SCP CIRCUIT: M07 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M07-closure.json)",
+    "scp/autofix/runner_phases/ast_scan.py:1:# SCP CIRCUIT: M07 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M07-closure.json)",
+    "scp/autofix/runner_phases/shadow_canary.py:1:# SCP CIRCUIT: M07 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M07-closure.json)",
+    "scp/hello_bug.py:4:# closure (docs/evidence-summary/M07-closure.json, probe commit 1f00d00):"
+  ],
+  "docs/evidence-summary/M08-closure.json": [
+    "scp/api/routes/audit_routes.py:1:# SCP CIRCUIT: M08 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M08-closure.json)",
+    "scp/api/routes/batch_benchmark_routes.py:1:# SCP CIRCUIT: M08 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M08-closure.json)",
+    "scp/core/audit_fetcher.py:1:# SCP CIRCUIT: M08 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M08-closure.json)",
+    "scp/core/fitness_engine.py:1:# SCP CIRCUIT: M08 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M08-closure.json)"
+  ],
+  "docs/evidence-summary/M09-closure.json": [
+    "scp/api/routes/threat_routes.py:1:# SCP CIRCUIT: M09 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M09-closure.json)",
+    "scp/core/ai_threat_scanner.py:1:# SCP CIRCUIT: M09 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M09-closure.json)",
+    "scp/core/harm_detector.py:1:# SCP CIRCUIT: M09 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M09-closure.json)",
+    "scp/security/attack_crawler.py:1:# SCP CIRCUIT: M09 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M09-closure.json)"
+  ],
+  "docs/evidence-summary/M10-closure.json": [
+    "scp/api/routes/stream_routes.py:1:# SCP CIRCUIT: M10 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M10-closure.json)"
+  ],
+  "docs/evidence-summary/M11-closure.json": [
+    "scp/api/routes/admin_v100.py:1:# SCP CIRCUIT: M11 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M11-closure.json)",
+    "scp/api/routes/admin_v98.py:1:# SCP CIRCUIT: M11 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M11-closure.json)",
+    "scp/api/routes/import_routes.py:1:# SCP CIRCUIT: M11 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M11-closure.json)"
+  ],
+  "docs/evidence-summary/M12-closure.json": [
+    "scp/core/doubt_cron.py:1:# SCP CIRCUIT: M12 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M12-closure.json)",
+    "scp/meta/why_engine.py:1:# SCP CIRCUIT: M12 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M12-closure.json)",
+    "scp/meta/why_engine_parts/init_why_db.py:1:# SCP CIRCUIT: M12 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M12-closure.json)",
+    "scp/meta/why_engine_parts/whyengine.py:1:# SCP CIRCUIT: M12 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M12-closure.json)",
+    "scp/meta/why_execute_plan.py:1:# SCP CIRCUIT: M12 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M12-closure.json)",
+    "scp/meta/why_gate.py:1:# SCP CIRCUIT: M12 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M12-closure.json)",
+    "scp/meta/why_sources/nasa.py:1:# SCP CIRCUIT: M12 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M12-closure.json)",
+    "scp/meta/why_sources/open_meteo.py:1:# SCP CIRCUIT: M12 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M12-closure.json)",
+    "scp/meta/why_sources/wikipedia.py:1:# SCP CIRCUIT: M12 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M12-closure.json)"
+  ],
+  "docs/evidence-summary/M13-closure.json": [
+    "scp/api/routes/v104_routes.py:1:# SCP CIRCUIT: M13 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M13-closure.json)",
+    "scp/consolidator/consolidator.py:1:# SCP CIRCUIT: M13 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M13-closure.json)",
+    "scp/core/top_systems_learning.py:1:# SCP CIRCUIT: M13 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M13-closure.json)",
+    "scp/data_sources/free_api_catalog.py:1:# SCP CIRCUIT: M13 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M13-closure.json)",
+    "scp/meta/knowledge_arbiter.py:1:# SCP CIRCUIT: M13 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M13-closure.json)"
+  ],
+  "docs/evidence-summary/M14-closure.json": [
+    "scp/api/routes/v106_routes.py:1:# SCP CIRCUIT: M14 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M14-closure.json)",
+    "scp/epistemic/evidence_store.py:1:# SCP CIRCUIT: M14 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M14-closure.json)",
+    "scp/self_model/capability_map.py:1:# SCP CIRCUIT: M14 \u2014 STATUS: CLOSED_WITH_KNOWN_GAP (closure: docs/evidence-summary/M14-closure.json)"
+  ],
+  "docs/evidence-summary/STATUS-LEDGER.md": [
+    "README.md:29:([STATUS-LEDGER](docs/evidence-summary/STATUS-LEDGER.md)). Mimosa deep scan:"
+  ],
+  "reports/core_repo_matrix_20260825/summary.json": [
+    "tools/create_snapshot_manifest.py:26:    \"reports/core_repo_matrix_20260825/summary.json\","
+  ],
+  "reports/ddg_candidate_provenance_20260825.json": [
+    "tools/create_snapshot_manifest.py:23:    \"reports/ddg_candidate_provenance_20260825.json\","
+  ],
+  "reports/expert-panel/ARCH-AUDIT-B-knowledge.md": [
+    "tests/T07_learning/test_judge_knowledge_wire.py:3:Audit 52-m\u1ea3nh @9ec8d6b (commit e0696f5; reports/expert-panel/ARCH-AUDIT-B-knowledge.md"
+  ],
+  "reports/expert-panel/C3-sandbox-evaluator.md": [
+    "scp/autofix/deterministic_worker.py:234:        loop, xem reports/expert-panel/C3-sandbox-evaluator.md)."
+  ],
+  "reports/expert-panel/EE-G1-client-method-census.json": [
+    "tests/T03_capability/test_egress_enforcement.py:491:    # reports/expert-panel/EE-G1-client-method-census.json."
+  ],
+  "reports/expert-panel/S-B1c-census-baseline.json": [
+    "scripts/diagnostics/fix_silent_except_sb1c.py:13:      --census reports/expert-panel/S-B1c-census-baseline.json \\"
+  ],
+  "reports/expert-panel/S-B3-print-logging.md": [
+    "tests/reality-tests/reality_4-c-022.py:44:in reports/expert-panel/S-B3-print-logging.md (m\u1ee5c S17) for the owner."
+  ],
+  "reports/expert-panel/S18-zero-cost-optin.md": [
+    "GA.md:417:  `reports/expert-panel/S18-zero-cost-optin.md`."
+  ],
+  "reports/expert-panel/S19-ask-kernel-fixes.md": [
+    "tests/T04_kernel/test_ask_kernel_lifecycle_and_identity.py:19:reports/expert-panel/S19-ask-kernel-fixes.md): option (b) \u2014 finalize"
+  ],
+  "reports/expert-panel/S23-discovery-scheduler.md": [
+    "scp/core/free_discovery_scheduler.py:35:ph\u1ea7n n\u00e0y B\u1ece (ghi trong reports/expert-panel/S23-discovery-scheduler.md)."
+  ],
+  "reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json": [
+    ".github/workflows/scp-rc-promotion.yml:295:          if python tools/verify_snapshot_manifest.py reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json | tee reports/release/manifest-verification.json; then",
+    ".github/workflows/scp-rc-promotion.yml:309:          python tools/create_snapshot_manifest.py --commit \"$GITHUB_SHA\" --output reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json",
+    ".github/workflows/scp-rc-promotion.yml:310:          git add reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json",
+    ".github/workflows/scp-rc-promotion.yml:312:          test \"$CHANGED\" = \"reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json\"",
+    ".github/workflows/scp-rc-promotion.yml:330:            reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json",
+    ".github/workflows/scp-rc-promotion.yml:366:          python tools/verify_snapshot_manifest.py reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json",
+    ".github/workflows/scp-rc-promotion.yml:508:          python tools/verify_snapshot_manifest.py reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json",
+    ".github/workflows/scp-refactor-freeze.yml:138:          MANIFEST=reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json",
+    ".github/workflows/scp-refactor-freeze.yml:162:          manifest = json.loads(Path('reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json').read_text(encoding='utf-8'))",
+    "tests/T11_release/test_release_authority_contract.py:34:    assert \"verify_snapshot_manifest.py reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json\" not in pre_rc",
+    "tools/create_snapshot_manifest.py:49:        if path_text == \"reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json\":",
+    "tools/verify_snapshot_manifest.py:26:        if path_text == \"reports/manifests_202608/ROOT_SCP_SNAPSHOT_MANIFEST_20260826.json\":"
+  ],
+  "reports/runtime_8002_20260825_v2/runtime_evidence_summary.json": [
+    "tools/create_snapshot_manifest.py:24:    \"reports/runtime_8002_20260825_v2/runtime_evidence_summary.json\","
+  ],
+  "reports/runtime_8002_20260826_remediation/runtime_evidence_summary.json": [
+    "tools/create_snapshot_manifest.py:25:    \"reports/runtime_8002_20260826_remediation/runtime_evidence_summary.json\","
+  ],
+  "reports/witness/WITNESS-REPORT-W2-2026-09-11.md": [
+    "GA.md:179:`reports/witness/WITNESS-REPORT-W2-2026-09-11.md`. Witness t\u1ef1 d\u1ef1ng real API cluster",
+    "README.md:34:LLM v\u00e0 \u0111o SCP b\u1eb1ng l\u01b0u l\u01b0\u1ee3ng th\u1eadt \u2014 [b\u00e1o c\u00e1o \u0111\u1ea7y \u0111\u1ee7](reports/witness/WITNESS-REPORT-W2-2026-09-11.md):",
+    "tests/T04_kernel/test_ask_kernel_lifecycle_and_identity.py:7:witness report (reports/witness/WITNESS-REPORT-W2-2026-09-11.md, bug 1)"
+  ]
+}

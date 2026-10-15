@@ -1,0 +1,998 @@
+[
+  {
+    "name": "augment_prompt",
+    "kind": "def",
+    "file": "scp/ai_patterns.py",
+    "lineno": 59
+  },
+  {
+    "name": "verify_with_voting",
+    "kind": "def",
+    "file": "scp/ai_patterns.py",
+    "lineno": 87
+  },
+  {
+    "name": "reflect_and_retry",
+    "kind": "def",
+    "file": "scp/ai_patterns.py",
+    "lineno": 196
+  },
+  {
+    "name": "login_for_access_token",
+    "kind": "def",
+    "file": "scp/api_server.py",
+    "lineno": 497
+  },
+  {
+    "name": "list_sessions",
+    "kind": "def",
+    "file": "scp/api/chat.py",
+    "lineno": 604
+  },
+  {
+    "name": "get_session_history",
+    "kind": "def",
+    "file": "scp/api/chat.py",
+    "lineno": 613
+  },
+  {
+    "name": "ContractAdapter",
+    "kind": "class",
+    "file": "scp/audit_engine/contract_adapter.py",
+    "lineno": 4
+  },
+  {
+    "name": "get_canonical_hash",
+    "kind": "def",
+    "file": "scp/audit_engine/contract_adapter.py",
+    "lineno": 18
+  },
+  {
+    "name": "generate_challenge",
+    "kind": "def",
+    "file": "scp/audit_engine/contract_adapter.py",
+    "lineno": 21
+  },
+  {
+    "name": "PromotionGate",
+    "kind": "class",
+    "file": "scp/audit_engine/gate.py",
+    "lineno": 3
+  },
+  {
+    "name": "evaluate_bundle",
+    "kind": "def",
+    "file": "scp/audit_engine/gate.py",
+    "lineno": 15
+  },
+  {
+    "name": "IndependentOracle",
+    "kind": "class",
+    "file": "scp/audit_engine/oracle.py",
+    "lineno": 3
+  },
+  {
+    "name": "AuditPlanner",
+    "kind": "class",
+    "file": "scp/audit_engine/planner.py",
+    "lineno": 3
+  },
+  {
+    "name": "plan_execution",
+    "kind": "def",
+    "file": "scp/audit_engine/planner.py",
+    "lineno": 7
+  },
+  {
+    "name": "JournalRecorder",
+    "kind": "class",
+    "file": "scp/audit_engine/recorder.py",
+    "lineno": 4
+  },
+  {
+    "name": "get_journal",
+    "kind": "def",
+    "file": "scp/audit_engine/recorder.py",
+    "lineno": 17
+  },
+  {
+    "name": "HermeticRunner",
+    "kind": "class",
+    "file": "scp/audit_engine/runner.py",
+    "lineno": 4
+  },
+  {
+    "name": "SnapshotAuthority",
+    "kind": "class",
+    "file": "scp/audit_engine/snapshot.py",
+    "lineno": 31
+  },
+  {
+    "name": "get_immutable_snapshot",
+    "kind": "def",
+    "file": "scp/audit_engine/snapshot.py",
+    "lineno": 40
+  },
+  {
+    "name": "create_execution_overlay",
+    "kind": "def",
+    "file": "scp/audit_engine/snapshot.py",
+    "lineno": 43
+  },
+  {
+    "name": "is_cached_clean",
+    "kind": "def",
+    "file": "scp/autofix/ast_diff_cache.py",
+    "lineno": 200
+  },
+  {
+    "name": "bulk_update",
+    "kind": "def",
+    "file": "scp/autofix/ast_diff_cache.py",
+    "lineno": 305
+  },
+  {
+    "name": "prune_missing",
+    "kind": "def",
+    "file": "scp/autofix/ast_diff_cache.py",
+    "lineno": 361
+  },
+  {
+    "name": "not_empty",
+    "kind": "def",
+    "file": "scp/autofix/audit_log.py",
+    "lineno": 140
+  },
+  {
+    "name": "is_file_current",
+    "kind": "def",
+    "file": "scp/autofix/callgraph_delta.py",
+    "lineno": 646
+  },
+  {
+    "name": "reset_evolution_engine",
+    "kind": "def",
+    "file": "scp/autofix/evolution.py",
+    "lineno": 603
+  },
+  {
+    "name": "get_streaks",
+    "kind": "def",
+    "file": "scp/autofix/monitor.py",
+    "lineno": 103
+  },
+  {
+    "name": "contains_line",
+    "kind": "def",
+    "file": "scp/autofix/property_validator.py",
+    "lineno": 350
+  },
+  {
+    "name": "unwrap_optional",
+    "kind": "def",
+    "file": "scp/autofix/type_flow_verifier.py",
+    "lineno": 117
+  },
+  {
+    "name": "get_by_error_type",
+    "kind": "def",
+    "file": "scp/brain/error_store.py",
+    "lineno": 284
+  },
+  {
+    "name": "update_or_verify",
+    "kind": "def",
+    "file": "scp/brain/error_store.py",
+    "lineno": 439
+  },
+  {
+    "name": "RAGEngine",
+    "kind": "class",
+    "file": "scp/capabilities/rag.py",
+    "lineno": 14
+  },
+  {
+    "name": "learn_word",
+    "kind": "def",
+    "file": "scp/core/antibody.py",
+    "lineno": 127
+  },
+  {
+    "name": "issue_token",
+    "kind": "def",
+    "file": "scp/core/capability.py",
+    "lineno": 15
+  },
+  {
+    "name": "start_evolution_loop",
+    "kind": "def",
+    "file": "scp/core/code_evolution_agent.py",
+    "lineno": 454
+  },
+  {
+    "name": "get_required",
+    "kind": "def",
+    "file": "scp/core/config_contract.py",
+    "lineno": 150
+  },
+  {
+    "name": "build_context_from_file",
+    "kind": "def",
+    "file": "scp/core/context_pruner.py",
+    "lineno": 108
+  },
+  {
+    "name": "cross_verify_trivia",
+    "kind": "def",
+    "file": "scp/core/cross_verify.py",
+    "lineno": 273
+  },
+  {
+    "name": "db_batch_exec",
+    "kind": "def",
+    "file": "scp/core/db_manager.py",
+    "lineno": 127
+  },
+  {
+    "name": "get_db_size_mb",
+    "kind": "def",
+    "file": "scp/core/db_manager.py",
+    "lineno": 177
+  },
+  {
+    "name": "ensure_importable",
+    "kind": "def",
+    "file": "scp/core/dependency_resolver.py",
+    "lineno": 104
+  },
+  {
+    "name": "get_backup_status",
+    "kind": "def",
+    "file": "scp/core/github_backup.py",
+    "lineno": 54
+  },
+  {
+    "name": "backup_to_hf",
+    "kind": "def",
+    "file": "scp/core/github_backup.py",
+    "lineno": 59
+  },
+  {
+    "name": "add_source",
+    "kind": "def",
+    "file": "scp/core/multi_source_verifier.py",
+    "lineno": 561
+  },
+  {
+    "name": "get_conclusion_with_evidences",
+    "kind": "def",
+    "file": "scp/core/phase0.py",
+    "lineno": 311
+  },
+  {
+    "name": "get_decision_history",
+    "kind": "def",
+    "file": "scp/core/phase0.py",
+    "lineno": 487
+  },
+  {
+    "name": "for_url_navigation",
+    "kind": "def",
+    "file": "scp/core/postcondition_schema.py",
+    "lineno": 116
+  },
+  {
+    "name": "for_artifact",
+    "kind": "def",
+    "file": "scp/core/postcondition_schema.py",
+    "lineno": 124
+  },
+  {
+    "name": "safe_run_python",
+    "kind": "def",
+    "file": "scp/core/safe_process.py",
+    "lineno": 179
+  },
+  {
+    "name": "SelfImprovementEngine",
+    "kind": "class",
+    "file": "scp/core/self_improvement.py",
+    "lineno": 1
+  },
+  {
+    "name": "propose_architecture_fix",
+    "kind": "def",
+    "file": "scp/core/self_improvement.py",
+    "lineno": 5
+  },
+  {
+    "name": "get_entries_by_namespace",
+    "kind": "def",
+    "file": "scp/core/smart_cache.py",
+    "lineno": 312
+  },
+  {
+    "name": "classify_multi",
+    "kind": "def",
+    "file": "scp/core/smart_classifier.py",
+    "lineno": 367
+  },
+  {
+    "name": "learn_from_feedback",
+    "kind": "def",
+    "file": "scp/core/smart_classifier.py",
+    "lineno": 385
+  },
+  {
+    "name": "SpeculativeRace",
+    "kind": "class",
+    "file": "scp/core/speculative.py",
+    "lineno": 46
+  },
+  {
+    "name": "stream_verdict_stages",
+    "kind": "def",
+    "file": "scp/core/streaming_factcheck.py",
+    "lineno": 167
+  },
+  {
+    "name": "prune_knowledge",
+    "kind": "def",
+    "file": "scp/core/top_systems_learning.py",
+    "lineno": 450
+  },
+  {
+    "name": "active_span_ids",
+    "kind": "def",
+    "file": "scp/core/trace_contract.py",
+    "lineno": 181
+  },
+  {
+    "name": "http_open",
+    "kind": "def",
+    "file": "scp/core/url_fetcher.py",
+    "lineno": 149
+  },
+  {
+    "name": "https_open",
+    "kind": "def",
+    "file": "scp/core/url_fetcher.py",
+    "lineno": 161
+  },
+  {
+    "name": "convert_temperature",
+    "kind": "def",
+    "file": "scp/data_sources/conversion.py",
+    "lineno": 268
+  },
+  {
+    "name": "get_domains_by_category",
+    "kind": "def",
+    "file": "scp/data_sources/domain_registry.py",
+    "lineno": 24
+  },
+  {
+    "name": "get_constant",
+    "kind": "def",
+    "file": "scp/data_sources/physics.py",
+    "lineno": 168
+  },
+  {
+    "name": "list_sources",
+    "kind": "def",
+    "file": "scp/data_sources/registry.py",
+    "lineno": 139
+  },
+  {
+    "name": "get_batch_processor",
+    "kind": "def",
+    "file": "scp/foundation/batch.py",
+    "lineno": 256
+  },
+  {
+    "name": "batch_fetch_rates",
+    "kind": "def",
+    "file": "scp/foundation/batch.py",
+    "lineno": 60
+  },
+  {
+    "name": "batch_fetch_crypto",
+    "kind": "def",
+    "file": "scp/foundation/batch.py",
+    "lineno": 139
+  },
+  {
+    "name": "batch_fetch_weather",
+    "kind": "def",
+    "file": "scp/foundation/batch.py",
+    "lineno": 186
+  },
+  {
+    "name": "inspect_changes",
+    "kind": "def",
+    "file": "scp/governance/drift_guard.py",
+    "lineno": 162
+  },
+  {
+    "name": "get_attack_patterns",
+    "kind": "def",
+    "file": "scp/knowledge/cwe_exploit_store.py",
+    "lineno": 265
+  },
+  {
+    "name": "search_by_antibody",
+    "kind": "def",
+    "file": "scp/knowledge/cwe_exploit_store.py",
+    "lineno": 272
+  },
+  {
+    "name": "validate_transition_object",
+    "kind": "def",
+    "file": "scp/knowledge/ontology.py",
+    "lineno": 161
+  },
+  {
+    "name": "accuracy_rate",
+    "kind": "def",
+    "file": "scp/knowledge/source_reputation.py",
+    "lineno": 76
+  },
+  {
+    "name": "check_source_before_ingestion",
+    "kind": "def",
+    "file": "scp/knowledge/source_watchlist.py",
+    "lineno": 226
+  },
+  {
+    "name": "list_blocked",
+    "kind": "def",
+    "file": "scp/knowledge/source_watchlist.py",
+    "lineno": 188
+  },
+  {
+    "name": "add_query",
+    "kind": "def",
+    "file": "scp/knowledge/warehouse.py",
+    "lineno": 23
+  },
+  {
+    "name": "record_feedback",
+    "kind": "def",
+    "file": "scp/learning/continual.py",
+    "lineno": 24
+  },
+  {
+    "name": "get_cognitive_gate",
+    "kind": "def",
+    "file": "scp/meta/cognitive_gate.py",
+    "lineno": 410
+  },
+  {
+    "name": "should_ask",
+    "kind": "def",
+    "file": "scp/meta/curiosity_asker.py",
+    "lineno": 58
+  },
+  {
+    "name": "evaluate_lineage",
+    "kind": "def",
+    "file": "scp/meta/epistemic_boundary.py",
+    "lineno": 32
+  },
+  {
+    "name": "is_support_condition_satisfied",
+    "kind": "def",
+    "file": "scp/meta/epistemic_boundary.py",
+    "lineno": 39
+  },
+  {
+    "name": "process_verification_failure",
+    "kind": "def",
+    "file": "scp/meta/epistemic_boundary.py",
+    "lineno": 73
+  },
+  {
+    "name": "is_skeptical",
+    "kind": "def",
+    "file": "scp/meta/falsification_engine.py",
+    "lineno": 85
+  },
+  {
+    "name": "get_scanner_evolver",
+    "kind": "def",
+    "file": "scp/meta/kb_evolve.py",
+    "lineno": 452
+  },
+  {
+    "name": "check_code_against_patterns",
+    "kind": "def",
+    "file": "scp/meta/kb_evolve.py",
+    "lineno": 323
+  },
+  {
+    "name": "should_audit",
+    "kind": "def",
+    "file": "scp/meta/logical_auditor.py",
+    "lineno": 260
+  },
+  {
+    "name": "update_progress",
+    "kind": "def",
+    "file": "scp/meta/meta.py",
+    "lineno": 130
+  },
+  {
+    "name": "complete_goal",
+    "kind": "def",
+    "file": "scp/meta/meta.py",
+    "lineno": 137
+  },
+  {
+    "name": "mark_asked",
+    "kind": "def",
+    "file": "scp/meta/meta.py",
+    "lineno": 442
+  },
+  {
+    "name": "infer_chain",
+    "kind": "def",
+    "file": "scp/meta/meta.py",
+    "lineno": 537
+  },
+  {
+    "name": "get_active_principles",
+    "kind": "def",
+    "file": "scp/meta/meta.py",
+    "lineno": 732
+  },
+  {
+    "name": "get_boundaries",
+    "kind": "def",
+    "file": "scp/meta/meta.py",
+    "lineno": 774
+  },
+  {
+    "name": "get_emergent_themes",
+    "kind": "def",
+    "file": "scp/meta/metawhy_monitor.py",
+    "lineno": 181
+  },
+  {
+    "name": "MultiLLMChecker",
+    "kind": "class",
+    "file": "scp/meta/multi_llm_check.py",
+    "lineno": 44
+  },
+  {
+    "name": "classify_source",
+    "kind": "def",
+    "file": "scp/meta/question_tracker.py",
+    "lineno": 61
+  },
+  {
+    "name": "record_failover",
+    "kind": "def",
+    "file": "scp/observability/otel_exporter.py",
+    "lineno": 99
+  },
+  {
+    "name": "record_task_transition",
+    "kind": "def",
+    "file": "scp/observability/otel_exporter.py",
+    "lineno": 106
+  },
+  {
+    "name": "start_retry_monitor",
+    "kind": "def",
+    "file": "scp/policy/retry_policy.py",
+    "lineno": 99
+  },
+  {
+    "name": "get_report",
+    "kind": "def",
+    "file": "scp/runtime/engine.py",
+    "lineno": 25
+  },
+  {
+    "name": "get_error_history",
+    "kind": "def",
+    "file": "scp/runtime/engine.py",
+    "lineno": 28
+  },
+  {
+    "name": "start_auto_explore",
+    "kind": "def",
+    "file": "scp/runtime/engine.py",
+    "lineno": 30
+  },
+  {
+    "name": "stop_auto_explore",
+    "kind": "def",
+    "file": "scp/runtime/engine.py",
+    "lineno": 31
+  },
+  {
+    "name": "V14SelfHealingEngine",
+    "kind": "class",
+    "file": "scp/runtime/healing_v14.py",
+    "lineno": 40
+  },
+  {
+    "name": "persist_to_store",
+    "kind": "def",
+    "file": "scp/security/attack_crawler.py",
+    "lineno": 450
+  },
+  {
+    "name": "get_attacker_status",
+    "kind": "def",
+    "file": "scp/security/canary_monitor.py",
+    "lineno": 199
+  },
+  {
+    "name": "get_alert_history",
+    "kind": "def",
+    "file": "scp/security/counter_response.py",
+    "lineno": 216
+  },
+  {
+    "name": "unblock_ip",
+    "kind": "def",
+    "file": "scp/security/counter_response.py",
+    "lineno": 691
+  },
+  {
+    "name": "collect_imports",
+    "kind": "def",
+    "file": "scp/security/egress_static_scan.py",
+    "lineno": 200
+  },
+  {
+    "name": "clear_session",
+    "kind": "def",
+    "file": "scp/security/memory_guard.py",
+    "lineno": 215
+  },
+  {
+    "name": "get_playbook",
+    "kind": "def",
+    "file": "scp/security/playbooks.py",
+    "lineno": 97
+  },
+  {
+    "name": "get_reviewer",
+    "kind": "def",
+    "file": "scp/security/quorum_why.py",
+    "lineno": 119
+  },
+  {
+    "name": "get_profile",
+    "kind": "def",
+    "file": "scp/security/threat_detector.py",
+    "lineno": 467
+  },
+  {
+    "name": "get_top_attackers",
+    "kind": "def",
+    "file": "scp/security/threat_detector.py",
+    "lineno": 470
+  },
+  {
+    "name": "get_recent_updates",
+    "kind": "def",
+    "file": "scp/security/threat_intel.py",
+    "lineno": 352
+  },
+  {
+    "name": "test_chaos_recovery",
+    "kind": "def",
+    "file": "scp/tests/chaos_recovery.py",
+    "lineno": 5
+  },
+  {
+    "name": "test_text_capable_rejects_audio_video",
+    "kind": "def",
+    "file": "scp/tests/test_free_catalog.py",
+    "lineno": 30
+  },
+  {
+    "name": "test_text_capable_accepts_text_and_absent",
+    "kind": "def",
+    "file": "scp/tests/test_free_catalog.py",
+    "lineno": 35
+  },
+  {
+    "name": "test_text_capable_supports_nested_architecture_schema",
+    "kind": "def",
+    "file": "scp/tests/test_free_catalog.py",
+    "lineno": 40
+  },
+  {
+    "name": "test_refresh_replaces_allowlist_and_filters_audio",
+    "kind": "def",
+    "file": "scp/tests/test_free_catalog.py",
+    "lineno": 45
+  },
+  {
+    "name": "test_refresh_replaces_client_allowlist_not_fc_module",
+    "kind": "def",
+    "file": "scp/tests/test_free_catalog.py",
+    "lineno": 54
+  },
+  {
+    "name": "test_refresh_network_fail_authorizes_nothing",
+    "kind": "def",
+    "file": "scp/tests/test_free_catalog.py",
+    "lineno": 64
+  },
+  {
+    "name": "test_refresh_empty_catalog_authorizes_nothing",
+    "kind": "def",
+    "file": "scp/tests/test_free_catalog.py",
+    "lineno": 75
+  },
+  {
+    "name": "test_refresh_unknown_pricing_gets_paid_sentinel",
+    "kind": "def",
+    "file": "scp/tests/test_free_catalog.py",
+    "lineno": 84
+  },
+  {
+    "name": "test_refresh_force_bypasses_fetched_flag",
+    "kind": "def",
+    "file": "scp/tests/test_free_catalog.py",
+    "lineno": 96
+  },
+  {
+    "name": "test_start_background_refresh_is_idempotent",
+    "kind": "def",
+    "file": "scp/tests/test_free_catalog.py",
+    "lineno": 105
+  },
+  {
+    "name": "debug_url",
+    "kind": "def",
+    "file": "scp/web_control/browser_session.py",
+    "lineno": 33
+  },
+  {
+    "name": "handle_data",
+    "kind": "def",
+    "file": "scp/web_control/internet_search.py",
+    "lineno": 51
+  },
+  {
+    "name": "handle_endtag",
+    "kind": "def",
+    "file": "scp/web_control/internet_search.py",
+    "lineno": 55
+  },
+  {
+    "name": "resolve_prediction",
+    "kind": "def",
+    "file": "scp/api/routes/calibration_routes.py",
+    "lineno": 82
+  },
+  {
+    "name": "create_call_session",
+    "kind": "def",
+    "file": "scp/api/routes/call_routes.py",
+    "lineno": 32
+  },
+  {
+    "name": "call_signal",
+    "kind": "def",
+    "file": "scp/api/routes/call_routes.py",
+    "lineno": 51
+  },
+  {
+    "name": "capability_deescalate",
+    "kind": "def",
+    "file": "scp/api/routes/control_routes.py",
+    "lineno": 91
+  },
+  {
+    "name": "evaluate_systemone",
+    "kind": "def",
+    "file": "scp/api/routes/evaluation_routes.py",
+    "lineno": 161
+  },
+  {
+    "name": "list_incidents",
+    "kind": "def",
+    "file": "scp/api/routes/risk_routes.py",
+    "lineno": 96
+  },
+  {
+    "name": "v104_top_systems_status",
+    "kind": "def",
+    "file": "scp/api/routes/v104_routes.py",
+    "lineno": 425
+  },
+  {
+    "name": "v104_top_systems_advise",
+    "kind": "def",
+    "file": "scp/api/routes/v104_routes.py",
+    "lineno": 456
+  },
+  {
+    "name": "v104_doubt_status",
+    "kind": "def",
+    "file": "scp/api/routes/v104_routes.py",
+    "lineno": 489
+  },
+  {
+    "name": "v104_doubt_run",
+    "kind": "def",
+    "file": "scp/api/routes/v104_routes.py",
+    "lineno": 505
+  },
+  {
+    "name": "get_audit_reports",
+    "kind": "def",
+    "file": "scp/api/routes/v106_routes.py",
+    "lineno": 16
+  },
+  {
+    "name": "visit_SetComp",
+    "kind": "def",
+    "file": "scp/autofix/runner_phases/ast_scan.py",
+    "lineno": 464
+  },
+  {
+    "name": "visit_GeneratorExp",
+    "kind": "def",
+    "file": "scp/autofix/runner_phases/ast_scan.py",
+    "lineno": 467
+  },
+  {
+    "name": "visit_DictComp",
+    "kind": "def",
+    "file": "scp/autofix/runner_phases/ast_scan.py",
+    "lineno": 470
+  },
+  {
+    "name": "list_watched",
+    "kind": "def",
+    "file": "scp/autofix/runner_phases/auto_rollback.py",
+    "lineno": 255
+  },
+  {
+    "name": "replay_evidence",
+    "kind": "def",
+    "file": "scp/autofix/runner_phases/evidence_replay.py",
+    "lineno": 1
+  },
+  {
+    "name": "visit_Module",
+    "kind": "def",
+    "file": "scp/autofix/scanners/dead_code_scanner.py",
+    "lineno": 149
+  },
+  {
+    "name": "visit_Assert",
+    "kind": "def",
+    "file": "scp/autofix/scanners/logic_flow_scanner.py",
+    "lineno": 106
+  },
+  {
+    "name": "visit_Return",
+    "kind": "def",
+    "file": "scp/autofix/scanners/resource_leak_scanner.py",
+    "lineno": 189
+  },
+  {
+    "name": "visit_JoinedStr",
+    "kind": "def",
+    "file": "scp/autofix/scanners/xss_scanner.py",
+    "lineno": 351
+  },
+  {
+    "name": "errors_archive_path",
+    "kind": "def",
+    "file": "scp/core/partition/shard.py",
+    "lineno": 166
+  },
+  {
+    "name": "bypasses_archive_path",
+    "kind": "def",
+    "file": "scp/core/partition/shard.py",
+    "lineno": 192
+  },
+  {
+    "name": "SCPV14ProcessMixin",
+    "kind": "class",
+    "file": "scp/runtime/engine_parts/scpv14_process_mixin.py",
+    "lineno": 106
+  },
+  {
+    "name": "pytest_collection_modifyitems",
+    "kind": "def",
+    "file": "scp/tests/external_audit/conftest.py",
+    "lineno": 25
+  },
+  {
+    "name": "test_admin_routes_have_auth",
+    "kind": "def",
+    "file": "scp/tests/external_audit/test_security.py",
+    "lineno": 71
+  },
+  {
+    "name": "test_verify_admin_no_dev_mode_bypass",
+    "kind": "def",
+    "file": "scp/tests/external_audit/test_security.py",
+    "lineno": 93
+  },
+  {
+    "name": "test_no_hardcoded_token_in_source",
+    "kind": "def",
+    "file": "scp/tests/external_audit/test_security.py",
+    "lineno": 112
+  },
+  {
+    "name": "test_bandit_no_new_high_severity_via_bandit",
+    "kind": "def",
+    "file": "scp/tests/external_audit/test_security.py",
+    "lineno": 145
+  },
+  {
+    "name": "test_pc_read_only_allowlist_rejects_command_chains",
+    "kind": "def",
+    "file": "scp/tests/external_audit/test_security.py",
+    "lineno": 175
+  },
+  {
+    "name": "test_browser_validator_rejects_private_network_targets",
+    "kind": "def",
+    "file": "scp/tests/external_audit/test_security.py",
+    "lineno": 200
+  },
+  {
+    "name": "test_webhook_handlers_pass_request_to_canonical_admin_auth",
+    "kind": "def",
+    "file": "scp/tests/external_audit/test_security.py",
+    "lineno": 214
+  },
+  {
+    "name": "test_webnavigator_revalidates_private_redirect_before_second_request",
+    "kind": "def",
+    "file": "scp/tests/external_audit/test_security.py",
+    "lineno": 266
+  },
+  {
+    "name": "test_detail_routes_share_producer_data_path_constants",
+    "kind": "def",
+    "file": "scp/tests/external_audit/test_security.py",
+    "lineno": 330
+  },
+  {
+    "name": "test_active_lifespan_does_not_autostart_ungated_external_producers",
+    "kind": "def",
+    "file": "scp/tests/external_audit/test_security.py",
+    "lineno": 345
+  },
+  {
+    "name": "test_stream_route_contract_is_live_and_offloads_sync_judge",
+    "kind": "def",
+    "file": "scp/tests/external_audit/test_security.py",
+    "lineno": 353
+  },
+  {
+    "name": "test_crypto_guard_never_raises",
+    "kind": "def",
+    "file": "scp/tests/property/test_none_safety.py",
+    "lineno": 115
+  },
+  {
+    "name": "test_currency_guard_never_raises",
+    "kind": "def",
+    "file": "scp/tests/property/test_none_safety.py",
+    "lineno": 146
+  },
+  {
+    "name": "test_chemistry_dict_guard_never_raises",
+    "kind": "def",
+    "file": "scp/tests/property/test_none_safety.py",
+    "lineno": 175
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "timestamp": 1790108367.7069762,
+  "checks": [
+    {
+      "name": "SafeCommandRunner: Adversarial Blocked Invariants",
+      "passed": true,
+      "details": "All 12 destructive commands blocked."
+    },
+    {
+      "name": "SafeCommandRunner: Chaining & Redirection",
+      "passed": true,
+      "details": "All 9 chaining/redirection vectors blocked."
+    },
+    {
+      "name": "SafeCommandRunner: Real Execution Authenticity",
+      "passed": true,
+      "details": "Real subprocess returned stdout containing token: forensic_token_1790108367713"
+    },
+    {
+      "name": "EgressPolicy: Fail-Closed Default & Invariants",
+      "passed": true,
+      "details": "Mode=EgressMode.ALLOWLIST, ext_blocked=True, meta_blocked=True, ipv6_meta_blocked=True"
+    },
+    {
+      "name": "AutonomousAuditLedger: Pristine HMAC Verification",
+      "passed": true,
+      "details": "Valid=True, entries=2, errors=[]"
+    },
+    {
+      "name": "AutonomousAuditLedger: Recalculated Hash Tamper Detection",
+      "passed": true,
+      "details": "Tamper detected: ['prev_hash:2', 'hmac_intent:1']"
+    },
+    {
+      "name": "HandsExecutor: Capability PEP & Two-Phase Commit",
+      "passed": true,
+      "details": "NoTokenBlocked=True, ValidExec=True, LedgerEntries=2"
+    },
+    {
+      "name": "Production Callers: Grep Verification",
+      "passed": true,
+      "details": "tools callers=3, egress callers=3, ledger callers=1"
+    }
+  ],
+  "all_passed": true
+}

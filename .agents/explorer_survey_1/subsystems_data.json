@@ -1,0 +1,1057 @@
+{
+  "api": {
+    "subsystem": "api",
+    "path": "scp/api",
+    "file_count": 35,
+    "loc": 6678,
+    "god_files": [
+      [
+        "scp/api/routes/v105_routes.py",
+        727
+      ],
+      [
+        "scp/api/chat.py",
+        617
+      ],
+      [
+        "scp/api/routes/v104_routes.py",
+        543
+      ],
+      [
+        "scp/api/dashboard_html.py",
+        540
+      ]
+    ],
+    "outbound": [
+      "api_server",
+      "api_server_parts",
+      "autofix",
+      "calibration",
+      "consolidator",
+      "contracts",
+      "core",
+      "data_sources",
+      "epistemic",
+      "forecast",
+      "hands",
+      "history",
+      "knowledge",
+      "llm_gateway",
+      "meta",
+      "pc_control",
+      "rag",
+      "release",
+      "risk_intelligence",
+      "runtime",
+      "security",
+      "self_model",
+      "web_control",
+      "world_state"
+    ],
+    "inbound": [
+      "api_server_parts",
+      "root/api_server.py",
+      "tests"
+    ]
+  },
+  "api_server_parts": {
+    "subsystem": "api_server_parts",
+    "path": "scp/api_server_parts",
+    "file_count": 6,
+    "loc": 1891,
+    "god_files": [
+      [
+        "scp/api_server_parts/_ask_impl.py",
+        869
+      ]
+    ],
+    "outbound": [
+      "api",
+      "autofix",
+      "calibration",
+      "capabilities",
+      "contracts",
+      "core",
+      "data_sources",
+      "forecast",
+      "history",
+      "knowledge",
+      "llm_gateway",
+      "meta",
+      "observability",
+      "policy",
+      "prediction",
+      "risk_intelligence",
+      "runtime",
+      "security",
+      "task_kernel",
+      "trace_ledger",
+      "web_control",
+      "world_state"
+    ],
+    "inbound": [
+      "api",
+      "root/api_server.py",
+      "root/ask_kernel_adapter.py",
+      "security"
+    ]
+  },
+  "audit_engine": {
+    "subsystem": "audit_engine",
+    "path": "scp/audit_engine",
+    "file_count": 9,
+    "loc": 288,
+    "god_files": [],
+    "outbound": [],
+    "inbound": []
+  },
+  "audit_r8": {
+    "subsystem": "audit_r8",
+    "path": "scp/audit_r8",
+    "file_count": 0,
+    "loc": 0,
+    "god_files": [],
+    "outbound": [],
+    "inbound": []
+  },
+  "audit_r9": {
+    "subsystem": "audit_r9",
+    "path": "scp/audit_r9",
+    "file_count": 0,
+    "loc": 0,
+    "god_files": [],
+    "outbound": [],
+    "inbound": []
+  },
+  "autofix": {
+    "subsystem": "autofix",
+    "path": "scp/autofix",
+    "file_count": 99,
+    "loc": 32648,
+    "god_files": [
+      [
+        "scp/autofix/engine_parts/autofix_mixin.py",
+        1631
+      ],
+      [
+        "scp/autofix/engine.py",
+        1045
+      ],
+      [
+        "scp/autofix/property_validator.py",
+        924
+      ],
+      [
+        "scp/autofix/policy_gate.py",
+        895
+      ],
+      [
+        "scp/autofix/speculative_prefixer.py",
+        847
+      ],
+      [
+        "scp/autofix/scanners/taint_flow_scanner.py",
+        830
+      ],
+      [
+        "scp/autofix/type_flow_verifier.py",
+        806
+      ],
+      [
+        "scp/autofix/runner_phases/ast_scan.py",
+        790
+      ],
+      [
+        "scp/autofix/runner_phases/shadow_canary.py",
+        784
+      ],
+      [
+        "scp/autofix/callgraph_delta.py",
+        751
+      ],
+      [
+        "scp/autofix/runner.py",
+        731
+      ],
+      [
+        "scp/autofix/enterprise_scanners.py",
+        718
+      ],
+      [
+        "scp/autofix/deterministic_worker.py",
+        675
+      ],
+      [
+        "scp/autofix/scanners/semantic_intent_scanner.py",
+        639
+      ],
+      [
+        "scp/autofix/runner_phases/post_fix_verify.py",
+        637
+      ],
+      [
+        "scp/autofix/evolution_parts/reflectmixin.py",
+        626
+      ],
+      [
+        "scp/autofix/engine_extensions.py",
+        610
+      ],
+      [
+        "scp/autofix/evolution.py",
+        607
+      ],
+      [
+        "scp/autofix/scanners/xss_scanner.py",
+        581
+      ],
+      [
+        "scp/autofix/runner_phases/auto_rollback.py",
+        575
+      ],
+      [
+        "scp/autofix/scanners/_self_audit.py",
+        561
+      ],
+      [
+        "scp/autofix/intent_inference_engine.py",
+        519
+      ],
+      [
+        "scp/autofix/scanners/race_condition_scanner.py",
+        513
+      ],
+      [
+        "scp/autofix/llm_fix_cache.py",
+        510
+      ]
+    ],
+    "outbound": [
+      "contracts",
+      "core",
+      "event_bus_pg",
+      "llm_gateway",
+      "meta",
+      "sandbox_evaluator",
+      "security"
+    ],
+    "inbound": [
+      "api",
+      "api_server_parts",
+      "core"
+    ]
+  },
+  "benchmark": {
+    "subsystem": "benchmark",
+    "path": "scp/benchmark",
+    "file_count": 22,
+    "loc": 2643,
+    "god_files": [
+      [
+        "scp/benchmark/run_benchmark_enhanced.py",
+        526
+      ]
+    ],
+    "outbound": [
+      "knowledge",
+      "llm_gateway",
+      "security"
+    ],
+    "inbound": []
+  },
+  "brain": {
+    "subsystem": "brain",
+    "path": "scp/brain",
+    "file_count": 8,
+    "loc": 2122,
+    "god_files": [
+      [
+        "scp/brain/error_store.py",
+        550
+      ],
+      [
+        "scp/brain/error_store_index.py",
+        534
+      ]
+    ],
+    "outbound": [],
+    "inbound": []
+  },
+  "calibration": {
+    "subsystem": "calibration",
+    "path": "scp/calibration",
+    "file_count": 4,
+    "loc": 374,
+    "god_files": [],
+    "outbound": [
+      "contracts",
+      "persistence"
+    ],
+    "inbound": [
+      "api",
+      "api_server_parts"
+    ]
+  },
+  "capabilities": {
+    "subsystem": "capabilities",
+    "path": "scp/capabilities",
+    "file_count": 4,
+    "loc": 231,
+    "god_files": [],
+    "outbound": [
+      "llm_gateway"
+    ],
+    "inbound": [
+      "api_server_parts"
+    ]
+  },
+  "consolidator": {
+    "subsystem": "consolidator",
+    "path": "scp/consolidator",
+    "file_count": 2,
+    "loc": 161,
+    "god_files": [],
+    "outbound": [],
+    "inbound": [
+      "api"
+    ]
+  },
+  "contracts": {
+    "subsystem": "contracts",
+    "path": "scp/contracts",
+    "file_count": 8,
+    "loc": 263,
+    "god_files": [],
+    "outbound": [],
+    "inbound": [
+      "api",
+      "api_server_parts",
+      "autofix",
+      "calibration",
+      "epistemic",
+      "governance",
+      "knowledge",
+      "meta",
+      "persistence",
+      "risk_intelligence",
+      "self_model",
+      "world_state"
+    ]
+  },
+  "core": {
+    "subsystem": "core",
+    "path": "scp/core",
+    "file_count": 94,
+    "loc": 21791,
+    "god_files": [
+      [
+        "scp/core/request_run_ledger.py",
+        801
+      ],
+      [
+        "scp/core/fast_learning_engine_parts/fastlearningengine.py",
+        716
+      ],
+      [
+        "scp/core/phase0.py",
+        702
+      ],
+      [
+        "scp/core/multi_source_verifier.py",
+        701
+      ],
+      [
+        "scp/core/smart_cache.py",
+        612
+      ],
+      [
+        "scp/core/question_fetchers/data_fetchers.py",
+        554
+      ],
+      [
+        "scp/core/conflict_resolver.py",
+        536
+      ],
+      [
+        "scp/core/partition/shard.py",
+        533
+      ],
+      [
+        "scp/core/math_evaluator.py",
+        531
+      ],
+      [
+        "scp/core/top_systems_learning.py",
+        514
+      ]
+    ],
+    "outbound": [
+      "autofix",
+      "data_sources",
+      "governance",
+      "hands",
+      "knowledge",
+      "llm_gateway",
+      "meta",
+      "runtime",
+      "security",
+      "task_kernel"
+    ],
+    "inbound": [
+      "api",
+      "api_server_parts",
+      "autofix",
+      "data_sources",
+      "experience",
+      "hands",
+      "history",
+      "knowledge",
+      "learning",
+      "llm_gateway",
+      "mcp_server",
+      "meta",
+      "pc_control",
+      "prediction",
+      "root/__init__.py",
+      "root/api_server.py",
+      "root/ask_kernel_adapter.py",
+      "root/verifier.py",
+      "runtime",
+      "security",
+      "task_kernel_parts",
+      "tests"
+    ]
+  },
+  "data_sources": {
+    "subsystem": "data_sources",
+    "path": "scp/data_sources",
+    "file_count": 71,
+    "loc": 12382,
+    "god_files": [
+      [
+        "scp/data_sources/live_knowledge.py",
+        705
+      ],
+      [
+        "scp/data_sources/chemistry.py",
+        642
+      ]
+    ],
+    "outbound": [
+      "core",
+      "interfaces",
+      "security"
+    ],
+    "inbound": [
+      "api",
+      "api_server_parts",
+      "core",
+      "meta",
+      "runtime"
+    ]
+  },
+  "epistemic": {
+    "subsystem": "epistemic",
+    "path": "scp/epistemic",
+    "file_count": 5,
+    "loc": 884,
+    "god_files": [],
+    "outbound": [
+      "contracts",
+      "governance",
+      "persistence"
+    ],
+    "inbound": [
+      "api",
+      "governance",
+      "knowledge",
+      "self_model"
+    ]
+  },
+  "experience": {
+    "subsystem": "experience",
+    "path": "scp/experience",
+    "file_count": 3,
+    "loc": 846,
+    "god_files": [
+      [
+        "scp/experience/experience.py",
+        822
+      ]
+    ],
+    "outbound": [
+      "core"
+    ],
+    "inbound": [
+      "knowledge"
+    ]
+  },
+  "forecast": {
+    "subsystem": "forecast",
+    "path": "scp/forecast",
+    "file_count": 3,
+    "loc": 405,
+    "god_files": [],
+    "outbound": [],
+    "inbound": [
+      "api",
+      "api_server_parts"
+    ]
+  },
+  "foundation": {
+    "subsystem": "foundation",
+    "path": "scp/foundation",
+    "file_count": 3,
+    "loc": 476,
+    "god_files": [],
+    "outbound": [
+      "security"
+    ],
+    "inbound": []
+  },
+  "governance": {
+    "subsystem": "governance",
+    "path": "scp/governance",
+    "file_count": 4,
+    "loc": 515,
+    "god_files": [],
+    "outbound": [
+      "contracts",
+      "epistemic",
+      "persistence"
+    ],
+    "inbound": [
+      "core",
+      "epistemic"
+    ]
+  },
+  "hands": {
+    "subsystem": "hands",
+    "path": "scp/hands",
+    "file_count": 8,
+    "loc": 2552,
+    "god_files": [
+      [
+        "scp/hands/planner.py",
+        977
+      ],
+      [
+        "scp/hands/task_kernel_bridge.py",
+        656
+      ]
+    ],
+    "outbound": [
+      "core",
+      "kernel_storage",
+      "pc_control",
+      "security",
+      "task_kernel",
+      "web_control"
+    ],
+    "inbound": [
+      "api",
+      "core",
+      "mcp_server"
+    ]
+  },
+  "history": {
+    "subsystem": "history",
+    "path": "scp/history",
+    "file_count": 5,
+    "loc": 660,
+    "god_files": [],
+    "outbound": [
+      "core"
+    ],
+    "inbound": [
+      "api",
+      "api_server_parts"
+    ]
+  },
+  "interfaces": {
+    "subsystem": "interfaces",
+    "path": "scp/interfaces",
+    "file_count": 2,
+    "loc": 83,
+    "god_files": [],
+    "outbound": [],
+    "inbound": [
+      "data_sources"
+    ]
+  },
+  "knowledge": {
+    "subsystem": "knowledge",
+    "path": "scp/knowledge",
+    "file_count": 28,
+    "loc": 6807,
+    "god_files": [
+      [
+        "scp/knowledge/antibody_parts/mixins.py",
+        1190
+      ],
+      [
+        "scp/knowledge/source_reputation.py",
+        695
+      ],
+      [
+        "scp/knowledge/antibody_system.py",
+        676
+      ],
+      [
+        "scp/knowledge/domain_knowledge.py",
+        533
+      ],
+      [
+        "scp/knowledge/domain_store.py",
+        530
+      ]
+    ],
+    "outbound": [
+      "contracts",
+      "core",
+      "epistemic",
+      "experience",
+      "meta",
+      "security",
+      "self_model",
+      "web_control"
+    ],
+    "inbound": [
+      "api",
+      "api_server_parts",
+      "benchmark",
+      "core",
+      "meta",
+      "runtime"
+    ]
+  },
+  "learning": {
+    "subsystem": "learning",
+    "path": "scp/learning",
+    "file_count": 2,
+    "loc": 37,
+    "god_files": [],
+    "outbound": [
+      "core"
+    ],
+    "inbound": []
+  },
+  "llm_gateway": {
+    "subsystem": "llm_gateway",
+    "path": "scp/llm_gateway",
+    "file_count": 5,
+    "loc": 1317,
+    "god_files": [
+      [
+        "scp/llm_gateway/client.py",
+        1024
+      ]
+    ],
+    "outbound": [
+      "core",
+      "security"
+    ],
+    "inbound": [
+      "api",
+      "api_server_parts",
+      "autofix",
+      "benchmark",
+      "capabilities",
+      "core",
+      "meta",
+      "runtime",
+      "security",
+      "tests"
+    ]
+  },
+  "mcp_server": {
+    "subsystem": "mcp_server",
+    "path": "scp/mcp_server",
+    "file_count": 3,
+    "loc": 437,
+    "god_files": [],
+    "outbound": [
+      "core",
+      "hands",
+      "security"
+    ],
+    "inbound": []
+  },
+  "meta": {
+    "subsystem": "meta",
+    "path": "scp/meta",
+    "file_count": 55,
+    "loc": 14110,
+    "god_files": [
+      [
+        "scp/meta/falsification_engine.py",
+        987
+      ],
+      [
+        "scp/meta/meta.py",
+        960
+      ],
+      [
+        "scp/meta/why_gate.py",
+        650
+      ],
+      [
+        "scp/meta/calibration_engine.py",
+        607
+      ],
+      [
+        "scp/meta/adversary_verifier.py",
+        549
+      ],
+      [
+        "scp/meta/why_engine_parts/whyengine.py",
+        510
+      ]
+    ],
+    "outbound": [
+      "contracts",
+      "core",
+      "data_sources",
+      "knowledge",
+      "llm_gateway",
+      "runtime",
+      "security"
+    ],
+    "inbound": [
+      "api",
+      "api_server_parts",
+      "autofix",
+      "core",
+      "knowledge",
+      "root/api_server.py",
+      "runtime",
+      "security",
+      "task_kernel_parts"
+    ]
+  },
+  "observability": {
+    "subsystem": "observability",
+    "path": "scp/observability",
+    "file_count": 4,
+    "loc": 190,
+    "god_files": [],
+    "outbound": [],
+    "inbound": [
+      "api_server_parts",
+      "root/api_server.py"
+    ]
+  },
+  "pc_control": {
+    "subsystem": "pc_control",
+    "path": "scp/pc_control",
+    "file_count": 2,
+    "loc": 470,
+    "god_files": [],
+    "outbound": [
+      "core",
+      "security"
+    ],
+    "inbound": [
+      "api",
+      "hands",
+      "tests"
+    ]
+  },
+  "persistence": {
+    "subsystem": "persistence",
+    "path": "scp/persistence",
+    "file_count": 2,
+    "loc": 118,
+    "god_files": [],
+    "outbound": [
+      "contracts"
+    ],
+    "inbound": [
+      "calibration",
+      "epistemic",
+      "governance",
+      "self_model",
+      "world_state"
+    ]
+  },
+  "policy": {
+    "subsystem": "policy",
+    "path": "scp/policy",
+    "file_count": 2,
+    "loc": 113,
+    "god_files": [],
+    "outbound": [],
+    "inbound": [
+      "api_server_parts"
+    ]
+  },
+  "prediction": {
+    "subsystem": "prediction",
+    "path": "scp/prediction",
+    "file_count": 2,
+    "loc": 1011,
+    "god_files": [
+      [
+        "scp/prediction/predictive.py",
+        1006
+      ]
+    ],
+    "outbound": [
+      "core"
+    ],
+    "inbound": [
+      "api_server_parts",
+      "root/api_server.py"
+    ]
+  },
+  "rag": {
+    "subsystem": "rag",
+    "path": "scp/rag",
+    "file_count": 2,
+    "loc": 77,
+    "god_files": [],
+    "outbound": [],
+    "inbound": [
+      "api"
+    ]
+  },
+  "release": {
+    "subsystem": "release",
+    "path": "scp/release",
+    "file_count": 2,
+    "loc": 210,
+    "god_files": [],
+    "outbound": [],
+    "inbound": [
+      "api"
+    ]
+  },
+  "risk_intelligence": {
+    "subsystem": "risk_intelligence",
+    "path": "scp/risk_intelligence",
+    "file_count": 6,
+    "loc": 360,
+    "god_files": [],
+    "outbound": [
+      "contracts",
+      "security"
+    ],
+    "inbound": [
+      "api",
+      "api_server_parts"
+    ]
+  },
+  "runtime": {
+    "subsystem": "runtime",
+    "path": "scp/runtime",
+    "file_count": 61,
+    "loc": 10932,
+    "god_files": [
+      [
+        "scp/runtime/question_router.py",
+        977
+      ],
+      [
+        "scp/runtime/experts/humanities.py",
+        821
+      ],
+      [
+        "scp/runtime/experts/chem_reality_astro.py",
+        817
+      ],
+      [
+        "scp/runtime/experts/lifestyle.py",
+        692
+      ],
+      [
+        "scp/runtime/experts/misc.py",
+        674
+      ],
+      [
+        "scp/runtime/engine_parts/scpv14_process_mixin.py",
+        650
+      ],
+      [
+        "scp/runtime/storage_manager.py",
+        529
+      ]
+    ],
+    "outbound": [
+      "core",
+      "data_sources",
+      "knowledge",
+      "llm_gateway",
+      "meta",
+      "security",
+      "verifier"
+    ],
+    "inbound": [
+      "api",
+      "api_server_parts",
+      "core",
+      "meta",
+      "root/api_server.py",
+      "root/ask_kernel_adapter.py"
+    ]
+  },
+  "sandbox_evaluator": {
+    "subsystem": "sandbox_evaluator",
+    "path": "scp/sandbox_evaluator",
+    "file_count": 4,
+    "loc": 753,
+    "god_files": [],
+    "outbound": [
+      "event_bus_pg"
+    ],
+    "inbound": [
+      "autofix"
+    ]
+  },
+  "security": {
+    "subsystem": "security",
+    "path": "scp/security",
+    "file_count": 44,
+    "loc": 11623,
+    "god_files": [
+      [
+        "scp/security/counter_response.py",
+        708
+      ],
+      [
+        "scp/security/h8_redteam_bridge.py",
+        660
+      ],
+      [
+        "scp/security/threat_detector.py",
+        625
+      ],
+      [
+        "scp/security/predictor.py",
+        575
+      ],
+      [
+        "scp/security/escalation.py",
+        570
+      ],
+      [
+        "scp/security/threat_simulator.py",
+        519
+      ],
+      [
+        "scp/security/attack_memory.py",
+        510
+      ]
+    ],
+    "outbound": [
+      "api_server_parts",
+      "core",
+      "llm_gateway",
+      "meta"
+    ],
+    "inbound": [
+      "api",
+      "api_server_parts",
+      "autofix",
+      "benchmark",
+      "core",
+      "data_sources",
+      "foundation",
+      "hands",
+      "knowledge",
+      "llm_gateway",
+      "mcp_server",
+      "meta",
+      "pc_control",
+      "risk_intelligence",
+      "root/__main__.py",
+      "root/api_server.py",
+      "runtime",
+      "task_kernel_parts",
+      "web_control"
+    ]
+  },
+  "self_model": {
+    "subsystem": "self_model",
+    "path": "scp/self_model",
+    "file_count": 2,
+    "loc": 280,
+    "god_files": [],
+    "outbound": [
+      "contracts",
+      "epistemic",
+      "persistence"
+    ],
+    "inbound": [
+      "api",
+      "knowledge"
+    ]
+  },
+  "task_kernel_parts": {
+    "subsystem": "task_kernel_parts",
+    "path": "scp/task_kernel_parts",
+    "file_count": 2,
+    "loc": 1966,
+    "god_files": [
+      [
+        "scp/task_kernel_parts/taskkernel.py",
+        1966
+      ]
+    ],
+    "outbound": [
+      "core",
+      "kernel_storage",
+      "meta",
+      "security",
+      "task_kernel"
+    ],
+    "inbound": []
+  },
+  "tests": {
+    "subsystem": "tests",
+    "path": "scp/tests",
+    "file_count": 9,
+    "loc": 792,
+    "god_files": [],
+    "outbound": [
+      "api",
+      "core",
+      "llm_gateway",
+      "pc_control",
+      "web_control"
+    ],
+    "inbound": []
+  },
+  "web_control": {
+    "subsystem": "web_control",
+    "path": "scp/web_control",
+    "file_count": 7,
+    "loc": 1007,
+    "god_files": [],
+    "outbound": [
+      "security"
+    ],
+    "inbound": [
+      "api",
+      "api_server_parts",
+      "hands",
+      "knowledge",
+      "root/api_server.py",
+      "tests"
+    ]
+  },
+  "world_state": {
+    "subsystem": "world_state",
+    "path": "scp/world_state",
+    "file_count": 4,
+    "loc": 316,
+    "god_files": [],
+    "outbound": [
+      "contracts",
+      "persistence"
+    ],
+    "inbound": [
+      "api",
+      "api_server_parts"
+    ]
+  }
+}

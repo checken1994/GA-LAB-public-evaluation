@@ -1,0 +1,51 @@
+name: SCP Strict System Audit
+
+on:
+  push:
+    branches:
+      - integration/experiment-god-split-and-providers
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  strict-system-audit:
+    runs-on: ubuntu-latest
+    env:
+      SCP_PRODUCTION_MODE: '0'
+      SCP_SKIP_STARTUP_GATE: '0'
+      SCP_EGRESS_MODE: deny
+      # [H-01 fix 2026-10-01] Scan oracle for the RC-2 no-hardcoded-token test —
+      # unset env made that test skip forever. CI-only value, not a real secret;
+      # appears in no source file, so the scan stays meaningful.
+      SCP_AUTH_TOKEN_SECRET: "ci-only-runtime-placeholder"
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: '1.3.14'
+      - name: Install dependencies
+        run: python -m pip install -r scp/requirements-dev.txt
+      - name: Install dashboard dependencies for strict audit suite
+        # The strict audit's full pytest includes the bun -e dashboard-contract
+        # tests and the live cluster e2e (next dev on :3000); both need
+        # dashboard node_modules before the suite runs.
+        working-directory: dashboard
+        run: npm ci --ignore-scripts --no-audit
+      - name: Run strict system audit
+        run: python -m scripts.run_system_audit_strict
+      - name: Upload strict system evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scp-strict-system-audit-${{ github.run_id }}
+          path: |
+            reports/system_audit_strict/
+            reports/reality/reality-tests-results.json
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "mimosa-finding-history/v1",
+  "runId": "20261002T002346598Z-7008-9293e555e97f",
+  "runStatus": "inconclusive",
+  "errors": [
+    "baseline-enumerate:.pytest_cache: bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+    "baseline:.: baseline_partial: baseline capture had enumeration or snapshot errors",
+    "scan:benchmark/download_global_top1_benchmarks.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:tests/test_audit_r2_dashboard_proxy_contract.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:tests/T03_capability/test_egress_enforcement.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:tests/T03_capability/test_flow_05_agent_call_scp_standard.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:tests/T03_capability/test_flow_14_reintegrated_systems_scp_standard.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:tests/T03_capability/test_security_store_bounds.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:tests/T02_contract/test_api_route_profile.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:tests/integration/test_critical_chain_severed.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:scp/security/auth.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "supply-chain-check:.: stop_budget_exhausted: focused supply-chain check was not run before the gate budget"
+  ],
+  "target": ".",
+  "revision": "96628de3ef595094c500cac27d8c5a8e4cc0e39d",
+  "diffHash": "c36b395baca7b5cc9129e69f3b555f13a85b7ceb437333bafb835c10d1ca4ccb",
+  "rulesVersion": "unavailable",
+  "recordedAt": "2026-10-02T00:23:46.598Z",
+  "timing": {
+    "startedAt": "2026-10-02T00:23:42.219Z",
+    "completedAt": "2026-10-02T00:23:46.598Z",
+    "durationMs": 4379
+  },
+  "tokens": {
+    "input": 0,
+    "output": 0,
+    "total": 0,
+    "modelCalls": 0,
+    "measurement": "known-zero"
+  },
+  "findings": {
+    "total": 1,
+    "bySeverity": {
+      "high": 1
+    },
+    "byStatus": {
+      "static_verified": 1
+    }
+  },
+  "coverage": {
+    "status": "partial",
+    "reasonCounts": {
+      "bash_discovery_incomplete": 1,
+      "baseline_partial": 1,
+      "scanner_failed": 9,
+      "stop_budget_exhausted": 1,
+      "project_check_failed": 12
+    }
+  },
+  "evidenceBoundary": "static_only",
+  "immutableReport": ".mimosa/reports/task-review-sess_01ba8183-90be-42a8-9a94-244f5ab921ed-20261002T002346598Z-7008-9293e555e97f.json"
+}

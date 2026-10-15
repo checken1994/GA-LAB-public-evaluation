@@ -1,0 +1,29 @@
+name: SCP L3 Verification (T00 Meta-Audit)
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  t00-meta-audit:
+    name: "L3: T00 Meta-Audit & Guardrails"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0 # Required for diff checking against origin/main
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r scp/requirements-dev.txt
+      - name: Run T00 Meta-Audit Tripwire
+        run: python tools/t00_meta_audit.py
+      - name: Test Inventory / Collection Integrity
+        # This confirms tests are collectable without syntax/import errors, 
+        # but does NOT claim to generate exact-SHA verified evidence.
+        run: |
+          echo "Collecting test inventory..."
+          pytest tests/ tests/internal/ --collect-only

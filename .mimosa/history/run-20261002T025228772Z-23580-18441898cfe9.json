@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "mimosa-finding-history/v1",
+  "runId": "20261002T025228772Z-23580-18441898cfe9",
+  "runStatus": "inconclusive",
+  "errors": [
+    "baseline-enumerate:.pytest_cache: bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+    "bash-discovery:dashboard/src/app/api/scp/call/session/route.ts: bash_discovery_truncated: changed-file discovery exceeded 80 files",
+    "candidate-select:tests/T03_capability/test_zonefix_hands_bounds.py: candidate_limit_exceeded: 60 changed reviewable file(s) were not scanned because the limit is 20",
+    "baseline:.: baseline_partial: baseline capture had enumeration or snapshot errors",
+    "scan:tests/T04_kernel/test_ask_trace_ledger_final_decision.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "scan:tests/T04_kernel/test_gap13_state_machine_boundaries.py: scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+    "agent-check:.: stop_budget_exhausted: focused agent configuration check was not run before the gate budget"
+  ],
+  "target": ".",
+  "revision": "13975a318c75e390ce7b30d1e716d7a9e5af8702",
+  "diffHash": "63c35e529494786f6a122c5c1d752dadff122c2951944e52cb21bef9acf64383",
+  "rulesVersion": "unavailable",
+  "recordedAt": "2026-10-02T02:52:28.772Z",
+  "timing": {
+    "startedAt": "2026-10-02T02:52:24.244Z",
+    "completedAt": "2026-10-02T02:52:28.772Z",
+    "durationMs": 4528
+  },
+  "tokens": {
+    "input": 0,
+    "output": 0,
+    "total": 0,
+    "modelCalls": 0,
+    "measurement": "known-zero"
+  },
+  "findings": {
+    "total": 0,
+    "bySeverity": {},
+    "byStatus": {}
+  },
+  "coverage": {
+    "status": "partial",
+    "reasonCounts": {
+      "bash_discovery_incomplete": 1,
+      "bash_discovery_truncated": 1,
+      "candidate_limit_exceeded": 1,
+      "baseline_partial": 1,
+      "scanner_failed": 2,
+      "stop_budget_exhausted": 1,
+      "project_check_failed": 7
+    }
+  },
+  "evidenceBoundary": "static_only",
+  "immutableReport": ".mimosa/reports/task-review-sess_01ba8183-90be-42a8-9a94-244f5ab921ed-20261002T025228772Z-23580-18441898cfe9.json"
+}

@@ -1,0 +1,138 @@
+"""One bounded local review. Source is copied without credentials or runtime data.
+
+This artifact is not a release runner: source_base_sha plus working file hashes
+identify an uncommitted candidate. Full-system release remains unverified.
+"""
+from __future__ import annotations
+
+import ast
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import sys
+import tempfile
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[3]
+PRODUCT = ['scp/core/budget_engine.py', 'scp/llm_gateway/client.py',
+           'scp/llm_gateway/zero_cost_guard.py', 'scp/llm_gateway/zero_cost_runtime.py',
+           'scp/llm_gateway/free_catalog.py']
+TEST_SCOPE = 'tests/T05_gateway'
+SKILLS = ['scp-dna','scp-gateway-resilience','scp-reality-verifier','scp-capability-security-review']
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def git(*args):
+    return subprocess.check_output(['git','-C',str(ROOT),*args]).decode('utf-8').strip()
+
+
+def main():
+    evidence = Path(tempfile.mkdtemp(prefix='scp-t05-evidence-'))
+    snapshot = evidence / 'snapshot'
+    snapshot.mkdir()
+    base = git('rev-parse','HEAD')
+    files = git('ls-files').splitlines()
+    files.append('tests/T05_gateway/conftest.py')
+    hashes = {}
+    for name in sorted(set(files)):
+        if not (name.startswith(('scp/','spec/','.agents/skills/','tests/','tools/')) or name in {'AGENTS.md','pytest.ini','ruff.toml'}):
+            continue
+        path = ROOT/name
+        if not path.is_file() or path.is_symlink() or any(part in {'.git','data','node_modules','__pycache__'} for part in path.relative_to(ROOT).parts):
+            continue
+        if path.name.startswith('.env') or path.suffix in {'.sqlite','.sqlite3','.db','.pyc','.pem','.key'}:
+            continue
+        data = path.read_bytes()
+        dest = snapshot/name
+        dest.parent.mkdir(parents=True,exist_ok=True)
+        dest.write_bytes(data)
+        hashes[name] = sha(data)
+    if git('rev-parse','HEAD') != base:
+        raise RuntimeError('source HEAD drifted during snapshot')
+    report = {'base_sha':base,'scope':'T05 working-tree patch; NOT full-system release',
+              'started_at':datetime.now(timezone.utc).isoformat(),'release':'BLOCKED',
+              'source_hashes':hashes,'skills':SKILLS,'commands':[],'mutations':[],
+              'snapshot':str(snapshot),'runtime_started':False}
+    report['git_clean'] = not bool(git('status','--porcelain'))
+    report['source_tree_hash'] = git('rev-parse','HEAD^{tree}')
+    report['skill_hashes'] = {name:hashes[f'.agents/skills/{name}/SKILL.md'] for name in SKILLS}
+    report['dna_hash'] = hashes['.agents/skills/scp-dna/references/dna-principles.md']
+    allowed_env = {'PATH','PATHEXT','SYSTEMROOT','SystemRoot','WINDIR','TEMP','TMP','COMSPEC','LOCALAPPDATA'}
+    env = {k:v for k,v in os.environ.items() if k in allowed_env}
+    env.update(PYTHONUTF8='1',PYTHONIOENCODING='utf-8',SCP_MODE='test',SCP_EGRESS_MODE='deny',
+               SCP_DATA_DIR=str(evidence/'test-data'),PYTHONPATH=str(snapshot),SCP_WHY_LLM_ENABLED='0',SCP_EVOLUTION_AUTO='0')
+
+    def command(label,argv):
+        started = datetime.now(timezone.utc).isoformat()
+        try:
+            result = subprocess.run(argv,cwd=snapshot,env=env,capture_output=True,timeout=180,check=False)
+            (evidence/(label+'.stdout')).write_bytes(result.stdout)
+            (evidence/(label+'.stderr')).write_bytes(result.stderr)
+            receipt={'id':label,'argv':argv,'exit_code':result.returncode,'started_at':started,
+                     'finished_at':datetime.now(timezone.utc).isoformat(),
+                     'stdout_hash':sha(result.stdout),'stderr_hash':sha(result.stderr)}
+        except subprocess.TimeoutExpired:
+            receipt={'id':label,'argv':argv,'exit_code':None,'error':'TIMEOUT'}
+        report['commands'].append(receipt)
+        print(json.dumps(receipt),flush=True)
+        return receipt
+
+    compile_result=command('compile',[sys.executable,'-m','compileall','-q',*PRODUCT,TEST_SCOPE])
+    lint_result=command('lint',[sys.executable,'-m','ruff','check',*PRODUCT,TEST_SCOPE,'--select','E9,F'])
+    test_result=command('tests',[sys.executable,'-m','pytest','-q',TEST_SCOPE,'--tb=short',
+                                '--basetemp='+str(evidence/'pytest-main'),
+                                '--junitxml='+str(evidence/'tests.xml')])
+    # Existing test names must remain. Compare AST names, not substrings.
+    removed=[]
+    for name in git('ls-files',TEST_SCOPE).splitlines():
+        if not name.endswith('.py'): continue
+        before=git('show',base+':'+name)
+        old={n.name for n in ast.walk(ast.parse(before)) if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name.startswith('test_')}
+        new={n.name for n in ast.walk(ast.parse((snapshot/name).read_text(encoding='utf-8'))) if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name.startswith('test_')}
+        removed.extend(name+'::'+n for n in old-new)
+    report['removed_test_functions']=removed
+    mutants=[
+      ('bypass_price_pep','scp/llm_gateway/zero_cost_runtime.py',
+       'proof = guard.authorize(request)','proof = None','test_runtime_pep_denies_before_real_transport_boundary'),
+      ('disable_stale_check','scp/llm_gateway/zero_cost_guard.py',
+       'if _parse_time(proof.expires_at) <= current:', 'if False:', 'test_runtime_pep_denies_before_real_transport_boundary'),
+      ('manufacture_missing_price','scp/llm_gateway/zero_cost_guard.py',
+       'return ZeroCostDecision.DENY_UNKNOWN_PRICE, proof','return ZeroCostDecision.ALLOW_FREE, proof','test_runtime_pep_denies_before_real_transport_boundary'),
+      ('budget_adds_paid_tier','scp/core/budget_engine.py','return ["free"]','return ["paid", "free"]','test_budget_reorders_verified_free_only'),
+    ]
+    if test_result['exit_code']==0:
+        for label,name,needle,replacement,selector in mutants:
+            target=snapshot/name
+            original=target.read_bytes()
+            text=original.decode('utf-8')
+            if needle not in text: raise RuntimeError('mutant target missing: '+label)
+            target.write_text(text.replace(needle,replacement),encoding='utf-8')
+            # Remove only generated bytecode in this disposable snapshot so a
+            # same-size, same-second mutation cannot execute a stale pyc.
+            for generated in snapshot.rglob('*.pyc'):
+                if '__pycache__' in generated.parts: generated.unlink()
+            try:
+                result=command(label,[sys.executable,'-m','pytest','-q',TEST_SCOPE,'-k',selector,
+                                       '--tb=short','--basetemp='+str(evidence/('pytest-'+label))])
+                output=(evidence/(label+'.stdout')).read_text(encoding='utf-8') if result['exit_code'] is not None else ''
+                killed=result['exit_code']==1 and 'failed' in output and 'ERROR collecting' not in output
+                report['mutations'].append({'id':label,'file':name,'killed':killed,'exit_code':result['exit_code']})
+            finally:
+                target.write_bytes(original)
+    drift=[name for name,digest in hashes.items() if not (ROOT/name).is_file() or sha((ROOT/name).read_bytes())!=digest]
+    report['source_drift']=drift
+    report['ended_base_sha']=git('rev-parse','HEAD')
+    report['finished_at']=datetime.now(timezone.utc).isoformat()
+    report['scoped_checks_ok']=all(c['exit_code']==0 for c in [compile_result,lint_result,test_result]) and not removed and not drift and report['ended_base_sha']==base and len(report['mutations'])==len(mutants) and all(m['killed'] for m in report['mutations'])
+    (evidence/'evidence.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
+    print(json.dumps({'evidence':str(evidence/'evidence.json'),'scoped_checks_ok':report['scoped_checks_ok'],'release':'BLOCKED'}),flush=True)
+    return 0 if report['scoped_checks_ok'] else 2
+
+
+if __name__=='__main__': raise SystemExit(main())

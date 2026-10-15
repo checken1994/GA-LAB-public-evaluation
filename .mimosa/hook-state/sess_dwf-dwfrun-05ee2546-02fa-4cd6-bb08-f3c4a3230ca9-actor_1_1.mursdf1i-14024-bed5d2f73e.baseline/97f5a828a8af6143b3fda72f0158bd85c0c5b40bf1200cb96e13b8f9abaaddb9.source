@@ -1,0 +1,140 @@
+interface CheckItem {
+  /** kc-1, kc-2... */
+  id: string;
+  /** Nguyên tắc DNA liên quan (số + tên ngắn từ 29 principles). */
+  principle: string;
+  /** Kiểm tra cái gì. */
+  what: string;
+  /** Lệnh chính xác / thủ tục từng bước. */
+  how: string;
+  /** Ngưỡng đạt, đo đếm được. */
+  passCriteria: string;
+  /** Bằng chứng bắt buộc lưu lại (file/output/SHA). */
+  evidence: string;
+  /** per-commit | wave-gate | W6-final. */
+  when: string;
+}
+
+interface VerificationPlan {
+  summary: string;
+  checks: CheckItem[];
+  /** Trình tự gate cho wave 1, mỗi bước là lệnh cụ thể. */
+  gateSequence: string[];
+  /** Cơ chế chống gian lận xanh: phát hiện skip/weaken/fake-pass. */
+  antiCheat: string[];
+  openQuestions: string[];
+}
+
+interface ReviewFeedback {
+  problems: string[];
+  missing: string[];
+  unmeasurable: string[];
+}
+
+interface WorkflowReport {
+  conclusion: string;
+  findings: CheckItem[];
+  verified: string[];
+  notCovered: string[];
+}
+
+const waveContext =
+  "Đối tượng kiểm tra: wave 1 remediation SCP trên branch fix/wave1 (gốc 1aef24a8), gồm 7 commit /ask pipeline: " +
+  "c1 await-route (finalize await đầy đủ), c2 refuse-block (chatbot-lane không bị từ chối oan), c3 heartbeat-retry (heartbeat sống sót exception), " +
+  "c4 TTL-knob (SCP_ASK_LEASE_TTL_S, default 120s), c5 seq-cap (cap tổng _chat_sequential), c6 crosscheck-deadline (deadline crosscheck), " +
+  "c7 pin-cap-TTL (test pin bất biến cap<TTL). Mỗi commit đã có scoped test riêng. " +
+  "Gate khả dụng trong repo: python -m pytest tests/ (full, dùng wrapper PYTEST_DEBUG_TEMPROOT + -p no:cacheprovider), " +
+  "python tools/t00_meta_audit.py, python tools/verify_scp_test_skill_contract.py, " +
+  "python -m ruff check scp tools --select E9,F821. " +
+  "Battery hành vi 16 probe /ask (script + kết quả đo TRƯỚC lưu ở C:\\Users\\check\\AppData\\Local\\Temp\\scp_ask_probe_battery.py và scp_ask_probe_results.json — baseline 12/16 PASS) dùng cho W6-final.";
+
+phase("Soạn kế hoạch kiểm tra theo DNA-SCP");
+
+const planner = agent("Người soạn kế hoạch kiểm tra", {
+  system:
+    "Bạn là kiểm toán viên chất lượng SCP. CHỈ ĐỌC (không sửa file, không chạy test nặng, không commit). " +
+    "Kế hoạch của bạn phải bám DNA-SCP: đọc .agents/skills/scp-dna/SKILL.md và .agents/skills/scp-dna/references/dna-principles.md (29 principles) TRƯỚC, " +
+    "đối chiếu .agents/skills/release-gate-skill-dna-bindings.json để biết gate nào bắt buộc. Viết tiếng Việt.",
+});
+const plan = await planner.ask<VerificationPlan>(
+  "Lên KẾ HOẠCH KIỂM TRA cho wave 1 (chưa thi hành — chỉ kế hoạch, sẽ thi hành khi implement xong).\n\n" +
+  waveContext + "\n\n" +
+  "Lưu ý: diff trên branch đang di động (implement đang chạy song song) — kế hoạch viết theo SCOPE wave, không neo vào diff tại thời điểm đọc.\n\n" +
+  "Yêu cầu: (1) checks phủ đủ 3 tầng — per-commit (scoped test + pre-commit T00), wave-gate (full pytest + T00 + contract + ruff + diff review), W6-final (battery 16 probe trước/sau theo MasterPlan v2: chạy 2 lần CẢ HAI ≥14/16, gate-check script viết trước khi đo); " +
+  "mỗi check gắn principle DNA cụ thể (ví dụ: PASS≠TRUE, independent lineage, fail-closed, same-SHA evidence, bounded verification, không delete/skip/weaken); " +
+  "(2) antiCheat: census skip/xfail so allowlist declared_infra_skips.json, T00 meta-audit, diff review maker/checker bởi agent thứ 2 chưa tham gia implement, đếm LLM call/prope so baseline, grep noqa mới; " +
+  "(3) gateSequence: thứ tự lệnh chính xác cho wave-gate 1 (từ checkout đến merge decision); " +
+  "(4) openQuestions: những gì kế hoạch không chốt được và cần owner/quyết định sau.",
+);
+
+phase("Người đọc thử soát kế hoạch");
+
+const feedback = await agent("Người đọc thử kế hoạch", {
+  system:
+    "Bạn đọc kế hoạch như kỹ sư sẽ THI HÀNH nó, chỉ dựa vào văn bản được đưa, không kiểm chứng repo, không sửa file. Phản biện là động tác dễ nhất.",
+}).ask<ReviewFeedback>(
+  "Đây là kế hoạch kiểm tra sắp thi hành cho wave 1 SCP:\n\n" + JSON.stringify(plan, null, 2) +
+  "\n\nChỉ ra: (1) problems — bước nào khi thi hành sẽ gãy/mâu thuẫn; (2) missing — thiếu check/gate nào quan trọng; (3) unmeasurable — passCriteria nào không đo được. Mảng rỗng nếu không có.",
+);
+
+let finalPlan = plan;
+let revisionNote = "Người đọc thử không có góp ý.";
+if (feedback.problems.length > 0 || feedback.missing.length > 0 || feedback.unmeasurable.length > 0) {
+  finalPlan = await planner.ask<VerificationPlan>(
+    "Phản hồi người đọc thử:\n" + JSON.stringify(feedback, null, 2) +
+    "\n\nBản kế hoạch hiện tại:\n" + JSON.stringify(plan, null, 2) +
+    "\n\nChỉnh để xử lý TỪNG điểm, trả về VerificationPlan hoàn chỉnh.",
+  );
+  revisionNote = "Đã chỉnh theo phản hồi (" + (feedback.problems.length + feedback.missing.length + feedback.unmeasurable.length) + " điểm).";
+}
+
+const md = [
+  "# Kế hoạch kiểm tra Wave 1 — chuẩn DNA-SCP",
+  "",
+  finalPlan.summary,
+  "",
+  "## Danh mục checks (" + finalPlan.checks.length + ")",
+  "",
+  ...finalPlan.checks.flatMap((c) => [
+    "- **" + c.id + "** [" + c.when + "] " + c.what,
+    "  - DNA: " + c.principle,
+    "  - Cách: " + c.how,
+    "  - Đạt khi: " + c.passCriteria,
+    "  - Bằng chứng: " + c.evidence,
+  ]),
+  "",
+  "## Trình tự gate wave 1",
+  "",
+  ...finalPlan.gateSequence.map((g, i) => (i + 1) + ". " + g),
+  "",
+  "## Anti-cheat",
+  "",
+  ...finalPlan.antiCheat.map((a) => "- " + a),
+  "",
+  "## Câu hỏi mở",
+  "",
+  ...(finalPlan.openQuestions.length > 0 ? finalPlan.openQuestions.map((q) => "- " + q) : ["- (không có)"]),
+  "",
+  "---",
+  revisionNote,
+].join("\n");
+
+await artifact.markdown("w1-check-plan", md, {
+  title: "Kế hoạch kiểm tra W1 (DNA-SCP)",
+  description: finalPlan.checks.length + " checks × 3 tầng (per-commit / wave-gate / W6-final), anti-cheat và trình tự gate — chờ thi hành khi implement xong.",
+  primary: true,
+});
+
+const result: WorkflowReport = {
+  conclusion: finalPlan.summary,
+  findings: finalPlan.checks,
+  verified: [
+    "Kế hoạch bám DNA-SCP: người soạn đọc SKILL.md + 29 principles + release-gate bindings trước khi soạn",
+    "Đã qua 1 lượt người đọc thử độc lập. " + revisionNote,
+  ],
+  notCovered: [
+    "Đây là KẾ HOẠCH — chưa thi hành check nào; thi hành khi agent implement (đang chạy song song) báo xong",
+    "Diff trên branch di động nên kế hoạch viết theo scope wave, không theo snapshot diff",
+  ],
+};
+return result;

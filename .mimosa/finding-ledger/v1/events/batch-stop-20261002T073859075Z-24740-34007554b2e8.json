@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "stop-20261002T073859075Z-24740-34007554b2e8",
+  "runId": "20261002T073859075Z-24740-34007554b2e8",
+  "runStatus": "completed",
+  "coverage": {
+    "status": "complete",
+    "reasons": [
+      {
+        "code": "baseline_partial",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline capture had enumeration or snapshot errors",
+        "affectsCompletion": false
+      }
+    ]
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "Stop"
+  },
+  "revision": "1aef24a84dcdf801b05dbdf855dc62b457686f17",
+  "diffHash": "ba193a026fe480de26f7b46be1d8d4be24c5ef81897e656bd8c95a16b4720948",
+  "rulesVersion": "unavailable",
+  "sessionHash": "7a12b8f55c13354e2b10da4dc08a4e79531cd91ff74e1fd0340a263d68c0409f",
+  "reportRef": ".mimosa/reports/task-review-sess_f1b3935b-c5f3-4747-ab61-9d046689a7ce-20261002T073859075Z-24740-34007554b2e8.json",
+  "events": [],
+  "observedFindingIds": [],
+  "verifiedFiles": [
+    {
+      "file": ".zcode/workflow-drafts/Audit-SCP-toàn-hệ-vòng-chỉ-đọc.dwf.ts",
+      "direct": "complete",
+      "projectContext": "partial"
+    }
+  ],
+  "recordedAt": "2026-10-02T07:38:59.500Z"
+}

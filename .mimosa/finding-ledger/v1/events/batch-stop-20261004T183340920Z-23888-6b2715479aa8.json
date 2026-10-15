@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "stop-20261004T183340920Z-23888-6b2715479aa8",
+  "runId": "20261004T183340920Z-23888-6b2715479aa8",
+  "runStatus": "completed",
+  "coverage": {
+    "status": "complete",
+    "reasons": [
+      {
+        "code": "baseline_partial",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline capture had enumeration or snapshot errors",
+        "affectsCompletion": false
+      }
+    ]
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "Stop"
+  },
+  "revision": "b9507c283eaa81ed4748001a87accc8f188d2068",
+  "diffHash": "9edf8f728c9dfdc9e1a8305c7911779b29bab8746cc97a603dbc53f2176f9f05",
+  "rulesVersion": "unavailable",
+  "sessionHash": "7a12b8f55c13354e2b10da4dc08a4e79531cd91ff74e1fd0340a263d68c0409f",
+  "reportRef": ".mimosa/reports/task-review-sess_f1b3935b-c5f3-4747-ab61-9d046689a7ce-20261004T183340920Z-23888-6b2715479aa8.json",
+  "events": [],
+  "observedFindingIds": [],
+  "verifiedFiles": [
+    {
+      "file": "tests/T04_kernel/test_lease_heartbeat.py",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "scp/runtime/question_router.py",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "tests/T02_contract/test_w2_fork_relevance.py",
+      "direct": "complete",
+      "projectContext": "partial"
+    }
+  ],
+  "recordedAt": "2026-10-04T18:33:41.327Z"
+}

@@ -1,0 +1,387 @@
+[
+  {
+    "path": "scp/runtime/experts/chem_reality_astro.py",
+    "loc": 817,
+    "stem": "chem_reality_astro",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/runtime/experts/misc.py",
+    "loc": 674,
+    "stem": "misc",
+    "all_matches": 6,
+    "code_matches": 1,
+    "code_details": [
+      "scp\\runtime\\experts\\__init__.py:5:(science, humanities, misc) v\u00e0o package n\u00e0y. Backward-compatible \u2014 slms.py"
+    ]
+  },
+  {
+    "path": "scp/security/h8_redteam_bridge.py",
+    "loc": 660,
+    "stem": "h8_redteam_bridge",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/runtime/engine_parts/scpv14_process_mixin.py",
+    "loc": 650,
+    "stem": "scpv14_process_mixin",
+    "all_matches": 1,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/meta/calibration_engine.py",
+    "loc": 607,
+    "stem": "calibration_engine",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/meta/adversary_verifier.py",
+    "loc": 549,
+    "stem": "adversary_verifier",
+    "all_matches": 7,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/brain/error_store_index.py",
+    "loc": 534,
+    "stem": "error_store_index",
+    "all_matches": 6,
+    "code_matches": 6,
+    "code_details": [
+      "scp\\brain\\index_parts\\clustering.py:14:Extracted from `brain/error_store_index.py` in Task 10-B (Modularity Refactor B).",
+      "scp\\brain\\index_parts\\__init__.py:1:\"\"\"Index parts package \u2014 extracted from `brain/error_store_index.py` in Task 10-B.",
+      "scp\\brain\\index_parts\\__init__.py:9:All public symbols re-exported here \u2014 backward compatible with error_store_index.py.",
+      "scp\\brain\\index_parts\\similarity.py:17:Extracted from `brain/error_store_index.py` in Task 10-B (Modularity Refactor B).",
+      "scp\\brain\\index_parts\\retrieval.py:15:Extracted from `brain/error_store_index.py` in Task 10-B (Modularity Refactor B).",
+      "scp\\meta\\falsification_engine.py:27:ErrorStore (see error_store_index.py) so the same mistake is never repeated."
+    ]
+  },
+  {
+    "path": "scp/benchmark/run_benchmark_enhanced.py",
+    "loc": 526,
+    "stem": "run_benchmark_enhanced",
+    "all_matches": 2,
+    "code_matches": 2,
+    "code_details": [
+      "tests\\T03_capability\\test_egress_enforcement.py:249:    \"scp/benchmark/run_benchmark_enhanced.py\": {",
+      "scp\\benchmark\\compare_results.py:74:        print(f\"   Run first: python run_benchmark_enhanced.py --output {scp_file}\")"
+    ]
+  },
+  {
+    "path": "scp/meta/question_tracker.py",
+    "loc": 460,
+    "stem": "question_tracker",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/ai_patterns.py",
+    "loc": 454,
+    "stem": "ai_patterns",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/runtime/experts/numeric_data.py",
+    "loc": 453,
+    "stem": "numeric_data",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/meta/verdict_predictor.py",
+    "loc": 396,
+    "stem": "verdict_predictor",
+    "all_matches": 1,
+    "code_matches": 1,
+    "code_details": [
+      "scp\\autofix\\classifier.py:75:        \"closed_loop\": r\"policy_applier.*threshold|calibration.*factor|verdict_predictor.*skip|closed.?loop\","
+    ]
+  },
+  {
+    "path": "scp/meta/self_questioning.py",
+    "loc": 395,
+    "stem": "self_questioning",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/runtime/experts/math_biology.py",
+    "loc": 394,
+    "stem": "math_biology",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/runtime/healing_v14.py",
+    "loc": 390,
+    "stem": "healing_v14",
+    "all_matches": 4,
+    "code_matches": 4,
+    "code_details": [
+      "scp\\audit_r8\\r8_findings.jsonl:6:{\"id\":\"R8-6\",\"file\":\"runtime/healing_v14.py\",\"line\":213,\"bug_class\":\"race_condition_concurrent_list_mutation\",\"severity\":\"LOW\",\"root_cause\":\"V14SelfHealingEngine.heal() called from V98 pipeline thread (sync, inside judge.judge()). get_stats() called from API request thread (asyncio event loop). healing_history list mutated WITHOUT lock: heal() does self.healing_history.append({...}) + if len > 1000: self.healing_history = self.healing_history[-500:]. get_stats() does sum(1 for h in self.healing_history if h['success']). CPython list iterator caches ob_size; if heal() appends mid-iteration, next(iterator) raises RuntimeError: list changed size during iteration. asyncio event loop propagates as 500 error to admin client.\",\"before_code\":\"# heal() line 213-218:\\nself.healing_history.append({'timestamp': ..., 'error_type': ..., 'strategy': strategy_name, 'success': success, 'duration': duration})\\nif len(self.healing_history) > 1000:\\n    self.healing_history = self.healing_history[-500:]\\n\\n# get_stats() line 344-346:\\ntotal = len(self.healing_history)\\nsuccesses = sum(1 for h in self.healing_history if h['success'])\\navg_duration = sum(h['duration'] for h in self.healing_history) / max(1, total)\",\"suggested_fix\":\"Guard healing_history with threading.Lock: __init__ adds self._history_lock = threading.Lock(). heal() wraps append+truncate in 'with self._history_lock:'. get_stats() wraps iteration in 'with self._history_lock:'. Alternatively use collections.deque(maxlen=1000) to eliminate manual truncation race.\",\"world_tool\":\"manual review + semgrep python.lang.security.audit.race-condition + ruff RUF006\",\"repro_hypothesis\":\"Run SCP under load (concurrent /ask requests triggering heal() + admin polling /v98/status calling get_stats()). Eventually RuntimeError: list changed size during iteration appears in API response (500) or logs.\",\"why_R7_missed\":\"R7-3 added threading.Lock to why_engine.py for similar concurrent-claim race, but healing_v14.py not in R7 audit scope. Mutation pattern looks safe in isolation (single-threaded read), but cross-thread interaction invisible without tracing call sites.\"}",
+      "scp\\audit_r9\\r9_findings.jsonl:1:{\"id\":\"R9-1\",\"file\":\"api/routes/import_routes.py\",\"lines\":[48,102,149],\"bug_class\":\"blocking_in_async_sync_judge_judge\",\"severity\":\"CRITICAL\",\"root_cause\":\"3 import endpoints (/import/jsonl, /import/excel, /import/batch) are declared async def but call judge.judge(...) synchronously (no await asyncio.to_thread). judge.judge() is a long-running sync method (SLM HTTP calls 5-15s each + WHY engine external queries + V98 pipeline + governance). Each call blocks the asyncio event loop for 5-30+ seconds. A batch import of N questions blocks ALL other HTTP requests (/ask, /health, /dashboard, WebSocket pings) for N * 5-30s \u2014 a 100-question import = 8-50 minutes of total event-loop blockage. The dev ALREADY knew about this pattern \u2014 api_server.py:788 and openai_compat.py:54 use 'await asyncio.to_thread(judge.judge, ...)' correctly, and openai_compat.py:51-53 has a comment explaining the bug. But the fix was NOT applied to import_routes.py (3 sites).\",\"before_code\":\"# import_routes.py:39-57 (jsonl endpoint, same pattern at :93-113 excel, :143-160 batch)\\nfor i, line in enumerate(lines):\\n    if not line.strip():\\n        continue\\n    try:\\n        data = _json.loads(line)\\n        question = data.get('question', '')\\n        ai_answer = data.get('ai_answer', data.get('answer', ''))\\n        data.get('domain', 'general')\\n        v = judge.judge(question=question, ai_answer=ai_answer, cycle_count=0)  # BLOCKS event loop\\n        results.append({\\n            'line': i + 1,\\n            'question': question[:100],\\n            'verdict': v.verdict,\\n            ...\\n        })\",\"suggested_fix\":\"Add 'import asyncio' at top of import_routes.py. At each of the 3 call sites (lines 48, 102, 149), replace:\\n  v = judge.judge(question=question, ai_answer=ai_answer, cycle_count=0)\\nwith:\\n  v = await asyncio.to_thread(\\n      judge.judge,\\n      question=question, ai_answer=ai_answer, cycle_count=0\\n  )\\n(Optional: run questions concurrently via asyncio.gather(*[asyncio.to_thread(judge.judge, q) for q in batch]) for 5-10x speedup.)\",\"world_tool\":\"ruff ASYNC100 + semgrep python.lang.performance.audit.async-blocking-call + manual review\",\"repro_hypothesis\":\"1. Start SCP server. 2. Open 2nd terminal: watch -n 1 'curl -s http://localhost:8000/health | jq .status' (should return ok every second). 3. In 3rd terminal: curl -X POST http://localhost:8000/import/jsonl -H 'Authorization: Bearer $TOKEN' -d @questions.jsonl where questions.jsonl has 20 questions. 4. Observe /health watch freezes for 100-600 seconds (20 questions * 5-30s each). During this time NO other request can be served. WebSocket clients disconnect.\",\"why_R8_missed\":\"R8 deep-read api_server.py + judge.py + healing_v14.py + storage_manager.py + autofix/engine.py + slms.py. api/routes/import_routes.py was NOT in R8's deep-read list (R8 Step 3 lists 6 files + 5 plus files; import_routes.py not mentioned). R8's grep patterns covered except:, SQLi, command injection, weak crypto \u2014 but did NOT grep for 'judge.judge( without await asyncio.to_thread' (the sync-in-async pattern). The bug is invisible to grep-only scans unless the scanner specifically looks for sync call inside async def.\"}",
+      "scp\\audit_r9\\r9_findings.jsonl:5:{\"id\":\"R9-5\",\"file\":\"runtime/judge.py + runtime/judge_parts/judgecore_mixin.py\",\"lines\":[1169,1692],\"bug_class\":\"race_condition_concurrent_list_mutation_verdict_history\",\"severity\":\"LOW\",\"root_cause\":\"judge.judge() runs in a worker thread (via asyncio.to_thread(judge.judge, ...) at api_server.py:788). judge.get_stats() is called by admin endpoints from the asyncio event loop thread (e.g. engine.get_report() at runtime/engine.py:558 -> judge.get_stats()). They share self.verdict_history WITHOUT a lock. judgecore_mixin.py:1692 appends + :1693 reassigns the list reference (self.verdict_history = self.verdict_history[-100:]). judge.py:1169 iterates the list in a for loop. CPython's list iterator caches ob_size at creation \u2014 if judge() appends or reassigns while get_stats() iterates, the iterator raises RuntimeError: list changed size during iteration. The asyncio event loop propagates this as a 500 error to the admin client. This is the EXACT SAME bug class as R8-6 (healing_history race) \u2014 R8-6 fixed healing_v14.healing_history but missed judge.verdict_history.\",\"before_code\":\"# judge.py:168 (init \u2014 NO lock)\\nself.verdict_history: list[JudgeVerdict] = []\\n\\n# judgecore_mixin.py:1692-1693 (worker thread \u2014 NO lock)\\nself.verdict_history.append(verdict)\\nself.verdict_history = self.verdict_history[-100:]  # [FIX LEAK] Cap to 100\\n\\n# judge.py:1169-1172 (event loop thread \u2014 NO lock)\\nfor v in self.verdict_history:\\n    verdicts[v.verdict] = verdicts.get(v.verdict, 0) + 1\\nreturn {\\n    'total_verdicts': len(self.verdict_history),\\n    ...\\n}\",\"suggested_fix\":\"Add a threading.Lock in __init__, guard the mutation in judgecore_mixin.py, snapshot in get_stats() before iterating:\\n# judge.py:168 (init \u2014 add lock)\\nimport threading\\n...\\nself.verdict_history: list[JudgeVerdict] = []\\nself._verdict_history_lock = threading.Lock()\\n\\n# judgecore_mixin.py:1692-1693 (worker thread \u2014 guard with lock)\\nwith self._verdict_history_lock:\\n    self.verdict_history.append(verdict)\\n    if len(self.verdict_history) > 100:\\n        self.verdict_history = self.verdict_history[-100:]\\n\\n# judge.py:1169-1172 (event loop \u2014 snapshot under lock, iterate snapshot)\\nwith self._verdict_history_lock:\\n    history_snapshot = list(self.verdict_history)\\nfor v in history_snapshot:\\n    verdicts[v.verdict] = verdicts.get(v.verdict, 0) + 1\\nreturn {\\n    'total_verdicts': len(history_snapshot),\\n    ...\\n}\",\"world_tool\":\"semgrep python.lang.security.audit.race-condition + ruff RUF006 + manual review\",\"repro_hypothesis\":\"Run SCP under load: 10 concurrent /ask requests (each triggers judge.judge() in a worker thread -> appends to verdict_history) + admin polling /v100/status (calls get_stats() from event loop). Eventually a RuntimeError: list changed size during iteration appears in the API response (500) or server logs.\",\"why_R8_missed\":\"R8-6 fixed healing_v14.healing_history (the SAME bug class) but only in healing_v14.py. R8 did not grep for other 'self.X_history.append(...)' patterns across the codebase. The verdict_history mutation is in judgecore_mixin.py (not judge.py itself) \u2014 extracted to a mixin file during a refactoring task (per comment at judge.py:1181-1194). R8 deep-read judge.py but did not trace into judge_parts/judgecore_mixin.py.\"}",
+      "scp\\audit_r9\\r9_findings.jsonl:6:{\"id\":\"R9-6\",\"file\":\"runtime/healing_v14.py\",\"lines\":[174,370],\"bug_class\":\"race_condition_concurrent_dict_mutation_error_patterns\",\"severity\":\"LOW\",\"root_cause\":\"R8-6 added a _history_lock to healing_v14.py and used it to guard healing_history mutations + snapshots. But error_patterns (a defaultdict(int) at line 57) \u2014 which lives in the SAME file, 6 lines below the patched block \u2014 was NOT guarded. monitor() at line 174-175 mutates self.error_patterns[issue['type']] += 1 (called from judge.judge() worker thread). get_stats() at line 370 reads dict(self.error_patterns) (called from admin endpoint event loop thread). dict(self.error_patterns) while another thread mutates the dict can raise RuntimeError: dictionary changed size during iteration (older CPython) or produce inconsistent reads (newer CPython). R8-6's fix was INCOMPLETE \u2014 it patched healing_history but missed error_patterns in the same file, despite the two being accessed by the same pair of threads.\",\"before_code\":\"# healing_v14.py:66 (init \u2014 R8-6 added _history_lock, but only for healing_history)\\nself._history_lock = threading.Lock()\\n\\n# healing_v14.py:174-175 (monitor() \u2014 NO lock for error_patterns)\\nfor issue in issues:\\n    self.error_patterns[issue['type']] = self.error_patterns.get(issue['type'], 0) + 1\\n\\n# healing_v14.py:370 (get_stats() \u2014 NO lock for error_patterns)\\n'error_patterns': dict(self.error_patterns),\",\"suggested_fix\":\"Extend the existing _history_lock to also guard error_patterns (or add a separate _patterns_lock). Snapshot under lock in get_stats():\\n# :174-175 (monitor() \u2014 guard with lock)\\nwith self._history_lock:\\n    for issue in issues:\\n        self.error_patterns[issue['type']] = self.error_patterns.get(issue['type'], 0) + 1\\n\\n# :370 (get_stats() \u2014 snapshot under lock)\\nwith self._history_lock:\\n    error_patterns_snapshot = dict(self.error_patterns)\\nreturn {\\n    ...\\n    'error_patterns': error_patterns_snapshot,\\n    ...\\n}\\n(Or rename _history_lock to _state_lock to reflect it now guards both fields.)\",\"world_tool\":\"semgrep python.lang.security.audit.race-condition + manual review\",\"repro_hypothesis\":\"Run SCP under load with healing issues triggering (e.g. high error rate -> monitor() called from worker thread). Poll /v98/status or any admin endpoint that calls healing.get_stats(). Eventually dict(self.error_patterns) raises RuntimeError or returns inconsistent counts.\",\"why_R8_missed\":\"R8-6 specifically traced the healing_history list mutation pattern (append + truncate) and added a lock for it. The error_patterns dict mutation is on a different line (174-175 vs 213-218 for healing_history) and uses a different access pattern (self.error_patterns[k] = v vs self.healing_history.append(...)). R8-6's grep was for '\\\\.append\\\\(' + 'for.*in self\\\\.healing_history' \u2014 did not catch dict(self.error_patterns) 6 lines below the patched block.\"}"
+    ]
+  },
+  {
+    "path": "scp/security/threat_intel.py",
+    "loc": 364,
+    "stem": "threat_intel",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/knowledge/scheduled_crawler.py",
+    "loc": 341,
+    "stem": "scheduled_crawler",
+    "all_matches": 1,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/meta/cognitive_engine.py",
+    "loc": 334,
+    "stem": "cognitive_engine",
+    "all_matches": 7,
+    "code_matches": 7,
+    "code_details": [
+      "scp\\meta\\cognitive_layers\\proof_graph.py:22:Extracted from `meta/cognitive_engine.py` in Task 10-B (Modularity Refactor B).",
+      "scp\\meta\\cognitive_layers\\meta_falsifier.py:15:Extracted from `meta/cognitive_engine.py` in Task 10-B (Modularity Refactor B).",
+      "scp\\meta\\cognitive_layers\\counter_question.py:16:Extracted from `meta/cognitive_engine.py` in Task 10-B (Modularity Refactor B).",
+      "scp\\meta\\cognitive_layers\\recursive_why.py:17:Extracted from `meta/cognitive_engine.py` in Task 10-B (Modularity Refactor B).",
+      "scp\\meta\\cognitive_layers\\unknown_state.py:12:Extracted from `meta/cognitive_engine.py` in Task 10-B (Modularity Refactor B).",
+      "scp\\meta\\cognitive_layers\\__init__.py:1:\"\"\"Cognitive layers package \u2014 extracted from `meta/cognitive_engine.py` in Task 10-B.",
+      "scp\\meta\\cognitive_layers\\__init__.py:11:All public symbols re-exported here \u2014 backward compatible with cognitive_engine.py."
+    ]
+  },
+  {
+    "path": "scp/core/real_question_fetcher.py",
+    "loc": 326,
+    "stem": "real_question_fetcher",
+    "all_matches": 16,
+    "code_matches": 16,
+    "code_details": [
+      "scp\\core\\question_fetchers\\__init__.py:2:[Task 8-A] Question fetcher modules \u2014 extracted from real_question_fetcher.py",
+      "scp\\core\\question_fetchers\\__init__.py:4:T\u1ea0I SAO: real_question_fetcher.py 1,467 LOC god file. T\u00e1ch 29 fetch_*",
+      "scp\\core\\question_fetchers\\__init__.py:6:real_question_fetcher.py re-exports all fetchers via `from scp.core.question_fetchers import *`.",
+      "scp\\core\\question_fetchers\\_common.py:2:[Task 8-A] Shared helpers for question fetchers \u2014 extracted from real_question_fetcher.py",
+      "scp\\core\\question_fetchers\\_common.py:4:T\u1ea0I SAO: real_question_fetcher.py 1,467 LOC god file. T\u00e1ch shared helpers",
+      "scp\\core\\question_fetchers\\_common.py:7:kh\u00f4ng g\u00e2y circular import v\u1edbi real_question_fetcher.py.",
+      "scp\\core\\question_fetchers\\_common.py:117:                    logger.warning(f\"[real_question_fetcher.fetch_json] JSON parse failed: {e}\")",
+      "scp\\core\\question_fetchers\\trivia_fetchers.py:2:[Task 8-A] Question fetcher module \u2014 extracted from real_question_fetcher.py",
+      "scp\\core\\question_fetchers\\trivia_fetchers.py:4:T\u1ea0I SAO: real_question_fetcher.py god file. T\u00e1ch fetcher functions v\u00e0o module",
+      "scp\\core\\question_fetchers\\trivia_fetchers.py:5:n\u00e0y. Backward-compatible \u2014 real_question_fetcher.py re-exports all fetchers.",
+      "scp\\core\\question_fetchers\\knowledge_fetchers.py:2:[Task 8-A] Question fetcher module \u2014 extracted from real_question_fetcher.py",
+      "scp\\core\\question_fetchers\\knowledge_fetchers.py:4:T\u1ea0I SAO: real_question_fetcher.py god file. T\u00e1ch fetcher functions v\u00e0o module",
+      "scp\\core\\question_fetchers\\knowledge_fetchers.py:5:n\u00e0y. Backward-compatible \u2014 real_question_fetcher.py re-exports all fetchers.",
+      "scp\\core\\question_fetchers\\data_fetchers.py:2:[Task 8-A] Question fetcher module \u2014 extracted from real_question_fetcher.py",
+      "scp\\core\\question_fetchers\\data_fetchers.py:4:T\u1ea0I SAO: real_question_fetcher.py god file. T\u00e1ch fetcher functions v\u00e0o module",
+      "scp\\core\\question_fetchers\\data_fetchers.py:5:n\u00e0y. Backward-compatible \u2014 real_question_fetcher.py re-exports all fetchers."
+    ]
+  },
+  {
+    "path": "scp/knowledge/cwe_exploit_store.py",
+    "loc": 298,
+    "stem": "cwe_exploit_store",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/benchmark/run_baseline.py",
+    "loc": 296,
+    "stem": "run_baseline",
+    "all_matches": 1,
+    "code_matches": 1,
+    "code_details": [
+      "scp\\benchmark\\compare_results.py:78:        print(f\"   Run first: python run_baseline.py --model <model> --output {baseline_file}\")"
+    ]
+  },
+  {
+    "path": "scp/core/auto_backup.py",
+    "loc": 293,
+    "stem": "auto_backup",
+    "all_matches": 1,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/meta/logical_auditor.py",
+    "loc": 278,
+    "stem": "logical_auditor",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/security/auto_payload_generator.py",
+    "loc": 251,
+    "stem": "auto_payload_generator",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/security/memory_guard.py",
+    "loc": 229,
+    "stem": "memory_guard",
+    "all_matches": 2,
+    "code_matches": 2,
+    "code_details": [
+      "scp\\autofix\\classifier.py:82:                           r\"security/|attack_classifier|memory_guard|multi_turn\",",
+      "scp\\autofix\\runner_phases\\ast_scan.py:60:    \"scp/security/memory_guard.py\","
+    ]
+  },
+  {
+    "path": "scp/security/rogue_ai_detector.py",
+    "loc": 227,
+    "stem": "rogue_ai_detector",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/core/react_agent.py",
+    "loc": 214,
+    "stem": "react_agent",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/core/github_backup.py",
+    "loc": 197,
+    "stem": "github_backup",
+    "all_matches": 3,
+    "code_matches": 2,
+    "code_details": [
+      "scp\\runtime\\storage_manager.py:348:                                f\"(scp/core/github_backup.py). Server will \"",
+      "scp\\runtime\\storage_manager.py:355:                            f\"backups repo (scp/core/github_backup.py). \""
+    ]
+  },
+  {
+    "path": "scp/meta/multi_llm_check.py",
+    "loc": 197,
+    "stem": "multi_llm_check",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/benchmark/compare_results.py",
+    "loc": 188,
+    "stem": "compare_results",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/security/attack_classifier.py",
+    "loc": 172,
+    "stem": "attack_classifier",
+    "all_matches": 1,
+    "code_matches": 1,
+    "code_details": [
+      "scp\\autofix\\classifier.py:82:                           r\"security/|attack_classifier|memory_guard|multi_turn\","
+    ]
+  },
+  {
+    "path": "scp/runtime/parallel_pipeline.py",
+    "loc": 164,
+    "stem": "parallel_pipeline",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/core/evidence_filter.py",
+    "loc": 154,
+    "stem": "evidence_filter",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/core/healing_engine.py",
+    "loc": 141,
+    "stem": "healing_engine",
+    "all_matches": 3,
+    "code_matches": 3,
+    "code_details": [
+      "tests\\reality-tests\\reality_4-a-017.py:2:\"\"\"Reality test for Fix 4-a-017: healing_engine LIKE pattern escape.",
+      "tests\\reality-tests\\reality_4-a-017.py:24:FILE = str(Path(__file__).resolve().parents[2]) + '/scp/core/healing_engine.py'",
+      "tests\\reality-tests\\reality_4-a-017.py:28:print(\"PASS [0/3]: healing_engine.py exists\")"
+    ]
+  },
+  {
+    "path": "scp/runtime/experts/management.py",
+    "loc": 136,
+    "stem": "management",
+    "all_matches": 6,
+    "code_matches": 6,
+    "code_details": [
+      "scp\\tests\\external_audit\\test_security.py:11:  management APIs. (PyRIT/garak need /v1/* open for testing; /ask is the main",
+      "scp\\autofix\\shadow_snapshot.py:3:Provides durable, atomic snapshot and rollback management at the filesystem level.",
+      "scp\\llm_gateway\\client.py:919:        handles loop creation+close properly) instead of manual loop management.",
+      "scp\\autofix\\runner.py:6:api_server.py instantiated the engine only for permission-management",
+      "scp\\meta\\cognitive_engine.py:17:Transform SCP t\u1eeb \"reasoning system\" \u2192 \"proof management system\".",
+      "scp\\security\\bypass_encrypt.py:10:  - \u0110\u01a1n gi\u1ea3n, kh\u00f4ng c\u1ea7n key management ph\u1ee9c t\u1ea1p"
+    ]
+  },
+  {
+    "path": "scp/core/environment_snapshot.py",
+    "loc": 129,
+    "stem": "environment_snapshot",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/runtime/timing_and_restart.py",
+    "loc": 127,
+    "stem": "timing_and_restart",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/security/quorum_why.py",
+    "loc": 125,
+    "stem": "quorum_why",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/observability/otel_exporter.py",
+    "loc": 118,
+    "stem": "otel_exporter",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  },
+  {
+    "path": "scp/core/dependency_resolver.py",
+    "loc": 112,
+    "stem": "dependency_resolver",
+    "all_matches": 0,
+    "code_matches": 0,
+    "code_details": []
+  }
+]

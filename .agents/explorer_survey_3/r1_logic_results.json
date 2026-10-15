@@ -1,0 +1,3344 @@
+{
+  "fire_and_forget_tasks": [
+    {
+      "file": "scp\\ask_kernel_adapter.py",
+      "line": 260,
+      "func": "begin",
+      "code": "self.kernel.create_task(task_id, \"ask-route\", \"rag-verified /ask\", \"R0\", input_hash=input_hash)"
+    },
+    {
+      "file": "scp\\ask_kernel_adapter.py",
+      "line": 972,
+      "func": "run_rag",
+      "code": "heartbeat = asyncio.create_task(self._lease_heartbeat(task, stop))"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 87,
+      "func": "lifespan",
+      "code": "_startup_gate_task = asyncio.create_task(_startup_gate_background())"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 129,
+      "func": "lifespan",
+      "code": "_judge_launch_task = asyncio.create_task(_launch_judge_deferred())"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 145,
+      "func": "_start_background_scheduler",
+      "code": "_background_task = asyncio.create_task(asyncio.to_thread(_run_scheduler_offloop))"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 157,
+      "func": "lifespan",
+      "code": "_scheduler_bootstrap_task = asyncio.create_task(_start_background_scheduler())"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 171,
+      "func": "lifespan",
+      "code": "_evolution_bootstrap_task = asyncio.create_task(_start_evolution_runtime())"
+    },
+    {
+      "file": "scp\\api_server_parts\\_ask_impl.py",
+      "line": 684,
+      "func": "_ask_impl",
+      "code": "_fc_task = asyncio.create_task(_async_fact_check(_api_final_answer, req.question, v98_context.get('session_id', '')))"
+    },
+    {
+      "file": "scp\\core\\call_session_hub.py",
+      "line": 90,
+      "func": "connect",
+      "code": "sender = asyncio.create_task(self._sender(peer))"
+    },
+    {
+      "file": "scp\\core\\free_discovery_scheduler.py",
+      "line": 220,
+      "func": "start",
+      "code": "self._task = asyncio.create_task(self.run_forever(), name=\"scp-free-discovery-scheduler\")"
+    },
+    {
+      "file": "scp\\core\\subsystem_telemetry.py",
+      "line": 331,
+      "func": "wrapped",
+      "code": "ticker = asyncio.create_task(_async_heartbeat_ticker(telemetry))"
+    },
+    {
+      "file": "scp\\hands\\planner.py",
+      "line": 436,
+      "func": "run_plan",
+      "code": "heartbeat = asyncio.create_task(self._lease_heartbeat(plan_id, lease_token))"
+    },
+    {
+      "file": "scp\\hands\\planner.py",
+      "line": 745,
+      "func": "run_dag",
+      "code": "heartbeat = asyncio.create_task(self._lease_heartbeat(plan_id, lease_token))"
+    },
+    {
+      "file": "scp\\hands\\planner.py",
+      "line": 835,
+      "func": "_run_dag_locked",
+      "code": "running[step_id] = asyncio.create_task(self._run_dag_step(plan, step, capability_level, approved, dry_run, capability_token=capability_token))"
+    },
+    {
+      "file": "scp\\hands\\task_kernel_bridge.py",
+      "line": 345,
+      "func": "execute",
+      "code": "self.kernel.create_task("
+    },
+    {
+      "file": "scp\\hands\\task_kernel_bridge.py",
+      "line": 445,
+      "func": "execute",
+      "code": "heartbeat_task = asyncio.create_task("
+    },
+    {
+      "file": "scp\\llm_gateway\\client.py",
+      "line": 802,
+      "func": "_launch_next",
+      "code": "task = loop.create_task("
+    }
+  ],
+  "unawaited_async_calls": [
+    {
+      "file": "scp\\api_server.py",
+      "line": 728,
+      "func": "<module>",
+      "callee": "run",
+      "code": "uvicorn.run(\"scp.api_server:app\", host=\"127.0.0.1\", port=8000, reload=False, log_level=\"info\")"
+    },
+    {
+      "file": "scp\\ask_kernel_adapter.py",
+      "line": 265,
+      "func": "begin",
+      "callee": "start",
+      "code": "self.kernel.start(task_id, lease.lease_id)"
+    },
+    {
+      "file": "scp\\event_bus_pg.py",
+      "line": 200,
+      "func": "ensure_schema",
+      "callee": "execute",
+      "code": "conn.execute(ddl)"
+    },
+    {
+      "file": "scp\\event_bus_pg.py",
+      "line": 224,
+      "func": "publish",
+      "callee": "execute",
+      "code": "conn.execute(_SQL_NOTIFY_EVENT, (_WAKE_CHANNEL, str(event_id)))"
+    },
+    {
+      "file": "scp\\event_bus_pg.py",
+      "line": 231,
+      "func": "publish",
+      "callee": "rollback",
+      "code": "conn.rollback()"
+    },
+    {
+      "file": "scp\\event_bus_pg.py",
+      "line": 292,
+      "func": "subscribe_poll",
+      "callee": "execute",
+      "code": "listen_conn.execute(\"LISTEN scp_bus_wake\")"
+    },
+    {
+      "file": "scp\\event_bus_pg.py",
+      "line": 386,
+      "func": "_attempt",
+      "callee": "execute",
+      "code": "conn.execute(_SQL_MARK_DEAD, (attempts, event.id))"
+    },
+    {
+      "file": "scp\\event_bus_pg.py",
+      "line": 397,
+      "func": "_attempt",
+      "callee": "execute",
+      "code": "conn.execute(_SQL_BUMP_ATTEMPTS, (attempts, event.id))"
+    },
+    {
+      "file": "scp\\event_bus_pg.py",
+      "line": 400,
+      "func": "_attempt",
+      "callee": "execute",
+      "code": "conn.execute(_SQL_MARK_DELIVERED, (event.id,))"
+    },
+    {
+      "file": "scp\\kernel_storage.py",
+      "line": 101,
+      "func": "__init__",
+      "callee": "execute",
+      "code": "c.execute(\"PRAGMA journal_mode=WAL\")"
+    },
+    {
+      "file": "scp\\kernel_storage.py",
+      "line": 102,
+      "func": "__init__",
+      "callee": "execute",
+      "code": "c.execute(\"PRAGMA foreign_keys=ON\")"
+    },
+    {
+      "file": "scp\\kernel_storage.py",
+      "line": 103,
+      "func": "__init__",
+      "callee": "execute",
+      "code": "c.execute(\"PRAGMA busy_timeout=10000\")"
+    },
+    {
+      "file": "scp\\kernel_storage.py",
+      "line": 110,
+      "func": "_make_connection",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA journal_mode=WAL\")"
+    },
+    {
+      "file": "scp\\kernel_storage.py",
+      "line": 111,
+      "func": "_make_connection",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA foreign_keys=ON\")"
+    },
+    {
+      "file": "scp\\kernel_storage.py",
+      "line": 112,
+      "func": "_make_connection",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA busy_timeout=10000\")"
+    },
+    {
+      "file": "scp\\kernel_storage.py",
+      "line": 129,
+      "func": "begin",
+      "callee": "execute",
+      "code": "self._get_conn().execute(\"BEGIN IMMEDIATE\")"
+    },
+    {
+      "file": "scp\\kernel_storage.py",
+      "line": 140,
+      "func": "commit",
+      "callee": "execute",
+      "code": "self._get_conn().execute(\"COMMIT\")"
+    },
+    {
+      "file": "scp\\kernel_storage.py",
+      "line": 145,
+      "func": "rollback",
+      "callee": "execute",
+      "code": "conn.execute(\"ROLLBACK\")"
+    },
+    {
+      "file": "scp\\kernel_storage_pg.py",
+      "line": 297,
+      "func": "_make_connection",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\kernel_storage_pg.py",
+      "line": 315,
+      "func": "_abort_if_open",
+      "callee": "rollback",
+      "code": "conn.rollback()"
+    },
+    {
+      "file": "scp\\kernel_storage_pg.py",
+      "line": 330,
+      "func": "begin",
+      "callee": "execute",
+      "code": "conn.execute(\"BEGIN\")"
+    },
+    {
+      "file": "scp\\kernel_storage_pg.py",
+      "line": 331,
+      "func": "begin",
+      "callee": "execute",
+      "code": "conn.execute(\"SELECT pg_advisory_xact_lock(%s)\", (_WRITE_SLOT_LOCK_KEY,))"
+    },
+    {
+      "file": "scp\\kernel_storage_pg.py",
+      "line": 365,
+      "func": "rollback",
+      "callee": "rollback",
+      "code": "conn.rollback()"
+    },
+    {
+      "file": "scp\\kernel_storage_pg.py",
+      "line": 397,
+      "func": "executescript",
+      "callee": "execute",
+      "code": "conn.execute(translated)"
+    },
+    {
+      "file": "scp\\task_kernel.py",
+      "line": 240,
+      "func": "_idempotency_claim_fenced",
+      "callee": "execute",
+      "code": "self.conn.execute("
+    },
+    {
+      "file": "scp\\task_kernel.py",
+      "line": 380,
+      "func": "_reconcile_unknown_complete_outcomes",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE leases SET released=1,version=version+1 WHERE task_id=? AND released=0', (task_id,))"
+    },
+    {
+      "file": "scp\\task_kernel.py",
+      "line": 382,
+      "func": "_reconcile_unknown_complete_outcomes",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE queue_accounts SET active=CASE WHEN active>0 THEN active-1 ELSE 0 END,version=version+1 WHERE owner=?', (task['owner'],))"
+    },
+    {
+      "file": "scp\\__main__.py",
+      "line": 117,
+      "func": "main",
+      "callee": "run",
+      "code": "uvicorn.run("
+    },
+    {
+      "file": "scp\\api\\background_jobs.py",
+      "line": 100,
+      "func": "start",
+      "callee": "start",
+      "code": "self._thread.start()"
+    },
+    {
+      "file": "scp\\api\\background_jobs.py",
+      "line": 161,
+      "func": "start_all",
+      "callee": "start",
+      "code": "job.start()"
+    },
+    {
+      "file": "scp\\api\\background_jobs.py",
+      "line": 182,
+      "func": "stop_all",
+      "callee": "stop",
+      "code": "job.stop(timeout=timeout)"
+    },
+    {
+      "file": "scp\\api\\routes\\batch_benchmark_routes.py",
+      "line": 266,
+      "func": "_start_job",
+      "callee": "start",
+      "code": "thread.start()"
+    },
+    {
+      "file": "scp\\api_server_parts\\helpers.py",
+      "line": 388,
+      "func": "get_judge",
+      "callee": "start",
+      "code": "threading.Thread(target=lambda: loop.run_until_complete(deferred_background_start(judge=_judge))).start()"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 126,
+      "func": "_launch_judge_deferred",
+      "callee": "start",
+      "code": "_judge_thread_r20.start()"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 144,
+      "func": "_run_scheduler_offloop",
+      "callee": "run",
+      "code": "asyncio.run(_judge.schedule_background_jobs())"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 181,
+      "func": "lifespan",
+      "callee": "start",
+      "code": "_audit_telemetry.start(mode='background', config={'interval_seconds': 86400})"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 182,
+      "func": "lifespan",
+      "callee": "tick",
+      "code": "_audit_telemetry.tick(status='IDLE')"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 190,
+      "func": "_deep_audit_heartbeat_loop",
+      "callee": "tick",
+      "code": "_audit_telemetry.tick(status=_audit_state['status'])"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 195,
+      "func": "lifespan",
+      "callee": "start",
+      "code": "threading.Thread(target=_deep_audit_heartbeat_loop, daemon=True, name='scp-deep-audit-heartbeat').start()"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 229,
+      "func": "lifespan",
+      "callee": "start",
+      "code": "_attack_telemetry.start(mode='background', config={'interval_seconds': 300})"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 230,
+      "func": "lifespan",
+      "callee": "tick",
+      "code": "_attack_telemetry.tick(status='IDLE')"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 238,
+      "func": "_attack_heartbeat_loop",
+      "callee": "tick",
+      "code": "_attack_telemetry.tick(status=_attack_state['status'])"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 243,
+      "func": "lifespan",
+      "callee": "start",
+      "code": "threading.Thread(target=_attack_heartbeat_loop, daemon=True, name='scp-attack-monitor-heartbeat').start()"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 296,
+      "func": "lifespan",
+      "callee": "start",
+      "code": "_doubt.start()"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 332,
+      "func": "lifespan",
+      "callee": "start",
+      "code": "_why_thread.start()"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 392,
+      "func": "lifespan",
+      "callee": "start",
+      "code": "_retry_thread.start()"
+    },
+    {
+      "file": "scp\\api_server_parts\\lifespan.py",
+      "line": 465,
+      "func": "lifespan",
+      "callee": "stop",
+      "code": "get_doubt_cron(data_dir=os.environ.get('SCP_DATA_DIR', 'data')).stop()"
+    },
+    {
+      "file": "scp\\api_server_parts\\_ask_impl.py",
+      "line": 685,
+      "func": "_ask_impl",
+      "callee": "add",
+      "code": "_async_factcheck_tasks.add(_fc_task)"
+    },
+    {
+      "file": "scp\\api_server_parts\\_ask_impl.py",
+      "line": 747,
+      "func": "_ask_impl",
+      "callee": "record_event",
+      "code": "_eea.record_event("
+    },
+    {
+      "file": "scp\\api_server_parts\\_ask_impl.py",
+      "line": 768,
+      "func": "_ask_impl",
+      "callee": "record_prediction",
+      "code": "_cal.record_prediction("
+    },
+    {
+      "file": "scp\\api_server_parts\\_ask_impl.py",
+      "line": 787,
+      "func": "_ask_impl",
+      "callee": "record_case",
+      "code": "_fc.record_case({"
+    },
+    {
+      "file": "scp\\autofix\\bug_report_validator.py",
+      "line": 422,
+      "func": "_load_feedback",
+      "callee": "add",
+      "code": "dismissed.add(entry[\"fingerprint\"])"
+    },
+    {
+      "file": "scp\\autofix\\callgraph_delta.py",
+      "line": 414,
+      "func": "_rebuild_indexes",
+      "callee": "add",
+      "code": "self._func_index.setdefault(fname, set()).add(path)"
+    },
+    {
+      "file": "scp\\autofix\\callgraph_delta.py",
+      "line": 416,
+      "func": "_rebuild_indexes",
+      "callee": "add",
+      "code": "self._caller_index.setdefault(edge.target_name, set()).add(path)"
+    },
+    {
+      "file": "scp\\autofix\\confidence_ranker.py",
+      "line": 133,
+      "func": "_check_ast_parse",
+      "callee": "parse",
+      "code": "ast.parse(patched_source)"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 97,
+      "func": "_connect",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA foreign_keys=ON\")"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 98,
+      "func": "_connect",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA busy_timeout=5000\")"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 133,
+      "func": "_event",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 142,
+      "func": "enqueue",
+      "callee": "execute",
+      "code": "conn.execute(\"BEGIN IMMEDIATE\")"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 145,
+      "func": "enqueue",
+      "callee": "execute",
+      "code": "conn.execute(\"COMMIT\")"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 148,
+      "func": "enqueue",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 153,
+      "func": "enqueue",
+      "callee": "execute",
+      "code": "conn.execute(\"COMMIT\")"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 159,
+      "func": "claim",
+      "callee": "execute",
+      "code": "conn.execute(\"BEGIN IMMEDIATE\")"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 166,
+      "func": "claim",
+      "callee": "execute",
+      "code": "conn.execute(\"COMMIT\")"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 171,
+      "func": "claim",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 176,
+      "func": "claim",
+      "callee": "execute",
+      "code": "conn.execute(\"COMMIT\")"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 184,
+      "func": "transition",
+      "callee": "execute",
+      "code": "conn.execute(\"BEGIN IMMEDIATE\")"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 187,
+      "func": "transition",
+      "callee": "execute",
+      "code": "conn.execute(\"ROLLBACK\")"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 190,
+      "func": "transition",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 195,
+      "func": "transition",
+      "callee": "execute",
+      "code": "conn.execute(\"COMMIT\")"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 498,
+      "func": "process_job",
+      "callee": "parse",
+      "code": "ast.parse(candidate.source_after, filename=str(path))"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 516,
+      "func": "process_job",
+      "callee": "parse",
+      "code": "ast.parse(after, filename=str(path))"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 667,
+      "func": "_main",
+      "callee": "run_forever",
+      "code": "worker.run_forever()"
+    },
+    {
+      "file": "scp\\autofix\\engine.py",
+      "line": 406,
+      "func": "_attempt_meta_repair",
+      "callee": "parse",
+      "code": "_ast.parse(_new_source)  # proposal must at least compile"
+    },
+    {
+      "file": "scp\\autofix\\engine.py",
+      "line": 666,
+      "func": "_auto_approve_tier3",
+      "callee": "parse",
+      "code": "_ast.parse(filepath.read_text(encoding=\"utf-8\"))"
+    },
+    {
+      "file": "scp\\autofix\\engine.py",
+      "line": 723,
+      "func": "_auto_approve_tier3",
+      "callee": "rollback",
+      "code": "shadow_mgr.rollback(tier3_tx_id, reason=f\"tier3_reality_test_fail: {_reality_test_result}\")"
+    },
+    {
+      "file": "scp\\autofix\\engine.py",
+      "line": 759,
+      "func": "_auto_approve_tier3",
+      "callee": "rollback",
+      "code": "shadow_mgr.rollback(tier3_tx_id, reason=\"tier3_autofix_not_fixed\")"
+    },
+    {
+      "file": "scp\\autofix\\evolution.py",
+      "line": 190,
+      "func": "__init__",
+      "callee": "start",
+      "code": "self._telemetry.start("
+    },
+    {
+      "file": "scp\\autofix\\evolution.py",
+      "line": 198,
+      "func": "__init__",
+      "callee": "tick",
+      "code": "self._telemetry.tick(status=\"IDLE\" if _enabled else \"DISABLED\")"
+    },
+    {
+      "file": "scp\\autofix\\evolution.py",
+      "line": 536,
+      "func": "_apply_xss_pattern_fix",
+      "callee": "parse",
+      "code": "_ast.parse(fixed_source, filename=str(filepath))"
+    },
+    {
+      "file": "scp\\autofix\\evolution.py",
+      "line": 561,
+      "func": "_apply_xss_pattern_fix",
+      "callee": "parse",
+      "code": "_ast.parse(fixed_source, filename=str(filepath))"
+    },
+    {
+      "file": "scp\\autofix\\monitor.py",
+      "line": 76,
+      "func": "_update_streak",
+      "callee": "add",
+      "code": "self._promoted.add(bug_type)"
+    },
+    {
+      "file": "scp\\autofix\\monitor.py",
+      "line": 88,
+      "func": "_update_streak",
+      "callee": "add",
+      "code": "self._demoted.add(bug_type)"
+    },
+    {
+      "file": "scp\\autofix\\property_validator.py",
+      "line": 737,
+      "func": "validate_fix",
+      "callee": "add",
+      "code": "orig_violations.add(idx)"
+    },
+    {
+      "file": "scp\\autofix\\validate_patch.py",
+      "line": 76,
+      "func": "_try_parse_fragment",
+      "callee": "parse",
+      "code": "ast.parse(code)"
+    },
+    {
+      "file": "scp\\autofix\\validate_patch.py",
+      "line": 86,
+      "func": "_try_parse_fragment",
+      "callee": "parse",
+      "code": "ast.parse(f\"def _autofix_chk_():\\n{indented}\\n\")"
+    },
+    {
+      "file": "scp\\autofix\\validate_patch.py",
+      "line": 94,
+      "func": "_try_parse_fragment",
+      "callee": "parse",
+      "code": "ast.parse(f\"try:\\n    pass\\n{code}\\n\")"
+    },
+    {
+      "file": "scp\\autofix\\validate_patch.py",
+      "line": 101,
+      "func": "_try_parse_fragment",
+      "callee": "parse",
+      "code": "ast.parse(f\"_ = ({code})\")"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 37,
+      "func": "_auto_fix",
+      "callee": "rollback",
+      "code": "ctx.shadow_mgr.rollback(ctx.shadow_tx_id, reason=f\"part1 non-fixed: {res.get('reason')}\")"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 47,
+      "func": "_auto_fix",
+      "callee": "rollback",
+      "code": "ctx.shadow_mgr.rollback(ctx.shadow_tx_id, reason=f\"part2 non-fixed: {res.get('reason')}\")"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 57,
+      "func": "_auto_fix",
+      "callee": "rollback",
+      "code": "ctx.shadow_mgr.rollback(ctx.shadow_tx_id, reason=f\"part3 non-fixed: {res.get('reason')}\")"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 66,
+      "func": "_auto_fix",
+      "callee": "rollback",
+      "code": "ctx.shadow_mgr.rollback(ctx.shadow_tx_id, reason=f\"auto-fix crash: {e}\")"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 78,
+      "func": "_auto_fix",
+      "callee": "rollback",
+      "code": "ctx.shadow_mgr.rollback(ctx.shadow_tx_id, reason=\"fell through\")"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 393,
+      "func": "_auto_fix_part1",
+      "callee": "parse",
+      "code": "_ast_verify.parse("
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 404,
+      "func": "_auto_fix_part1",
+      "callee": "rollback",
+      "code": "ctx.shadow_mgr.rollback(ctx.shadow_tx_id, reason=f\"XSS_SYNTAX_ERROR: {_syn_err}\")"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 609,
+      "func": "_auto_fix_part1",
+      "callee": "record",
+      "code": "_get_monitor().record(_FixAttempt("
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 712,
+      "func": "_auto_fix_part1",
+      "callee": "record",
+      "code": "_get_monitor().record(_FixAttempt("
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 1038,
+      "func": "_auto_fix_part2",
+      "callee": "record",
+      "code": "_get_monitor().record(_FixAttempt("
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 1214,
+      "func": "_auto_fix_part3",
+      "callee": "rollback",
+      "code": "ctx.shadow_mgr.rollback(ctx.shadow_tx_id, reason=\"apply_fix_failed\")"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 1231,
+      "func": "_auto_fix_part3",
+      "callee": "record",
+      "code": "_get_monitor().record(_FixAttempt("
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 1265,
+      "func": "_auto_fix_part3",
+      "callee": "rollback",
+      "code": "ctx.shadow_mgr.rollback(ctx.shadow_tx_id, reason=f\"VERIFY_FIX_FAILED: {_verify_reason}\")"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 1287,
+      "func": "_auto_fix_part3",
+      "callee": "record",
+      "code": "_get_monitor().record(_FixAttempt("
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 1339,
+      "func": "_auto_fix_part3",
+      "callee": "rollback",
+      "code": "ctx.shadow_mgr.rollback(ctx.shadow_tx_id, reason=f\"POST_FIX_VERIFY_FAILED: {_pfv_reason}\")"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 1381,
+      "func": "_auto_fix_part3",
+      "callee": "rollback",
+      "code": "ctx.shadow_mgr.rollback(ctx.shadow_tx_id, reason=f\"POST_FIX_VERIFY_IMPORT_ERROR: {_pfv_imp}\")"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 1397,
+      "func": "_auto_fix_part3",
+      "callee": "rollback",
+      "code": "ctx.shadow_mgr.rollback(ctx.shadow_tx_id, reason=f\"POST_FIX_VERIFY_ERROR: {_pfv_err}\")"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 1413,
+      "func": "_auto_fix_part3",
+      "callee": "rollback",
+      "code": "ctx.shadow_mgr.rollback(ctx.shadow_tx_id, reason=f\"VERIFY_CALL_ERROR: {_verify_call_err}\")"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 1535,
+      "func": "_auto_fix_part3",
+      "callee": "record",
+      "code": "_get_monitor().record(_FixAttempt("
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\verify_mixin.py",
+      "line": 71,
+      "func": "_verify_fix",
+      "callee": "parse",
+      "code": "_ast.parse(_content, filename=str(filepath))"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\verify_mixin.py",
+      "line": 321,
+      "func": "_verify_fix",
+      "callee": "add",
+      "code": "_pre_existing_types.add((f.get(\"line\"), f.get(\"bug_type\", \"\")))"
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\buildmixin.py",
+      "line": 82,
+      "func": "build_module",
+      "callee": "parse",
+      "code": "ast.parse(code, filename=spec.path)"
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\buildmixin.py",
+      "line": 207,
+      "func": "_validate_evolved_module",
+      "callee": "parse",
+      "code": "_ast.parse(_code, filename=str(filepath))"
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\buildmixin.py",
+      "line": 243,
+      "func": "_validate_evolved_module",
+      "callee": "add",
+      "code": "_defined_names.add(_node.name)"
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\buildmixin.py",
+      "line": 247,
+      "func": "_validate_evolved_module",
+      "callee": "add",
+      "code": "_defined_names.add(_target.id)"
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\buildmixin.py",
+      "line": 370,
+      "func": "_wire_module",
+      "callee": "parse",
+      "code": "ast.parse(patched, filename=str(fp))"
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\reflectmixin.py",
+      "line": 373,
+      "func": "fix_dead_slm",
+      "callee": "parse",
+      "code": "ast.parse(patched, filename=str(judge_path))"
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\wiremixin.py",
+      "line": 129,
+      "func": "wire_api",
+      "callee": "parse",
+      "code": "ast.parse(patched, filename=str(target_path))"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\ast_scan.py",
+      "line": 147,
+      "func": "visit_FunctionDef",
+      "callee": "add",
+      "code": "self._names.add(node.name)"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\ast_scan.py",
+      "line": 152,
+      "func": "visit_ClassDef",
+      "callee": "add",
+      "code": "self._names.add(node.name)"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\ast_scan.py",
+      "line": 156,
+      "func": "visit_Import",
+      "callee": "add",
+      "code": "self._names.add(alias.asname or alias.name.split(\".\")[0])"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\ast_scan.py",
+      "line": 162,
+      "func": "visit_ImportFrom",
+      "callee": "add",
+      "code": "self._names.add(alias.asname or alias.name)"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\ast_scan.py",
+      "line": 172,
+      "func": "visit_AnnAssign",
+      "callee": "add",
+      "code": "self._names.add(node.target.id)"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\ast_scan.py",
+      "line": 203,
+      "func": "visit_ExceptHandler",
+      "callee": "add",
+      "code": "self._names.add(node.name)"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\ast_scan.py",
+      "line": 236,
+      "func": "visit_NamedExpr",
+      "callee": "add",
+      "code": "self._names.add(node.target.id)"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\ast_scan.py",
+      "line": 241,
+      "func": "_collect_target",
+      "callee": "add",
+      "code": "self._names.add(tgt.id)"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\ast_scan.py",
+      "line": 309,
+      "func": "_define",
+      "callee": "add",
+      "code": "self._scope_stack[-1].add(name)"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\auto_rollback.py",
+      "line": 238,
+      "func": "register",
+      "callee": "start",
+      "code": "self.start()"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\auto_rollback.py",
+      "line": 409,
+      "func": "start",
+      "callee": "start",
+      "code": "self._thread.start()"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\auto_rollback.py",
+      "line": 542,
+      "func": "reset_regression_watcher",
+      "callee": "stop",
+      "code": "_watcher_singleton.stop()"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\blast_radius.py",
+      "line": 305,
+      "func": "compute_blast_radius",
+      "callee": "add",
+      "code": "caller_files_set.add(str(path))"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\blast_radius.py",
+      "line": 310,
+      "func": "compute_blast_radius",
+      "callee": "add",
+      "code": "test_files_set.add(str(path))"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\lineage_cross_validation.py",
+      "line": 129,
+      "func": "collect_lineages",
+      "callee": "add",
+      "code": "seen.add(lin)"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\shadow_canary.py",
+      "line": 204,
+      "func": "_ast_parse_test",
+      "callee": "parse",
+      "code": "ast.parse(src)"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\shadow_canary.py",
+      "line": 408,
+      "func": "add_test",
+      "callee": "add",
+      "code": "self.add(CanaryTest(name=name, fn=fn, description=description))"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\dead_code_scanner.py",
+      "line": 289,
+      "func": "_build_call_graph",
+      "callee": "add",
+      "code": "all_def_names.add(d[\"name\"])"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\dead_code_scanner.py",
+      "line": 310,
+      "func": "_build_call_graph",
+      "callee": "add",
+      "code": "symbol_to_referrers[name].add(str(path))"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\dead_slm_scanner.py",
+      "line": 117,
+      "func": "visit_Call",
+      "callee": "add",
+      "code": "self.routed_domains.add(arg.value)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\dead_slm_scanner.py",
+      "line": 131,
+      "func": "visit_For",
+      "callee": "add",
+      "code": "self.routed_domains.add(elt.value)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\null_safety_scanner.py",
+      "line": 69,
+      "func": "visit_FunctionDef",
+      "callee": "add",
+      "code": "self.optional_funcs.add(node.name)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\null_safety_scanner.py",
+      "line": 130,
+      "func": "visit_If",
+      "callee": "add",
+      "code": "self._checked_vars.add(cond_node.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\null_safety_scanner.py",
+      "line": 138,
+      "func": "visit_If",
+      "callee": "add",
+      "code": "self._checked_vars.add(cond_node.left.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\performance_scanner.py",
+      "line": 268,
+      "func": "scan",
+      "callee": "add",
+      "code": "seen.add(key)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\race_condition_scanner.py",
+      "line": 246,
+      "func": "visit_Assign",
+      "callee": "add",
+      "code": "self._lock_attrs.add(name)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\resource_leak_scanner.py",
+      "line": 148,
+      "func": "visit_Assign",
+      "callee": "add",
+      "code": "self._managed.add(tgt.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\resource_leak_scanner.py",
+      "line": 159,
+      "func": "visit_AnnAssign",
+      "callee": "add",
+      "code": "self._managed.add(node.target.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\resource_leak_scanner.py",
+      "line": 170,
+      "func": "visit_With",
+      "callee": "add",
+      "code": "self._managed.add(item.optional_vars.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\resource_leak_scanner.py",
+      "line": 173,
+      "func": "visit_With",
+      "callee": "add",
+      "code": "self._managed.add(ctx.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\resource_leak_scanner.py",
+      "line": 186,
+      "func": "visit_Call",
+      "callee": "add",
+      "code": "self._managed.add(vname)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\resource_leak_scanner.py",
+      "line": 192,
+      "func": "visit_Return",
+      "callee": "add",
+      "code": "self._managed.add(node.value.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\resource_leak_scanner.py",
+      "line": 219,
+      "func": "visit_Try",
+      "callee": "add",
+      "code": "self._managed.add(stmt.func.value.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\schema_scanner.py",
+      "line": 95,
+      "func": "_parse_columns",
+      "callee": "add",
+      "code": "cols.add(col_name)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\security_scanner.py",
+      "line": 108,
+      "func": "visit_FunctionDef",
+      "callee": "add",
+      "code": "self._func_params.add(arg.arg)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\sql_injection_scanner.py",
+      "line": 230,
+      "func": "_find_suppression_lines",
+      "callee": "add",
+      "code": "suppressed.add(i)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\taint_flow_scanner.py",
+      "line": 310,
+      "func": "_collect_names",
+      "callee": "add",
+      "code": "names.add(n.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\taint_flow_scanner.py",
+      "line": 526,
+      "func": "_check_isinstance_in_test",
+      "callee": "add",
+      "code": "self._sanitized.add(var_name)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\taint_flow_scanner.py",
+      "line": 536,
+      "func": "_handle_assign",
+      "callee": "add",
+      "code": "self._sanitized.add(tgt.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\taint_flow_scanner.py",
+      "line": 589,
+      "func": "_handle_annassign",
+      "callee": "add",
+      "code": "self._sanitized.add(node.target.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\taint_flow_scanner.py",
+      "line": 652,
+      "func": "_handle_call",
+      "callee": "add",
+      "code": "tainted_arg_names.add(n.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\taint_flow_scanner.py",
+      "line": 659,
+      "func": "_handle_call",
+      "callee": "add",
+      "code": "tainted_arg_names.add(n.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\_self_audit.py",
+      "line": 401,
+      "func": "audit_scanner",
+      "callee": "add",
+      "code": "result.expected_bug_types.add(bug_type)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\_self_audit.py",
+      "line": 414,
+      "func": "audit_scanner",
+      "callee": "add",
+      "code": "result.actual_bug_types.add(str(getattr(f, \"bug_type\", \"\")))"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\cross_func_taint_scanner_parts\\_callgraphbuilder.py",
+      "line": 72,
+      "func": "_analyze_body",
+      "callee": "add",
+      "code": "sanitized.add(sub.args[0].id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\cross_func_taint_scanner_parts\\_callgraphbuilder.py",
+      "line": 78,
+      "func": "_analyze_body",
+      "callee": "add",
+      "code": "return_call_ids.add(id(sub))"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\cross_func_taint_scanner_parts\\_callgraphbuilder.py",
+      "line": 113,
+      "func": "_analyze_return_value",
+      "callee": "add",
+      "code": "info.returns_param.add(value.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\cross_func_taint_scanner_parts\\_callgraphbuilder.py",
+      "line": 118,
+      "func": "_analyze_return_value",
+      "callee": "add",
+      "code": "info.returns_param.add(n)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\cross_func_taint_scanner_parts\\_crossfuncscanner.py",
+      "line": 68,
+      "func": "detect_bugs",
+      "callee": "analyze",
+      "code": "detector.analyze()"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\cross_func_taint_scanner_parts\\_crossfuncscanner.py",
+      "line": 73,
+      "func": "detect_bugs",
+      "callee": "add",
+      "code": "seen_keys.add(key)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\cross_func_taint_scanner_parts\\_functiondetector.py",
+      "line": 67,
+      "func": "_check_isinstance_in_test",
+      "callee": "add",
+      "code": "self.sanitized.add(var_name)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\cross_func_taint_scanner_parts\\_functiondetector.py",
+      "line": 76,
+      "func": "_handle_assign",
+      "callee": "add",
+      "code": "self.sanitized.add(tgt.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\cross_func_taint_scanner_parts\\_functiondetector.py",
+      "line": 122,
+      "func": "_handle_annassign",
+      "callee": "add",
+      "code": "self.sanitized.add(node.target.id)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\cross_func_taint_scanner_parts\\_run_fixpoint.py",
+      "line": 45,
+      "func": "_run_fixpoint",
+      "callee": "add",
+      "code": "f.sink_consuming_params.add(edge.arg_param)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\cross_func_taint_scanner_parts\\_run_fixpoint.py",
+      "line": 54,
+      "func": "_run_fixpoint",
+      "callee": "add",
+      "code": "existing_keys.add(key)"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\cross_func_taint_scanner_parts\\_run_fixpoint.py",
+      "line": 58,
+      "func": "_run_fixpoint",
+      "callee": "add",
+      "code": "f.propagating_params.add(edge.arg_param)"
+    },
+    {
+      "file": "scp\\brain\\error_store_index.py",
+      "line": 534,
+      "func": "<module>",
+      "callee": "run",
+      "code": "asyncio.run(_smoke_test())"
+    },
+    {
+      "file": "scp\\brain\\index_parts\\clustering.py",
+      "line": 189,
+      "func": "trim",
+      "callee": "rebuild_index",
+      "code": "rebuild_index(index)"
+    },
+    {
+      "file": "scp\\calibration\\ledger.py",
+      "line": 108,
+      "func": "record_prediction",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\calibration\\ledger.py",
+      "line": 153,
+      "func": "resolve",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\capabilities\\vector_db.py",
+      "line": 26,
+      "func": "_init_db",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\"CREATE TABLE IF NOT EXISTS vectors ("
+    },
+    {
+      "file": "scp\\capabilities\\vector_db.py",
+      "line": 30,
+      "func": "_init_db",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_vectors_text ON vectors(text)\")"
+    },
+    {
+      "file": "scp\\capabilities\\vector_db.py",
+      "line": 56,
+      "func": "add",
+      "callee": "execute",
+      "code": "conn.execute(\"INSERT OR REPLACE INTO vectors VALUES (?,?,?,?,?)\","
+    },
+    {
+      "file": "scp\\core\\ai_threat_scanner.py",
+      "line": 290,
+      "func": "start_scanner",
+      "callee": "start",
+      "code": "_thread.start()"
+    },
+    {
+      "file": "scp\\core\\audit_fetcher.py",
+      "line": 227,
+      "func": "start_audit_fetcher",
+      "callee": "start",
+      "code": "_thread.start()"
+    },
+    {
+      "file": "scp\\core\\auto_backup.py",
+      "line": 109,
+      "func": "backup_db",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA wal_checkpoint(TRUNCATE)\")"
+    },
+    {
+      "file": "scp\\core\\bounded_evolution.py",
+      "line": 152,
+      "func": "run_bounded_evolution",
+      "callee": "start",
+      "code": "process.start()"
+    },
+    {
+      "file": "scp\\core\\code_evolution_agent.py",
+      "line": 278,
+      "func": "_write_if_safe",
+      "callee": "parse",
+      "code": "ast.parse(patched, filename=str(filepath))"
+    },
+    {
+      "file": "scp\\core\\conflict_resolver.py",
+      "line": 168,
+      "func": "_detect_conflict",
+      "callee": "add",
+      "code": "distinct.add(normalized)"
+    },
+    {
+      "file": "scp\\core\\crypto_verifier.py",
+      "line": 274,
+      "func": "fetch_crypto_price",
+      "callee": "add",
+      "code": "completed_sources.add(source_name)"
+    },
+    {
+      "file": "scp\\core\\db_manager.py",
+      "line": 162,
+      "func": "checkpoint_wal",
+      "callee": "execute",
+      "code": "get_db().execute(\"PRAGMA wal_checkpoint(TRUNCATE)\")"
+    },
+    {
+      "file": "scp\\core\\db_manager.py",
+      "line": 169,
+      "func": "vacuum_db",
+      "callee": "execute",
+      "code": "get_db().execute(\"VACUUM\")"
+    },
+    {
+      "file": "scp\\core\\dependency_resolver.py",
+      "line": 53,
+      "func": "_import_names",
+      "callee": "add",
+      "code": "names.add(alias.name.split(\".\")[0])"
+    },
+    {
+      "file": "scp\\core\\dependency_resolver.py",
+      "line": 55,
+      "func": "_import_names",
+      "callee": "add",
+      "code": "names.add(node.module.split(\".\")[0])"
+    },
+    {
+      "file": "scp\\core\\doubt_cron.py",
+      "line": 182,
+      "func": "start",
+      "callee": "start",
+      "code": "self._thread.start()"
+    },
+    {
+      "file": "scp\\core\\generator.py",
+      "line": 17,
+      "func": "add",
+      "callee": "add",
+      "code": "self._seen.add(q)"
+    },
+    {
+      "file": "scp\\core\\generator.py",
+      "line": 56,
+      "func": "sinh_ngau_nhien",
+      "callee": "add",
+      "code": "self.history.add(question)"
+    },
+    {
+      "file": "scp\\core\\github_backup.py",
+      "line": 111,
+      "func": "backup_to_hf",
+      "callee": "execute",
+      "code": "_conn.execute(\"PRAGMA wal_checkpoint(TRUNCATE)\")"
+    },
+    {
+      "file": "scp\\core\\harm_detector.py",
+      "line": 217,
+      "func": "_harm_loop",
+      "callee": "add",
+      "code": "seen.add(key)"
+    },
+    {
+      "file": "scp\\core\\harm_detector.py",
+      "line": 234,
+      "func": "start_detector",
+      "callee": "start",
+      "code": "_thread.start()"
+    },
+    {
+      "file": "scp\\core\\hypothesis_zone.py",
+      "line": 50,
+      "func": "get_hz_db",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA journal_mode=WAL\")"
+    },
+    {
+      "file": "scp\\core\\hypothesis_zone.py",
+      "line": 51,
+      "func": "get_hz_db",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA synchronous=NORMAL\")"
+    },
+    {
+      "file": "scp\\core\\hypothesis_zone.py",
+      "line": 52,
+      "func": "get_hz_db",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA foreign_keys = ON\")"
+    },
+    {
+      "file": "scp\\core\\hypothesis_zone.py",
+      "line": 65,
+      "func": "hz_exec",
+      "callee": "rollback",
+      "code": "conn.rollback()"
+    },
+    {
+      "file": "scp\\core\\hypothesis_zone.py",
+      "line": 93,
+      "func": "init_hz_schema",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\core\\hypothesis_zone.py",
+      "line": 107,
+      "func": "init_hz_schema",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_partial_status ON partial_entries(status)\")"
+    },
+    {
+      "file": "scp\\core\\hypothesis_zone.py",
+      "line": 108,
+      "func": "init_hz_schema",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_partial_entity ON partial_entries(entity, attribute)\")"
+    },
+    {
+      "file": "scp\\core\\hypothesis_zone.py",
+      "line": 109,
+      "func": "init_hz_schema",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_partial_question ON partial_entries(question)\")"
+    },
+    {
+      "file": "scp\\core\\hypothesis_zone.py",
+      "line": 112,
+      "func": "init_hz_schema",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\core\\hypothesis_zone.py",
+      "line": 124,
+      "func": "init_hz_schema",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_conflicts_question ON conflicts(question)\")"
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 80,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"\"\""
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 97,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"CREATE INDEX IF NOT EXISTS idx_evidences_type ON evidences(evidence_type)\")"
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 98,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"CREATE INDEX IF NOT EXISTS idx_evidences_entity ON evidences(entity, attribute)\")"
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 99,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"CREATE INDEX IF NOT EXISTS idx_evidences_source ON evidences(source)\")"
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 102,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"\"\""
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 117,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"CREATE INDEX IF NOT EXISTS idx_conclusions_verdict ON conclusions(verdict)\")"
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 118,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"CREATE INDEX IF NOT EXISTS idx_conclusions_domain ON conclusions(domain)\")"
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 119,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"CREATE INDEX IF NOT EXISTS idx_conclusions_question ON conclusions(question)\")"
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 120,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"CREATE INDEX IF NOT EXISTS idx_conclusions_sha256 ON conclusions(sha256)\")"
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 123,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"\"\""
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 134,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"CREATE INDEX IF NOT EXISTS idx_decision_conclusion ON decision_history(conclusion_id)\")"
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 137,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"\"\""
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 146,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"\"\""
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 155,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"\"\""
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 168,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"CREATE INDEX IF NOT EXISTS idx_reason_conclusion ON reason_chains(conclusion_id)\")"
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 169,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"CREATE INDEX IF NOT EXISTS idx_reason_state ON reason_chains(state)\")"
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 172,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"\"\""
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 188,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"CREATE INDEX IF NOT EXISTS idx_elinks_chain ON evidence_links(chain_id)\")"
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 189,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"CREATE INDEX IF NOT EXISTS idx_elinks_evidence ON evidence_links(evidence_id)\")"
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 192,
+      "func": "init_phase0_schema",
+      "callee": "execute",
+      "code": "cursor.execute(\"\"\""
+    },
+    {
+      "file": "scp\\core\\safe_process.py",
+      "line": 72,
+      "func": "_build_whitelisted_paths",
+      "callee": "add",
+      "code": "paths.add(os.path.realpath(raw))"
+    },
+    {
+      "file": "scp\\core\\speculative.py",
+      "line": 131,
+      "func": "run",
+      "callee": "start",
+      "code": "t.start()"
+    },
+    {
+      "file": "scp\\core\\startup_optimizer.py",
+      "line": 71,
+      "func": "optimize_sqlite_wal",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA wal_checkpoint(TRUNCATE)\")"
+    },
+    {
+      "file": "scp\\core\\startup_optimizer.py",
+      "line": 75,
+      "func": "optimize_sqlite_wal",
+      "callee": "execute",
+      "code": "conn.execute(\"VACUUM\")"
+    },
+    {
+      "file": "scp\\core\\subsystem_telemetry.py",
+      "line": 88,
+      "func": "_connect",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA busy_timeout=15000\")"
+    },
+    {
+      "file": "scp\\core\\subsystem_telemetry.py",
+      "line": 89,
+      "func": "_connect",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA journal_mode=WAL\")"
+    },
+    {
+      "file": "scp\\core\\subsystem_telemetry.py",
+      "line": 160,
+      "func": "_write",
+      "callee": "execute",
+      "code": "conn.execute(\"BEGIN IMMEDIATE\")"
+    },
+    {
+      "file": "scp\\core\\subsystem_telemetry.py",
+      "line": 220,
+      "func": "_write",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\core\\subsystem_telemetry.py",
+      "line": 225,
+      "func": "_write",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\core\\subsystem_telemetry.py",
+      "line": 317,
+      "func": "heartbeat_sleep",
+      "callee": "tick",
+      "code": "telemetry.tick(status=status, next_due_at_utc=str(deadline))"
+    },
+    {
+      "file": "scp\\core\\subsystem_telemetry.py",
+      "line": 369,
+      "func": "_async_heartbeat_ticker",
+      "callee": "tick",
+      "code": "telemetry.tick(status=\"RUNNING\")"
+    },
+    {
+      "file": "scp\\core\\subsystem_telemetry.py",
+      "line": 384,
+      "func": "_tick_loop",
+      "callee": "tick",
+      "code": "telemetry.tick(status=\"RUNNING\")"
+    },
+    {
+      "file": "scp\\core\\subsystem_telemetry.py",
+      "line": 386,
+      "func": "wrapped",
+      "callee": "start",
+      "code": "ticker.start()"
+    },
+    {
+      "file": "scp\\core\\top_systems_learning.py",
+      "line": 340,
+      "func": "_known_content_hashes",
+      "callee": "add",
+      "code": "hashes.add(digest)"
+    },
+    {
+      "file": "scp\\core\\top_systems_learning.py",
+      "line": 394,
+      "func": "learn_topic",
+      "callee": "add",
+      "code": "seen.add(digest)"
+    },
+    {
+      "file": "scp\\core\\top_systems_learning.py",
+      "line": 494,
+      "func": "stats",
+      "callee": "add",
+      "code": "topics.add(str(record[\"topic\"]))"
+    },
+    {
+      "file": "scp\\core\\trace_store.py",
+      "line": 40,
+      "func": "_get_conn",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA journal_mode=WAL\")"
+    },
+    {
+      "file": "scp\\core\\trace_store.py",
+      "line": 41,
+      "func": "_get_conn",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA synchronous=NORMAL\")"
+    },
+    {
+      "file": "scp\\core\\trace_store.py",
+      "line": 49,
+      "func": "_init_db",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\core\\trace_store.py",
+      "line": 63,
+      "func": "_init_db",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_traces_session ON traces(session_id)\")"
+    },
+    {
+      "file": "scp\\core\\trace_store.py",
+      "line": 64,
+      "func": "_init_db",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_traces_timestamp ON traces(timestamp)\")"
+    },
+    {
+      "file": "scp\\core\\trace_store.py",
+      "line": 96,
+      "func": "record_trace",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\core\\url_fetcher.py",
+      "line": 137,
+      "func": "connect",
+      "callee": "connect",
+      "code": "_PinnedHTTPConnection.connect(self)"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\db_batch_flush.py",
+      "line": 27,
+      "func": "db_batch_flush",
+      "callee": "execute",
+      "code": "conn.execute(sql, params)"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\db_batch_flush.py",
+      "line": 34,
+      "func": "db_batch_flush",
+      "callee": "rollback",
+      "code": "conn.rollback()"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\db_exec.py",
+      "line": 34,
+      "func": "db_exec",
+      "callee": "rollback",
+      "code": "conn.rollback()"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\get_db.py",
+      "line": 30,
+      "func": "get_db",
+      "callee": "execute",
+      "code": "_persistent_conn.execute('PRAGMA journal_mode=WAL')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\get_db.py",
+      "line": 31,
+      "func": "get_db",
+      "callee": "execute",
+      "code": "_persistent_conn.execute('PRAGMA synchronous=NORMAL')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\get_db.py",
+      "line": 32,
+      "func": "get_db",
+      "callee": "execute",
+      "code": "_persistent_conn.execute('PRAGMA cache_size=-128000')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\get_db.py",
+      "line": 33,
+      "func": "get_db",
+      "callee": "execute",
+      "code": "_persistent_conn.execute('PRAGMA temp_store=MEMORY')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\get_db.py",
+      "line": 34,
+      "func": "get_db",
+      "callee": "execute",
+      "code": "_persistent_conn.execute('PRAGMA busy_timeout=30000')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\get_db.py",
+      "line": 35,
+      "func": "get_db",
+      "callee": "execute",
+      "code": "_persistent_conn.execute('PRAGMA mmap_size=268435456')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\get_db.py",
+      "line": 36,
+      "func": "get_db",
+      "callee": "execute",
+      "code": "_persistent_conn.execute('PRAGMA wal_autocheckpoint=5000')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\get_db.py",
+      "line": 37,
+      "func": "get_db",
+      "callee": "execute",
+      "code": "_persistent_conn.execute('PRAGMA page_size=4096')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\get_db.py",
+      "line": 38,
+      "func": "get_db",
+      "callee": "execute",
+      "code": "_persistent_conn.execute('PRAGMA foreign_keys = ON')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\_get_path_conn.py",
+      "line": 34,
+      "func": "_get_path_conn",
+      "callee": "execute",
+      "code": "conn.execute('PRAGMA foreign_keys = ON')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\_get_path_conn.py",
+      "line": 35,
+      "func": "_get_path_conn",
+      "callee": "execute",
+      "code": "conn.execute('PRAGMA journal_mode=WAL')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\_get_path_conn.py",
+      "line": 36,
+      "func": "_get_path_conn",
+      "callee": "execute",
+      "code": "conn.execute('PRAGMA synchronous=NORMAL')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\_get_path_conn.py",
+      "line": 37,
+      "func": "_get_path_conn",
+      "callee": "execute",
+      "code": "conn.execute('PRAGMA busy_timeout=30000')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\_preflight_integrity_check.py",
+      "line": 24,
+      "func": "_preflight_integrity_check",
+      "callee": "execute",
+      "code": "_probe.execute('PRAGMA quick_check')"
+    },
+    {
+      "file": "scp\\core\\db_manager_parts\\_preflight_integrity_check.py",
+      "line": 35,
+      "func": "_preflight_integrity_check",
+      "callee": "execute",
+      "code": "_probe2.execute('VACUUM INTO ?', (_recovered,))"
+    },
+    {
+      "file": "scp\\core\\fast_learning_engine_parts\\fastlearningengine.py",
+      "line": 50,
+      "func": "__init__",
+      "callee": "start",
+      "code": "self._telemetry.start(mode='background', config={'db_path': str(self.scp_db_path), 'count': 50, 'llm': 'ollama', 'verify': 'wikipedia'})"
+    },
+    {
+      "file": "scp\\core\\fast_learning_engine_parts\\fastlearningengine.py",
+      "line": 73,
+      "func": "_init_kb",
+      "callee": "execute",
+      "code": "conn.execute(_KNOWLEDGE_CANONICAL_DDL)"
+    },
+    {
+      "file": "scp\\core\\fast_learning_engine_parts\\fastlearningengine.py",
+      "line": 74,
+      "func": "_init_kb",
+      "callee": "execute",
+      "code": "conn.execute('CREATE INDEX IF NOT EXISTS idx_knowledge_entity ON knowledge(entity)')"
+    },
+    {
+      "file": "scp\\core\\fast_learning_engine_parts\\fastlearningengine.py",
+      "line": 75,
+      "func": "_init_kb",
+      "callee": "execute",
+      "code": "conn.execute('CREATE INDEX IF NOT EXISTS idx_knowledge_attr ON knowledge(attribute)')"
+    },
+    {
+      "file": "scp\\core\\fast_learning_engine_parts\\fastlearningengine.py",
+      "line": 129,
+      "func": "_get_known_countries_domains",
+      "callee": "add",
+      "code": "known.add((country, domain))"
+    },
+    {
+      "file": "scp\\core\\fast_learning_engine_parts\\start_fast_learning_thread.py",
+      "line": 74,
+      "func": "start_fast_learning_thread",
+      "callee": "start",
+      "code": "thread.start()"
+    },
+    {
+      "file": "scp\\core\\partition\\archive.py",
+      "line": 76,
+      "func": "_init_table",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\core\\partition\\archive.py",
+      "line": 96,
+      "func": "_init_table",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_lessons_attack \""
+    },
+    {
+      "file": "scp\\core\\partition\\archive.py",
+      "line": 98,
+      "func": "_init_table",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_lessons_activated \""
+    },
+    {
+      "file": "scp\\core\\partition\\rotate.py",
+      "line": 90,
+      "func": "_init_warm_table",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE TABLE IF NOT EXISTS verdict_cache \" +"
+    },
+    {
+      "file": "scp\\core\\partition\\rotate.py",
+      "line": 101,
+      "func": "_init_warm_table",
+      "callee": "execute",
+      "code": "conn.execute(\"ALTER TABLE verdict_cache RENAME TO verdict_cache_old\")"
+    },
+    {
+      "file": "scp\\core\\partition\\rotate.py",
+      "line": 102,
+      "func": "_init_warm_table",
+      "callee": "execute",
+      "code": "conn.execute(_VERDICT_CACHE_CANONICAL_DDL)"
+    },
+    {
+      "file": "scp\\core\\partition\\rotate.py",
+      "line": 133,
+      "func": "_init_warm_table",
+      "callee": "execute",
+      "code": "conn.execute(\"DROP TABLE verdict_cache_old\")"
+    },
+    {
+      "file": "scp\\core\\partition\\rotate.py",
+      "line": 137,
+      "func": "_init_warm_table",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_verdict_expires \""
+    },
+    {
+      "file": "scp\\data_sources\\free_api_catalog.py",
+      "line": 100,
+      "func": "parse_catalog_md",
+      "callee": "add",
+      "code": "seen_names.add(key)"
+    },
+    {
+      "file": "scp\\data_sources\\live_knowledge.py",
+      "line": 402,
+      "func": "_extract_key_values",
+      "callee": "add",
+      "code": "values.add(f\"{num_raw}{unit}\")"
+    },
+    {
+      "file": "scp\\epistemic\\evidence_store.py",
+      "line": 196,
+      "func": "observe",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\epistemic\\evidence_store.py",
+      "line": 200,
+      "func": "observe",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\epistemic\\evidence_store.py",
+      "line": 211,
+      "func": "observe",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\epistemic\\evidence_store.py",
+      "line": 260,
+      "func": "verify_integrity",
+      "callee": "execute",
+      "code": "self.db.execute("
+    },
+    {
+      "file": "scp\\epistemic\\evidence_store.py",
+      "line": 277,
+      "func": "link",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\epistemic\\evidence_store.py",
+      "line": 298,
+      "func": "purge_payload",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\epistemic\\evidence_store.py",
+      "line": 303,
+      "func": "purge_payload",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\epistemic\\lineage.py",
+      "line": 77,
+      "func": "ensure_relation",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\epistemic\\lineage.py",
+      "line": 139,
+      "func": "record_relation",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\epistemic\\source_identity.py",
+      "line": 164,
+      "func": "register",
+      "callee": "execute",
+      "code": "self.db.execute("
+    },
+    {
+      "file": "scp\\epistemic\\source_identity.py",
+      "line": 172,
+      "func": "register",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\forecast\\ledger.py",
+      "line": 125,
+      "func": "load",
+      "callee": "add",
+      "code": "ids.add(case_id)"
+    },
+    {
+      "file": "scp\\governance\\privacy.py",
+      "line": 111,
+      "func": "evaluate",
+      "callee": "apply",
+      "code": "apply(kind, pattern, f\"<{kind}_REDACTED>\".encode(\"ascii\"))"
+    },
+    {
+      "file": "scp\\governance\\privacy.py",
+      "line": 115,
+      "func": "evaluate",
+      "callee": "apply",
+      "code": "apply(kind, pattern, f\"<{kind}_REDACTED>\".encode(\"ascii\"))"
+    },
+    {
+      "file": "scp\\governance\\retention.py",
+      "line": 57,
+      "func": "add_hold",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\governance\\retention.py",
+      "line": 99,
+      "func": "purge_evidence",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\governance\\retention.py",
+      "line": 106,
+      "func": "purge_evidence",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\hands\\planner.py",
+      "line": 339,
+      "func": "create_plan",
+      "callee": "add",
+      "code": "known_ids.add(step[\"stepId\"])"
+    },
+    {
+      "file": "scp\\hands\\planner.py",
+      "line": 434,
+      "func": "run_plan",
+      "callee": "add",
+      "code": "self._active_runs.add(plan_id)"
+    },
+    {
+      "file": "scp\\hands\\planner.py",
+      "line": 743,
+      "func": "run_dag",
+      "callee": "add",
+      "code": "self._active_runs.add(plan_id)"
+    },
+    {
+      "file": "scp\\hands\\planner.py",
+      "line": 848,
+      "func": "_run_dag_locked",
+      "callee": "add",
+      "code": "completed.add(step_id)"
+    },
+    {
+      "file": "scp\\hands\\task_kernel_bridge.py",
+      "line": 401,
+      "func": "execute",
+      "callee": "start",
+      "code": "self.kernel.start(task_id, lease.lease_id)"
+    },
+    {
+      "file": "scp\\history\\regression_corpus.py",
+      "line": 136,
+      "func": "build_cases",
+      "callee": "add",
+      "code": "seen.add(case[\"case_id\"])"
+    },
+    {
+      "file": "scp\\history\\semantic_gate.py",
+      "line": 88,
+      "func": "evaluate_candidate",
+      "callee": "parse",
+      "code": "ast.parse(patched_source, filename=str(path))"
+    },
+    {
+      "file": "scp\\knowledge\\contradiction_authority.py",
+      "line": 123,
+      "func": "register",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\domain_knowledge.py",
+      "line": 84,
+      "func": "_init_sqlite",
+      "callee": "execute",
+      "code": "conn.execute(\"PRAGMA journal_mode = WAL;\")"
+    },
+    {
+      "file": "scp\\knowledge\\domain_knowledge.py",
+      "line": 85,
+      "func": "_init_sqlite",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\domain_knowledge.py",
+      "line": 98,
+      "func": "_init_sqlite",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_kr_domain ON knowledge_records(domain);\")"
+    },
+    {
+      "file": "scp\\knowledge\\domain_knowledge.py",
+      "line": 99,
+      "func": "_init_sqlite",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_kr_question ON knowledge_records(question);\")"
+    },
+    {
+      "file": "scp\\knowledge\\domain_knowledge.py",
+      "line": 130,
+      "func": "store",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\knowledge\\domain_knowledge.py",
+      "line": 154,
+      "func": "search",
+      "callee": "add",
+      "code": "seen_answers.add(ans)"
+    },
+    {
+      "file": "scp\\knowledge\\domain_knowledge.py",
+      "line": 181,
+      "func": "search",
+      "callee": "add",
+      "code": "seen_answers.add(ans)"
+    },
+    {
+      "file": "scp\\knowledge\\domain_knowledge.py",
+      "line": 400,
+      "func": "separate",
+      "callee": "add",
+      "code": "seen_claims.add(claim_text)"
+    },
+    {
+      "file": "scp\\knowledge\\domain_knowledge.py",
+      "line": 418,
+      "func": "separate",
+      "callee": "add",
+      "code": "seen_claims.add(claim_text)"
+    },
+    {
+      "file": "scp\\knowledge\\domain_knowledge.py",
+      "line": 435,
+      "func": "separate",
+      "callee": "add",
+      "code": "seen_claims.add(claim_text)"
+    },
+    {
+      "file": "scp\\knowledge\\knowledge_control_db.py",
+      "line": 54,
+      "func": "record_promotion_decision",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\knowledge_control_db.py",
+      "line": 86,
+      "func": "record_status_event",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\learning_db.py",
+      "line": 69,
+      "func": "execute_insert",
+      "callee": "execute",
+      "code": "conn.execute(f\"INSERT INTO {table} ({cols}) VALUES ({placeholders})\", values)"
+    },
+    {
+      "file": "scp\\knowledge\\revalidation_authority.py",
+      "line": 82,
+      "func": "schedule_revalidation",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\source_reputation.py",
+      "line": 136,
+      "func": "_conn",
+      "callee": "rollback",
+      "code": "conn.rollback()"
+    },
+    {
+      "file": "scp\\knowledge\\source_reputation.py",
+      "line": 143,
+      "func": "_init_db",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\source_reputation.py",
+      "line": 157,
+      "func": "_init_db",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\source_reputation.py",
+      "line": 172,
+      "func": "_init_db",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\source_reputation.py",
+      "line": 184,
+      "func": "_init_db",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\source_reputation.py",
+      "line": 273,
+      "func": "_create",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\source_reputation.py",
+      "line": 286,
+      "func": "on_fact_committed",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\source_reputation.py",
+      "line": 304,
+      "func": "on_fact_invalidated",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\source_reputation.py",
+      "line": 340,
+      "func": "on_fact_independently_verified",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\source_reputation.py",
+      "line": 369,
+      "func": "force_block",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\source_reputation.py",
+      "line": 438,
+      "func": "record_outcome",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\source_reputation.py",
+      "line": 450,
+      "func": "record_outcome",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\knowledge\\antibody_parts\\mixins.py",
+      "line": 186,
+      "func": "verify_drug_interaction",
+      "callee": "add",
+      "code": "found_drugs.add(canonical)"
+    },
+    {
+      "file": "scp\\llm_gateway\\client.py",
+      "line": 805,
+      "func": "_launch_next",
+      "callee": "add",
+      "code": "pending.add(task)"
+    },
+    {
+      "file": "scp\\llm_gateway\\free_catalog.py",
+      "line": 150,
+      "func": "start_background_refresh",
+      "callee": "start",
+      "code": "threading.Thread(target=loop, daemon=True, name=\"llm-gateway-free-catalog-refresh\").start()"
+    },
+    {
+      "file": "scp\\meta\\falsification_engine.py",
+      "line": 313,
+      "func": "_extract_numbers",
+      "callee": "add",
+      "code": "seen_spans.add(span)"
+    },
+    {
+      "file": "scp\\meta\\falsification_engine.py",
+      "line": 987,
+      "func": "<module>",
+      "callee": "_smoke_test",
+      "code": "_smoke_test()"
+    },
+    {
+      "file": "scp\\meta\\kb_evolve.py",
+      "line": 90,
+      "func": "_init_db",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\meta\\kb_evolve.py",
+      "line": 105,
+      "func": "_init_db",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\meta\\kb_evolve.py",
+      "line": 119,
+      "func": "_init_db",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_lessons_bug_type ON lessons(bug_type)\")"
+    },
+    {
+      "file": "scp\\meta\\kb_evolve.py",
+      "line": 120,
+      "func": "_init_db",
+      "callee": "execute",
+      "code": "conn.execute(\"CREATE INDEX IF NOT EXISTS idx_patterns_bug_type ON evolved_patterns(bug_type)\")"
+    },
+    {
+      "file": "scp\\meta\\kb_evolve.py",
+      "line": 139,
+      "func": "save_lesson",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\meta\\kb_evolve.py",
+      "line": 149,
+      "func": "save_lesson",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\meta\\kb_evolve.py",
+      "line": 198,
+      "func": "save_pattern",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\""
+    },
+    {
+      "file": "scp\\meta\\kb_evolve.py",
+      "line": 245,
+      "func": "record_pattern_detection",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\meta\\kb_evolve.py",
+      "line": 251,
+      "func": "record_pattern_detection",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\meta\\cognitive_layers\\proof_graph.py",
+      "line": 160,
+      "func": "build_from_plan",
+      "callee": "evaluate",
+      "code": "graph.evaluate()"
+    },
+    {
+      "file": "scp\\observability\\otel_exporter.py",
+      "line": 95,
+      "func": "record_llm_call",
+      "callee": "add",
+      "code": "_llm_call_counter.add(1, attrs)"
+    },
+    {
+      "file": "scp\\observability\\otel_exporter.py",
+      "line": 96,
+      "func": "record_llm_call",
+      "callee": "record",
+      "code": "_llm_latency_histogram.record(latency_ms, attrs)"
+    },
+    {
+      "file": "scp\\observability\\otel_exporter.py",
+      "line": 103,
+      "func": "record_failover",
+      "callee": "add",
+      "code": "_failover_counter.add(1, {\"from\": from_provider, \"to\": to_provider, \"reason\": reason})"
+    },
+    {
+      "file": "scp\\observability\\otel_exporter.py",
+      "line": 110,
+      "func": "record_task_transition",
+      "callee": "add",
+      "code": "_task_state_counter.add(1, {\"from_state\": from_state, \"to_state\": to_state})"
+    },
+    {
+      "file": "scp\\persistence\\db.py",
+      "line": 45,
+      "func": "__init__",
+      "callee": "execute",
+      "code": "self._conn.execute(\"PRAGMA foreign_keys=ON\")"
+    },
+    {
+      "file": "scp\\persistence\\db.py",
+      "line": 46,
+      "func": "__init__",
+      "callee": "execute",
+      "code": "self._conn.execute(\"PRAGMA journal_mode=WAL\")"
+    },
+    {
+      "file": "scp\\persistence\\db.py",
+      "line": 54,
+      "func": "_startup",
+      "callee": "execute",
+      "code": "self._conn.execute("
+    },
+    {
+      "file": "scp\\persistence\\db.py",
+      "line": 75,
+      "func": "_startup",
+      "callee": "execute",
+      "code": "conn.execute(statement)"
+    },
+    {
+      "file": "scp\\persistence\\db.py",
+      "line": 76,
+      "func": "_startup",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\persistence\\db.py",
+      "line": 85,
+      "func": "transaction",
+      "callee": "execute",
+      "code": "self._conn.execute(\"BEGIN IMMEDIATE\")"
+    },
+    {
+      "file": "scp\\persistence\\db.py",
+      "line": 89,
+      "func": "transaction",
+      "callee": "rollback",
+      "code": "self._conn.rollback()"
+    },
+    {
+      "file": "scp\\policy\\retry_policy.py",
+      "line": 111,
+      "func": "start_retry_monitor",
+      "callee": "start",
+      "code": "t.start()"
+    },
+    {
+      "file": "scp\\prediction\\predictive.py",
+      "line": 231,
+      "func": "_add_seen",
+      "callee": "add",
+      "code": "self._seen_questions.add(question)"
+    },
+    {
+      "file": "scp\\prediction\\predictive.py",
+      "line": 995,
+      "func": "main",
+      "callee": "run_cycle",
+      "code": "orch.run_cycle()"
+    },
+    {
+      "file": "scp\\prediction\\predictive.py",
+      "line": 1006,
+      "func": "main",
+      "callee": "run_cycle",
+      "code": "orch.run_cycle()"
+    },
+    {
+      "file": "scp\\rag\\canonical_retriever.py",
+      "line": 47,
+      "func": "_load",
+      "callee": "add",
+      "code": "for t in terms:self.postings.setdefault(t,set()).add(idx)"
+    },
+    {
+      "file": "scp\\rag\\canonical_retriever.py",
+      "line": 68,
+      "func": "retrieve",
+      "callee": "add",
+      "code": "seen.add(item['document_id']);out.append({key:value for key,value in item.items() if key not in ('terms','norm','title_terms')}|{'retrieval_score':round(score,4),'term_coverage':round(cov,4),'matched_bigrams':mb})"
+    },
+    {
+      "file": "scp\\runtime\\judge.py",
+      "line": 54,
+      "func": "_run_crosscheck_sync",
+      "callee": "start",
+      "code": "bridge.start()"
+    },
+    {
+      "file": "scp\\runtime\\multi_llm_crosscheck.py",
+      "line": 91,
+      "func": "cross_verify",
+      "callee": "add",
+      "code": "seen_families.add(family)"
+    },
+    {
+      "file": "scp\\runtime\\storage_manager.py",
+      "line": 251,
+      "func": "_vacuum_db",
+      "callee": "execute",
+      "code": "conn.execute(\"VACUUM\")"
+    },
+    {
+      "file": "scp\\runtime\\storage_manager.py",
+      "line": 273,
+      "func": "_vacuum_db",
+      "callee": "execute",
+      "code": "conn.execute('VACUUM INTO ?', (_rec_str,))"
+    },
+    {
+      "file": "scp\\runtime\\engine_parts\\scpv14_process_mixin.py",
+      "line": 181,
+      "func": "process",
+      "callee": "execute",
+      "code": "conn.execute(\"VACUUM\")"
+    },
+    {
+      "file": "scp\\runtime\\engine_parts\\scpv14_process_mixin.py",
+      "line": 284,
+      "func": "process",
+      "callee": "record",
+      "code": "self.health_state.record(verdict.domain or \"unknown\", verdict.verdict)"
+    },
+    {
+      "file": "scp\\runtime\\engine_parts\\scpv14_process_mixin.py",
+      "line": 301,
+      "func": "process",
+      "callee": "add",
+      "code": "self.knowledge_memory.add("
+    },
+    {
+      "file": "scp\\runtime\\engine_parts\\scpv14_process_mixin.py",
+      "line": 347,
+      "func": "process",
+      "callee": "record",
+      "code": "self.v13.v13.error_history.record("
+    },
+    {
+      "file": "scp\\runtime\\engine_parts\\scpv14_process_mixin.py",
+      "line": 614,
+      "func": "process",
+      "callee": "start",
+      "code": "threading.Thread(target=_run_consolidator, daemon=True).start()"
+    },
+    {
+      "file": "scp\\runtime\\engine_parts\\scpv14_process_mixin.py",
+      "line": 625,
+      "func": "process",
+      "callee": "start",
+      "code": "threading.Thread(target=_run_predictive, daemon=True).start()"
+    },
+    {
+      "file": "scp\\sandbox_evaluator\\evaluator.py",
+      "line": 281,
+      "func": "_setup_workspace",
+      "callee": "add",
+      "code": "seen_names.add(base)"
+    },
+    {
+      "file": "scp\\security\\attack_crawler.py",
+      "line": 100,
+      "func": "_load_seen",
+      "callee": "add",
+      "code": "self._seen_hashes.add(hashlib.sha256(entry.get(\"attack_text\", \"\").encode()).hexdigest()[:16])  # [V104.32 #26a]"
+    },
+    {
+      "file": "scp\\security\\attack_crawler.py",
+      "line": 131,
+      "func": "crawl_all",
+      "callee": "add",
+      "code": "self._seen_hashes.add(h)"
+    },
+    {
+      "file": "scp\\security\\attack_crawler.py",
+      "line": 446,
+      "func": "deduplicate",
+      "callee": "add",
+      "code": "seen.add(key)"
+    },
+    {
+      "file": "scp\\security\\attack_crawler.py",
+      "line": 477,
+      "func": "start_crawl_thread",
+      "callee": "start",
+      "code": "thread.start()"
+    },
+    {
+      "file": "scp\\security\\attack_memory.py",
+      "line": 132,
+      "func": "_load_bypasses",
+      "callee": "add",
+      "code": "self._bypass_hashes.add(_h)"
+    },
+    {
+      "file": "scp\\security\\attack_memory.py",
+      "line": 143,
+      "func": "_load_bypasses",
+      "callee": "add",
+      "code": "self._bypass_hashes.add(_canon_h)"
+    },
+    {
+      "file": "scp\\security\\attack_memory.py",
+      "line": 255,
+      "func": "record_bypass",
+      "callee": "add",
+      "code": "self._bypass_hashes.add(_bypass_hash)"
+    },
+    {
+      "file": "scp\\security\\counter_response.py",
+      "line": 445,
+      "func": "execute",
+      "callee": "add",
+      "code": "self._blocked_ips.add(attacker_ip)"
+    },
+    {
+      "file": "scp\\security\\egress_static_scan.py",
+      "line": 191,
+      "func": "_track",
+      "callee": "add",
+      "code": "self.module_vars.add(name)"
+    },
+    {
+      "file": "scp\\security\\egress_static_scan.py",
+      "line": 196,
+      "func": "_track",
+      "callee": "add",
+      "code": "bucket.add(name)"
+    },
+    {
+      "file": "scp\\security\\egress_static_scan.py",
+      "line": 296,
+      "func": "_handle",
+      "callee": "add",
+      "code": "self.client_attrs.add(\".\".join(parts))"
+    },
+    {
+      "file": "scp\\security\\egress_static_scan.py",
+      "line": 313,
+      "func": "_handle_call",
+      "callee": "add",
+      "code": "self.scope_gate_lines.setdefault(sid, set()).add(call.lineno)"
+    },
+    {
+      "file": "scp\\security\\egress_static_scan.py",
+      "line": 342,
+      "func": "_resolve_to_fixpoint",
+      "callee": "add",
+      "code": "self.factories.add(fname)"
+    },
+    {
+      "file": "scp\\security\\escalation.py",
+      "line": 115,
+      "func": "_restore_state",
+      "callee": "start",
+      "code": "timer.start()"
+    },
+    {
+      "file": "scp\\security\\escalation.py",
+      "line": 282,
+      "func": "start_countdown",
+      "callee": "start",
+      "code": "timer.start()"
+    },
+    {
+      "file": "scp\\security\\h8_redteam_bridge.py",
+      "line": 334,
+      "func": "_analyze_bypass",
+      "callee": "add",
+      "code": "existing_keywords.add(rule.pattern.lower())"
+    },
+    {
+      "file": "scp\\security\\os_sandbox.py",
+      "line": 156,
+      "func": "_execute_windows_job",
+      "callee": "start",
+      "code": "reader.start()"
+    },
+    {
+      "file": "scp\\security\\request_context.py",
+      "line": 45,
+      "func": "safe_header_metadata",
+      "callee": "add",
+      "code": "names.add(name[:64])"
+    },
+    {
+      "file": "scp\\security\\threat_detector.py",
+      "line": 361,
+      "func": "record",
+      "callee": "add",
+      "code": "profile[\"endpoints_visited\"].add(endpoint)"
+    },
+    {
+      "file": "scp\\security\\threat_detector.py",
+      "line": 362,
+      "func": "record",
+      "callee": "add",
+      "code": "profile[\"methods_used\"].add(method)"
+    },
+    {
+      "file": "scp\\security\\threat_simulator.py",
+      "line": 363,
+      "func": "generate_variants",
+      "callee": "add",
+      "code": "seen_hashes.add(h)"
+    },
+    {
+      "file": "scp\\security\\unified_detector.py",
+      "line": 172,
+      "func": "decode_attacks",
+      "callee": "add",
+      "code": "variants.add(norm)"
+    },
+    {
+      "file": "scp\\security\\unified_detector.py",
+      "line": 175,
+      "func": "decode_attacks",
+      "callee": "add",
+      "code": "variants.add(_try_rot13_decode(norm))"
+    },
+    {
+      "file": "scp\\security\\unified_detector.py",
+      "line": 179,
+      "func": "decode_attacks",
+      "callee": "add",
+      "code": "variants.add(leet_decoded)"
+    },
+    {
+      "file": "scp\\security\\unified_detector.py",
+      "line": 183,
+      "func": "decode_attacks",
+      "callee": "add",
+      "code": "variants.add(dotted)"
+    },
+    {
+      "file": "scp\\security\\unified_detector.py",
+      "line": 186,
+      "func": "decode_attacks",
+      "callee": "add",
+      "code": "variants.add(_try_rot13_decode(leet_decoded))"
+    },
+    {
+      "file": "scp\\security\\unified_detector.py",
+      "line": 191,
+      "func": "decode_attacks",
+      "callee": "add",
+      "code": "variants.add(leet_dotted)"
+    },
+    {
+      "file": "scp\\security\\unified_detector.py",
+      "line": 194,
+      "func": "decode_attacks",
+      "callee": "add",
+      "code": "variants.add(b64_decoded)"
+    },
+    {
+      "file": "scp\\security\\unified_detector.py",
+      "line": 196,
+      "func": "decode_attacks",
+      "callee": "add",
+      "code": "variants.add(normalize_unicode(b64_decoded))"
+    },
+    {
+      "file": "scp\\security\\unified_detector.py",
+      "line": 198,
+      "func": "decode_attacks",
+      "callee": "add",
+      "code": "variants.add(_try_leet_decode(b64_decoded))"
+    },
+    {
+      "file": "scp\\self_model\\capability_map.py",
+      "line": 134,
+      "func": "record_proof",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\self_model\\capability_map.py",
+      "line": 248,
+      "func": "add_blindspot",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 301,
+      "func": "_schema",
+      "callee": "execute",
+      "code": "self.conn.execute('ALTER TABLE tasks ADD COLUMN priority INTEGER NOT NULL DEFAULT 5')"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 303,
+      "func": "_schema",
+      "callee": "execute",
+      "code": "self.conn.execute('ALTER TABLE tasks ADD COLUMN active_lease_id TEXT')"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 305,
+      "func": "_schema",
+      "callee": "execute",
+      "code": "self.conn.execute('ALTER TABLE tasks ADD COLUMN active_fencing_token INTEGER NOT NULL DEFAULT 0')"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 307,
+      "func": "_schema",
+      "callee": "execute",
+      "code": "self.conn.execute('ALTER TABLE tasks ADD COLUMN version INTEGER NOT NULL DEFAULT 1')"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 309,
+      "func": "_schema",
+      "callee": "execute",
+      "code": "self.conn.execute('ALTER TABLE tasks ADD COLUMN attempts INTEGER NOT NULL DEFAULT 0')"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 311,
+      "func": "_schema",
+      "callee": "execute",
+      "code": "self.conn.execute('ALTER TABLE tasks ADD COLUMN error TEXT')"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 322,
+      "func": "_schema",
+      "callee": "execute",
+      "code": "self.conn.execute('ALTER TABLE \"leases\" ADD COLUMN version INTEGER NOT NULL DEFAULT 1')"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 326,
+      "func": "_schema",
+      "callee": "execute",
+      "code": "self.conn.execute('ALTER TABLE \"idempotency\" ADD COLUMN version INTEGER NOT NULL DEFAULT 1')"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 330,
+      "func": "_schema",
+      "callee": "execute",
+      "code": "self.conn.execute('ALTER TABLE \"queue_accounts\" ADD COLUMN version INTEGER NOT NULL DEFAULT 1')"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 344,
+      "func": "_rollback",
+      "callee": "rollback",
+      "code": "self._storage.rollback()"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 365,
+      "func": "_append_event",
+      "callee": "execute",
+      "code": "self.conn.execute('INSERT INTO events(event_id,task_id,seq,type,from_state,to_state,actor,reason,payload_json,policy_hash,prev_event_hash,event_hash,created_at) VALUES (:event_id,:task_id,:seq,:type,:from_state,:to_state,:actor,:reason,:payload_json,:policy_hash,:prev_event_hash,:event_hash,:created_at)', row)"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 384,
+      "func": "create_task",
+      "callee": "execute",
+      "code": "self.conn.execute('INSERT INTO tasks(task_id,owner,goal,risk_tier,deadline_ms,max_attempts,input_hash,priority,state,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)', (task_id, owner, goal, risk_tier, deadline_ms, max_attempts, input_hash, priority, 'CREATED', created, created))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 501,
+      "func": "transition",
+      "callee": "execute",
+      "code": "self.conn.execute(\"UPDATE leases SET released=1,version=version+1 WHERE lease_id=? AND released=0\", (caller_lease,))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 502,
+      "func": "transition",
+      "callee": "execute",
+      "code": "self.conn.execute("
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 563,
+      "func": "claim",
+      "callee": "execute",
+      "code": "self.conn.execute('INSERT INTO leases(lease_id,task_id,attempt_id,worker_id,issued_at,expires_at,heartbeat_at,fencing_token,global_kill_epoch) VALUES (?,?,?,?,?,?,?,?,?)', (lease_id, task_id, attempt_id, worker_id, now, now + ttl_seconds, now, token, control['global_kill_epoch']))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 564,
+      "func": "claim",
+      "callee": "execute",
+      "code": "self.conn.execute('INSERT INTO queue_accounts(owner,active,dispatch_count,last_dispatch_at) VALUES (?,?,?,?) ON CONFLICT(owner) DO UPDATE SET active=active+1,dispatch_count=dispatch_count+1,last_dispatch_at=excluded.last_dispatch_at', (task['owner'], 1, 1, now))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 603,
+      "func": "claim_next",
+      "callee": "execute",
+      "code": "self.conn.execute('INSERT INTO leases(lease_id,task_id,attempt_id,worker_id,issued_at,expires_at,heartbeat_at,fencing_token,global_kill_epoch) VALUES (?,?,?,?,?,?,?,?,?)', (lease_id, task['task_id'], attempt_id, worker_id, now, expires_at, now, fencing_token, control['global_kill_epoch']))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 604,
+      "func": "claim_next",
+      "callee": "execute",
+      "code": "self.conn.execute('INSERT INTO queue_accounts(owner,active,dispatch_count,last_dispatch_at) VALUES (?,?,?,?) ON CONFLICT(owner) DO UPDATE SET active=active+1,dispatch_count=dispatch_count+1,last_dispatch_at=excluded.last_dispatch_at', (task['owner'], 1, 1, now))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 853,
+      "func": "expire_leases",
+      "callee": "execute",
+      "code": "self.conn.execute(\"UPDATE tasks SET active_lease_id=NULL,active_fencing_token=0,version=version+1,updated_at=? WHERE task_id=? AND version=?\", (now_iso(), task['task_id'], task['version']))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 854,
+      "func": "expire_leases",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE leases SET released=1,version=version+1 WHERE lease_id=? AND released=0', (lease['lease_id'],))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 856,
+      "func": "expire_leases",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE queue_accounts SET active=CASE WHEN active>0 THEN active-1 ELSE 0 END,version=version+1 WHERE owner=?', (owner,))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 903,
+      "func": "release",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE queue_accounts SET active=CASE WHEN active>0 THEN active-1 ELSE 0 END,version=version+1 WHERE owner=?', (task['owner'],))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 934,
+      "func": "checkpoint",
+      "callee": "execute",
+      "code": "self.conn.execute('INSERT INTO checkpoints(checkpoint_id,task_id,attempt_id,step_id,state,planned_action_hash,capability_epoch,idempotency_key,pre_observation_ref,post_observation_ref,tool_result_json,verifier_verdict,payload_hash,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)', (cp_id, task_id, lease['attempt_id'], step_id, state, stable_hash(planned_action), capability_epoch, idempotency_key, pre_observation_ref, post_observation_ref, json.dumps(tool_result, ensure_ascii=False, sort_keys=True) if tool_result is not None else None, verifier_verdict, payload_hash, now_iso()))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 983,
+      "func": "record_action_dispatched",
+      "callee": "execute",
+      "code": "self.conn.execute('INSERT INTO checkpoints(checkpoint_id,task_id,attempt_id,step_id,state,planned_action_hash,capability_epoch,idempotency_key,pre_observation_ref,post_observation_ref,tool_result_json,verifier_verdict,payload_hash,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)', (checkpoint_id, task_id, lease['attempt_id'], step_id, 'UNKNOWN', stable_hash(planned_action), capability_epoch, idempotency_key, pre_observation_ref, None, json.dumps(tool_result, ensure_ascii=False, sort_keys=True), None, payload_hash, now_iso()))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1031,
+      "func": "enter_reconciling",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE leases SET released=1,version=version+1 WHERE task_id=? AND released=0', (task_id,))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1033,
+      "func": "enter_reconciling",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE queue_accounts SET active=CASE WHEN active>0 THEN active-1 ELSE 0 END,version=version+1 WHERE owner=?', (task['owner'],))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1092,
+      "func": "reconcile_unknown",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE leases SET released=1,version=version+1 WHERE task_id=? AND released=0', (task_id,))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1094,
+      "func": "reconcile_unknown",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE queue_accounts SET active=CASE WHEN active>0 THEN active-1 ELSE 0 END,version=version+1 WHERE owner=?', (task['owner'],))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1150,
+      "func": "idempotency_claim",
+      "callee": "execute",
+      "code": "self.conn.execute('INSERT INTO idempotency(logical_key,task_id,step_id,action_type,resource_identity,status,created_at,version) VALUES (?,?,?,?,?,?,?,1)', (logical_key, task_id, step_id, action_type, resource_identity, 'CLAIMED', now_iso()))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1307,
+      "func": "commit_completed",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE leases SET released=1,version=version+1 WHERE lease_id=? AND released=0', (lease_id,))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1308,
+      "func": "commit_completed",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE queue_accounts SET active=CASE WHEN active>0 THEN active-1 ELSE 0 END,version=version+1 WHERE owner=?', (task['owner'],))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1504,
+      "func": "fail_task_fail_closed",
+      "callee": "execute",
+      "code": "self.conn.execute("
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1509,
+      "func": "fail_task_fail_closed",
+      "callee": "execute",
+      "code": "self.conn.execute("
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1643,
+      "func": "commit_failed",
+      "callee": "execute",
+      "code": "self.conn.execute("
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1647,
+      "func": "commit_failed",
+      "callee": "execute",
+      "code": "self.conn.execute("
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1665,
+      "func": "set_global_kill",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE control SET global_kill=?,global_kill_epoch=? WHERE id=1', (1 if active else 0, epoch))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1683,
+      "func": "set_task_kill",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE leases SET released=1,version=version+1 WHERE task_id=? AND released=0', (task_id,))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1685,
+      "func": "set_task_kill",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE queue_accounts SET active=CASE WHEN active>0 THEN active-1 ELSE 0 END,version=version+1 WHERE owner=?', (task['owner'],))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1769,
+      "func": "auto_reconcile_orphans",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE leases SET released=1,version=version+1 WHERE task_id=? AND released=0', (tid,))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1771,
+      "func": "auto_reconcile_orphans",
+      "callee": "execute",
+      "code": "self.conn.execute("
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1850,
+      "func": "recover_on_boot",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE leases SET released=1,version=version+1 WHERE task_id=? AND released=0', (task_id,))"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 1852,
+      "func": "recover_on_boot",
+      "callee": "execute",
+      "code": "self.conn.execute('UPDATE queue_accounts SET active=CASE WHEN active>0 THEN active-1 ELSE 0 END,version=version+1 WHERE owner=?', (task_row['owner'],))"
+    },
+    {
+      "file": "scp\\tests\\external_audit\\test_security.py",
+      "line": 164,
+      "func": "test_bandit_no_new_high_severity_via_bandit",
+      "callee": "add",
+      "code": "new_categories.add((issue.get(\"test_id\"), issue.get(\"filename\")))"
+    },
+    {
+      "file": "scp\\web_control\\internet_search.py",
+      "line": 93,
+      "func": "_dedupe",
+      "callee": "add",
+      "code": "seen.add(url)"
+    },
+    {
+      "file": "scp\\web_control\\playwright_backend.py",
+      "line": 228,
+      "func": "search_public",
+      "callee": "add",
+      "code": "seen.add(url)"
+    },
+    {
+      "file": "scp\\web_control\\playwright_backend.py",
+      "line": 323,
+      "func": "_browse_sync",
+      "callee": "stop",
+      "code": "driver.stop()"
+    },
+    {
+      "file": "scp\\web_control\\playwright_backend.py",
+      "line": 354,
+      "func": "_search_rows_sync",
+      "callee": "stop",
+      "code": "driver.stop()"
+    },
+    {
+      "file": "scp\\world_state\\entity_event_authority.py",
+      "line": 35,
+      "func": "link_identity",
+      "callee": "execute",
+      "code": "conn.execute("
+    },
+    {
+      "file": "scp\\world_state\\entity_event_authority.py",
+      "line": 60,
+      "func": "linked_ids",
+      "callee": "add",
+      "code": "ids.add(link[\"entity_b\"])"
+    },
+    {
+      "file": "scp\\world_state\\entity_event_authority.py",
+      "line": 63,
+      "func": "linked_ids",
+      "callee": "add",
+      "code": "ids.add(link[\"entity_a\"])"
+    },
+    {
+      "file": "scp\\world_state\\temporal_authority.py",
+      "line": 115,
+      "func": "promote_to_observed",
+      "callee": "execute",
+      "code": "self.db.execute(\"UPDATE world_assertions SET superseded_by=? WHERE assertion_id=?\","
+    },
+    {
+      "file": "scp\\world_state\\temporal_authority.py",
+      "line": 131,
+      "func": "correct",
+      "callee": "execute",
+      "code": "self.db.execute(\"UPDATE world_assertions SET superseded_by=? WHERE assertion_id=?\","
+    },
+    {
+      "file": "scp\\world_state\\temporal_authority.py",
+      "line": 154,
+      "func": "_append",
+      "callee": "execute",
+      "code": "conn.execute(\"\"\"INSERT INTO world_assertions (assertion_id, subject, predicate,"
+    }
+  ],
+  "pagination_off_by_one": [],
+  "str_int_comparisons": []
+}

@@ -1,0 +1,475 @@
+{
+  "schema_version": "mimosa-task-review/v2",
+  "run_id": "20260930T195118635Z-20232-feb9cfa50d9a",
+  "run_status": "inconclusive",
+  "errors": [
+    {
+      "stage": "baseline-enumerate",
+      "target": ".pytest_cache",
+      "reason": "bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'"
+    },
+    {
+      "stage": "baseline",
+      "target": ".",
+      "reason": "baseline_partial: baseline capture had enumeration or snapshot errors"
+    },
+    {
+      "stage": "scan",
+      "target": "tests/integration/test_critical_chain_severed.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "scp/web_control/internet_search.py",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "dashboard/src/lib/scp-service-auth.ts",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "dashboard/src/components/dashboard/live-activity-stream.tsx",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "dashboard/src/components/dashboard/scp-overview.tsx",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    },
+    {
+      "stage": "scan",
+      "target": "dashboard/src/app/api/scp/ask/route.ts",
+      "reason": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT"
+    }
+  ],
+  "coverage": {
+    "schema_version": "mimosa-hook-coverage/v1",
+    "status": "partial",
+    "scope": "hook_observed_diff",
+    "baseline": {
+      "complete": false,
+      "captured_files": 1452,
+      "candidate_limit": 5000,
+      "truncated": false,
+      "enumeration_error_count": 1,
+      "snapshot_error_count": 0,
+      "compensated_target_count": 6
+    },
+    "change_tracking": {
+      "touched_observed": 0,
+      "touched_retained": 0,
+      "truncated": false,
+      "bash_mutation": true,
+      "bash_discovered": 6,
+      "bash_discovery_limit": 80,
+      "bash_discovery_truncated": false
+    },
+    "candidates": {
+      "eligible_files": 6,
+      "selected_files": 6,
+      "limit": 20,
+      "truncated": false
+    },
+    "scanning": {
+      "required_files": 6,
+      "scanned_files": 0,
+      "skipped_files": 0,
+      "failed_files": 6,
+      "project_checks_required": 0,
+      "project_checks_completed": 0
+    },
+    "notification": {
+      "eligible_findings": 0,
+      "detailed_findings": 0,
+      "detail_limit": 3,
+      "truncated": false
+    },
+    "reason_counts": {
+      "bash_discovery_incomplete": 1,
+      "baseline_partial": 1,
+      "scanner_failed": 6,
+      "project_check_failed": 8
+    },
+    "reasons": [
+      {
+        "code": "bash_discovery_incomplete",
+        "stage": "baseline-enumerate",
+        "target": ".pytest_cache",
+        "detail": "EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+        "affects_completion": true
+      },
+      {
+        "code": "baseline_partial",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline capture had enumeration or snapshot errors",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tests/integration/test_critical_chain_severed.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "scp/web_control/internet_search.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "dashboard/src/lib/scp-service-auth.ts",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "dashboard/src/components/dashboard/live-activity-stream.tsx",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "dashboard/src/components/dashboard/scp-overview.tsx",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "dashboard/src/app/api/scp/ask/route.ts",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline-enumerate",
+        "target": ".pytest_cache",
+        "detail": "bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline_partial: baseline capture had enumeration or snapshot errors",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tests/integration/test_critical_chain_severed.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "scp/web_control/internet_search.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "dashboard/src/lib/scp-service-auth.ts",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "dashboard/src/components/dashboard/live-activity-stream.tsx",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "dashboard/src/components/dashboard/scp-overview.tsx",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "dashboard/src/app/api/scp/ask/route.ts",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affects_completion": true
+      }
+    ],
+    "reasons_truncated": false
+  },
+  "generated_at": "2026-09-30T19:51:18.635Z",
+  "session_id": "sess_79f2063f-9518-4c34-aa6a-6b7b9f9a6666",
+  "target": ".",
+  "revision": "ab2aa8e3cfdd77fb0de36b539c1af33b80981420",
+  "rules_version": "unavailable",
+  "diff_hash": "7fdf37a4d3a740bf7b83df7ecbfb42da34cf5c71db35bd7dafc0d58e630858f8",
+  "diff": {
+    "algorithm": "sha256",
+    "changed_file_count": 6,
+    "changed_files": [
+      {
+        "file": "dashboard/src/app/api/scp/ask/route.ts",
+        "ranges": [
+          {
+            "start": 10,
+            "end": 10
+          },
+          {
+            "start": 45,
+            "end": 54
+          },
+          {
+            "start": 56,
+            "end": 60
+          },
+          {
+            "start": 62,
+            "end": 62
+          },
+          {
+            "start": 67,
+            "end": 80
+          }
+        ],
+        "before_hash": "1226079c9c6de0d371d87f81ef8e75fd854d381351819eadb4a9e44e5713e376",
+        "after_hash": "6be52eb8bba373fc45e01e10c77a54e0d34f8affd0d6ae03aba60be4de2f00a4"
+      },
+      {
+        "file": "dashboard/src/components/dashboard/live-activity-stream.tsx",
+        "ranges": [
+          {
+            "start": 63,
+            "end": 80
+          },
+          {
+            "start": 83,
+            "end": 83
+          },
+          {
+            "start": 101,
+            "end": 103
+          },
+          {
+            "start": 107,
+            "end": 107
+          },
+          {
+            "start": 264,
+            "end": 270
+          },
+          {
+            "start": 273,
+            "end": 273
+          },
+          {
+            "start": 296,
+            "end": 298
+          },
+          {
+            "start": 322,
+            "end": 322
+          },
+          {
+            "start": 418,
+            "end": 444
+          }
+        ],
+        "before_hash": "2f364db1e7f3906c4bedadc695fcd4ef176fae98b284819934f784bf6d21c503",
+        "after_hash": "6bcbabe8774f2a8a34f68d2378e813f8d7089249e020b7350343a92ecc4b7771"
+      },
+      {
+        "file": "dashboard/src/components/dashboard/scp-overview.tsx",
+        "ranges": [
+          {
+            "start": 602,
+            "end": 602
+          },
+          {
+            "start": 604,
+            "end": 604
+          },
+          {
+            "start": 606,
+            "end": 636
+          },
+          {
+            "start": 802,
+            "end": 802
+          }
+        ],
+        "before_hash": "791403f721558f0af9ad80baab74afbeb06eee8599d49bd1c8195e1e041e41d7",
+        "after_hash": "f09f1e50b91c6db4936f10f112c9faf4e7cdc1d7167fc735b0b78b120f287da8"
+      },
+      {
+        "file": "dashboard/src/lib/scp-service-auth.ts",
+        "ranges": [
+          {
+            "start": 18,
+            "end": 19
+          },
+          {
+            "start": 22,
+            "end": 25
+          },
+          {
+            "start": 47,
+            "end": 152
+          }
+        ],
+        "before_hash": "cf6af930591694e2547d84c73e775c59a15a7aa904e928a193672cd3a4227a93",
+        "after_hash": "ff8d089553246f14ef4af9c8974401d928e4922ca2d2e12906f7d598b7d8bca8"
+      },
+      {
+        "file": "scp/web_control/internet_search.py",
+        "ranges": [
+          {
+            "start": 8,
+            "end": 8
+          },
+          {
+            "start": 13,
+            "end": 13
+          },
+          {
+            "start": 31,
+            "end": 38
+          },
+          {
+            "start": 51,
+            "end": 59
+          },
+          {
+            "start": 63,
+            "end": 66
+          },
+          {
+            "start": 83,
+            "end": 89
+          },
+          {
+            "start": 107,
+            "end": 145
+          },
+          {
+            "start": 164,
+            "end": 164
+          },
+          {
+            "start": 169,
+            "end": 172
+          },
+          {
+            "start": 215,
+            "end": 227
+          }
+        ],
+        "before_hash": "6132662d90d0a19b0c3a3e1072b9eda944a9221181283ba713d0d67e57a18f1b",
+        "after_hash": "d73e53eb187974a15205dad1567804f1aec73719b980ba3cfe4be3f42573da31"
+      },
+      {
+        "file": "tests/integration/test_critical_chain_severed.py",
+        "ranges": [
+          {
+            "start": 6,
+            "end": 9
+          },
+          {
+            "start": 200,
+            "end": 220
+          },
+          {
+            "start": 222,
+            "end": 222
+          },
+          {
+            "start": 228,
+            "end": 369
+          },
+          {
+            "start": 371,
+            "end": 376
+          },
+          {
+            "start": 378,
+            "end": 398
+          },
+          {
+            "start": 612,
+            "end": 615
+          },
+          {
+            "start": 617,
+            "end": 629
+          },
+          {
+            "start": 638,
+            "end": 640
+          }
+        ],
+        "before_hash": "2bf1e9e596af9da99e4d3dc7349419548949db408517a393d4e7834723c281c0",
+        "after_hash": "31a23d0f322cb2e8ebf7d1368b18459f4be29a873bc9af797b70c082e8972bbf"
+      }
+    ]
+  },
+  "timing": {
+    "started_at": "2026-09-30T19:51:14.916Z",
+    "completed_at": "2026-09-30T19:51:18.635Z",
+    "duration_ms": 3719,
+    "measurement": "hook_wall_clock"
+  },
+  "tokens": {
+    "input": 0,
+    "output": 0,
+    "total": 0,
+    "model_calls": 0,
+    "measurement": "known-zero"
+  },
+  "telemetry": {
+    "schemaVersion": "mimosa-gate-telemetry/v1",
+    "profile": "gate",
+    "operation": "Stop",
+    "outcome": "partial/INCONCLUSIVE",
+    "latencyMs": 3719,
+    "peakMemoryBytes": 120336384,
+    "memoryMeasurement": "max-observed-process-rss",
+    "scannedFiles": 0,
+    "cache": {
+      "hits": 0,
+      "misses": 0,
+      "measurement": "not-applicable"
+    },
+    "denyCount": 0,
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "total": 0,
+      "modelCalls": 0,
+      "measurement": "known-zero"
+    }
+  },
+  "finding_count": 0,
+  "rewake_finding_count": 0,
+  "evidence_boundary": {
+    "scan": "candidate",
+    "static_fix_verification": "observed_static_only",
+    "runtime_verification": "not_performed"
+  },
+  "finding_events": [],
+  "findings": [],
+  "artifacts": {
+    "immutable_report": ".mimosa/reports/task-review-sess_79f2063f-9518-4c34-aa6a-6b7b9f9a6666-20260930T195118635Z-20232-feb9cfa50d9a.json",
+    "latest_report": ".mimosa/reports/task-review-sess_79f2063f-9518-4c34-aa6a-6b7b9f9a6666.json",
+    "history_summary": ".mimosa/history/run-20260930T195118635Z-20232-feb9cfa50d9a.json"
+  }
+}

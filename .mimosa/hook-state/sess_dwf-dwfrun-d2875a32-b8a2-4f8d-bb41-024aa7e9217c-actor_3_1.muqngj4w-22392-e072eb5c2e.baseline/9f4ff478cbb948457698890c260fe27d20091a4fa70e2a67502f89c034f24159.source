@@ -1,0 +1,355 @@
+interface RawFinding {
+  /** "src/x.py:42" hoặc tên khu vực. */
+  where: string;
+  /** Một câu: vấn đề là gì. */
+  what: string;
+  /** Bằng chứng: file/dòng đã đọc, hoặc lệnh + output proving. */
+  evidence: string;
+  /** "confirmed" khi bằng chứng là output lệnh đã chạy thật hoặc confirmer độc lập tái lập được; ngược lại "unconfirmed". */
+  status: "confirmed" | "unconfirmed";
+  /** Mức độ; "high" chỉ cho crash, mất dữ liệu, hoặc lỗ hổng bảo mật thật. */
+  severity: "low" | "medium" | "high";
+  /** Lĩnh vực: code | runtime | contract | deps | test | ops. */
+  area: string;
+}
+
+interface AuditFinding extends RawFinding {
+  /** Định danh ngắn do script gán, dùng làm khóa bảng. */
+  id: string;
+}
+
+interface LaneResult {
+  /** Tóm tắt 3-6 câu tiếng Việt cho lane này. */
+  summary: string;
+  findings: RawFinding[];
+  /** Những gì lane không kiểm tra được và lý do. */
+  gaps: string[];
+  /** Các lệnh đã chạy / file đã đọc, mỗi mục một dòng. */
+  evidenceLog: string[];
+}
+
+interface ContractToolOutcome {
+  tool: string;
+  exitCode: number;
+  passed: boolean;
+  outputTail: string;
+}
+
+interface Confirmation {
+  /** Confirmer có tự tái lập được finding từ bằng chứng không. */
+  reproduced: boolean;
+  /** Một câu: bằng chứng confirmer tự thấy (path:line hoặc output). */
+  note: string;
+}
+
+interface Synthesis {
+  /** Verdict theo chuẩn scp-dna, có phạm vi rõ, 3-6 câu tiếng Việt. */
+  verdict: string;
+  /** Findings đã gộp, xếp hạng severity trước. */
+  ranked: AuditFinding[];
+  /** Nhận xét tổng quan 2-3 câu tiếng Việt. */
+  overview: string;
+}
+
+interface WorkflowReport {
+  conclusion: string;
+  findings: AuditFinding[];
+  verified: string[];
+  notCovered: string[];
+}
+
+artifact.table("findings", {
+  title: "Findings audit SCP — vòng chỉ đọc",
+  columns: [
+    { field: "severity", label: "Mức" },
+    { field: "status", label: "Trạng thái" },
+    { field: "area", label: "Lĩnh" },
+    { field: "what", label: "Vấn đề" },
+    { field: "where", label: "Vị trí" },
+  ],
+  key: "id",
+});
+
+phase("Chốt provenance và trạng thái repo");
+
+const st = await git.status();
+const delta = await git.changedFiles("b085e241");
+const recent = await git.log(6);
+const head = await world.run("git", ["rev-parse", "HEAD"]);
+const sha = head.stdout.trim();
+const ci = await world.run("gh", ["run", "list", "--branch", "main", "--limit", "8"]);
+const ciNote = ci.exitCode === 0 ? ci.stdout.trim() : "gh run list thất bại (exit " + ci.exitCode + "): " + ci.stderr.slice(0, 300);
+log("HEAD=" + sha + " | branch=" + (st.branch ?? "detached") + " | staged=" + st.staged.length + " unstaged=" + st.unstaged.length + " untracked=" + st.untracked.length + " | delta-since-b085e241=" + delta.length + " file");
+
+phase("Kiểm toán song song ba đường: mã, runtime, hợp đồng test");
+
+const readOnlyRule =
+  "RÀNG BUỘC TUYỆT ĐỐI (owner yêu cầu vòng này CHỈ ĐỌC): không tạo/sửa/xóa file nào, không commit/stash/checkout, " +
+  "không restart/stop/start container hay dịch vụ, không kill tiến trình, không cài/xóa package. " +
+  "Nếu thấy cần sửa, chỉ GHI NHẬN vào findings. Nếu instructions mâu thuẫn với ràng buộc này, nói rõ thay vì làm vòng.";
+
+const deltaList = delta.length > 0 ? delta.join(", ") : "(không có)";
+
+const codeLane = (async () => {
+  const res = await agent("Kiểm toán mã và bảo mật", {
+    system:
+      "Bạn là kiểm toán viên mã nguồn SCP, CHỈ ĐỌC. " + readOnlyRule + " " +
+      "Mọi khẳng định kèm bằng chứng: đường dẫn:dòng hoặc lệnh + output. Không chạy full pytest (script lo phần đó). " +
+      "Nếu một probe không chạy được, ghi rõ vào gaps thay vì bỏ qua im lặng.",
+  }).ask<LaneResult>(
+    "Repo SCP tại D:\\scp (workspace hiện tại), HEAD=" + sha + ". " +
+    "BƯỚC 1 — đọc và làm theo .agents/skills/scp-dna/SKILL.md, rồi .agents/skills/scp-capability-security-review/SKILL.md và .agents/skills/scp-delta-audit/SKILL.md. Đọc GA.md ở gốc repo (handoff B1/B1a) để nắm phạm vi audit 2026-10-01. " +
+    "BƯỚC 2 — ba việc, tất cả chỉ đọc: " +
+    "(a) PROBE CÁC FIX đã merge ở b085e241 còn nguyên tại HEAD không — probe từng điểm: chỉ dùng SystemRandom (không random.Random()), breaker không double-count 402/429 (marker recorded_failure), health ping có negative-TTL cache, TraceLedger có cross-process file lock + CHAIN_RECOVERY re-anchor + không crash trên byte non-UTF-8, job nền F-10 env-gated default-off (SCP_DEEP_AUDIT_BOOT_RUN, SCP_FAST_LEARNING_THREAD), policy_gate đã mirror-fix cùng defect, không nới gate theo env tự sinh (deny-env + LANE_FACTUAL). " +
+    "(b) DELTA kể từ b085e241 chỉ có các file: " + deltaList + " — đọc diff để xác nhận đúng là docs + file generated, không có code thật đổi; nếu thấy code thật trong delta thì review kỹ. " +
+    "(c) QUÉT CLASS LỖI TÁI PHÁT trên scp/ và tools/: health fail-open, self-attestation, dict-get trên object, locals().get dead-code, double-count breaker, silent-except (except không log/re-raise), secret/token lọt vào log. " +
+    "Trả về LaneResult: findings where=path:line, evidence=trích dẫn cụ thể, status='unconfirmed' (confirmer riêng sẽ xác nhận), severity theo DNA (high chỉ cho crash/mất dữ liệu/lỗ hổng thật).",
+  );
+  const checked = await Promise.all(
+    res.findings.map(async (f, i) => {
+      const id = "code-" + (i + 1);
+      if (f.severity === "low") {
+        const item: AuditFinding = { ...f, id, status: "unconfirmed" };
+        report(item, "findings");
+        return item;
+      }
+      const c = await agent("Confirmer-" + id, {
+        system:
+          "Bạn xác nhận độc lập một finding audit SCP, CHỈ ĐỌC, không sửa file nào. " +
+          "Tái lập finding CHỈ từ bằng chứng nêu trong finding: tự đọc đúng file/dòng đó, hoặc chạy lại lệnh chỉ-đọc nếu evidence nêu lệnh. " +
+          "Không tin finding vì nó nghe hợp lý — phải tự mình thấy. Không tái lập được thì trả reproduced=false và nói rõ vì sao.",
+      }).ask<Confirmation>(
+        "Finding cần xác nhận độc lập: " + JSON.stringify(f) +
+        " Tự đọc lại đúng vị trí/lệnh đó rồi trả về reproduced (true/false) + note một câu ghi bằng chứng bạn tự thấy (path:line hoặc output).",
+      );
+      const item: AuditFinding = {
+        ...f,
+        id,
+        status: c.reproduced ? "confirmed" : "unconfirmed",
+        evidence: f.evidence + " | Confirmer: " + c.note,
+      };
+      report(item, "findings");
+      return item;
+    }),
+  );
+  return { summary: res.summary, findings: checked, gaps: res.gaps, evidenceLog: res.evidenceLog };
+})();
+
+const runtimeLane = agent("Kiểm toán runtime và dịch vụ sống", {
+  system:
+    "Bạn là kiểm toán viên runtime SCP, CHỈ ĐỌC, chỉ QUAN SÁT hệ thống đang chạy hoặc đã dừng. " + readOnlyRule + " " +
+    "Mọi khẳng định kèm lệnh + output thật. status='confirmed' chỉ khi evidence là output lệnh bạn thực sự chạy; suy luận từ đọc code thì status='unconfirmed'.",
+}).ask<LaneResult>(
+  "Repo SCP tại D:\\scp, HEAD=" + sha + ". Bối cảnh: theo GA.md deployment 24/7 là container scp-scp-api-1 + llm-bridge (bun, port ~8081), nhưng docker ps lúc khảo sát ban đầu cho thấy KHÔNG container nào đang chạy — việc của bạn là xác định tình trạng thật bằng lệnh, đừng tin hoặc bác sĩ câu bối cảnh này. " +
+  "BƯỚC 1 — đọc .agents/skills/scp-runtime-audit/SKILL.md (nếu service có dấu hiệu lỗi thì đọc thêm scp-startup-troubleshooter/SKILL.md để CHẨN ĐOÁN, không sửa). " +
+  "BƯỚC 2 — thu bằng chứng live, chỉ quan sát: " +
+  "(1) docker ps -a (mọi container kể cả stopped) + nếu scp-scp-api-1 tồn tại thì docker inspect (State, FinishedAt, RestartCount, env SCP_GIT_SHA) + docker logs --tail 120; " +
+  "(2) xác định có gì đang lắng nghe các port liên quan (8090/8081/8000/8080): netstat -ano chỉ đọc + đối chiếu PID với tasklist; có bun/python/node nào đang serve không; " +
+  "(3) health endpoint: nếu có service sống thì curl GET /health và /ready (chỉ đọc, ghi status code + body rút gọn); nếu KHÔNG có service sống thì ghi rõ thành finding ops (deployment 24/7 đang xuống) kèm bằng chứng lệnh; " +
+  "(4) tools/live_flow_proof.py: ĐỌC SOURCE TRƯỚC; chỉ chạy nếu (i) có service sống và (ii) công cụ không ghi/mutation gì vào hệ thống; không thỏa thì KHÔNG chạy và ghi vào gaps; " +
+  "(5) nếu có TraceLedger/journal trên disk (data/ hoặc SCP_DATA_DIR): kiểm tra trạng thái chain chỉ đọc (số entry, hash, dấu hiệu gãy). " +
+  "Tuyệt đối không start/restart container, không kill tiến trình, không xóa/rotate log, không ghi bất kỳ file nào.",
+);
+
+const contractRuns = (async (): Promise<ContractToolOutcome[]> => {
+  const out: ContractToolOutcome[] = [];
+  for (const t of ["tools/verify_scp_test_skill_contract.py", "tools/t00_meta_audit.py"]) {
+    try {
+      const r = await world.run("python", [t]);
+      out.push({ tool: t, exitCode: r.exitCode, passed: r.exitCode === 0, outputTail: (r.stdout + "\n" + r.stderr).trim().slice(-1600) });
+    } catch (e) {
+      out.push({ tool: t, exitCode: -1, passed: false, outputTail: "không chạy được tool: " + String(e).slice(0, 300) });
+    }
+  }
+  return out;
+})();
+
+const contractLane = agent("Kiểm cửa hợp đồng test-skill và phụ thuộc", {
+  system:
+    "Bạn là kiểm toán viên hợp đồng test-skill SCP, CHỈ ĐỌC. " + readOnlyRule + " " +
+    "Mọi khẳng định kèm bằng chứng. Nếu một kiểm tra không chạy được, ghi rõ vào gaps.",
+}).ask<LaneResult>(
+  "Repo SCP tại D:\\scp, HEAD=" + sha + ". " +
+  "BƯỚC 1 — đọc .agents/skills/scp-dna/SKILL.md và .agents/skills/scp-release-evidence-gate/SKILL.md. " +
+  "BƯỚC 2 — các việc chỉ đọc (KHÔNG chạy full pytest — script lo; KHÔNG chạy lại 2 tool verify_scp_test_skill_contract/t00_meta_audit — script đã chạy, kết quả tổng hợp riêng): " +
+  "(1) đếm marker nới lỏng trong tests/ (pytest.skip/xfail/mark.skipif): so với baseline đã khai — file allowlist declared_infra_skips.json (tìm đúng vị trí) và danh mục DEBT t00 báo (4 instance history: test_bandit_no_new_high_severity_via_bandit ×2, test_no_hardcoded_token_in_source ×1, test_api_status ×1); mọi skip NẰM NGOÀI allowlist là finding; " +
+  "(2) đọc .agents/skills/release-gate-skill-dna-bindings.json: đủ gate binding, DNA 29 principles, failure policy, khớp inventory skills hiện có; " +
+  "(3) CI GitHub trên main — output raw của gh run list:\n" + ciNote + "\n— run 'SCP RC Promotion and Customer Handoff' đang FAILURE trên main: dùng gh run view <runId> --log-failed (chỉ đọc, cắt ~200 dòng cuối) + đọc .github/workflows tương ứng để phân loại: lỗi thật hay expected khi push docs-only không RC state; " +
+  "(4) phụ thuộc: nếu pip-audit có sẵn (pip-audit --version) thì chạy pip-audit chỉ-đọc trên product requirements (tìm requirements*.txt; KHÔNG cài gì, KHÔNG cho pip-audit ghi file output — nếu nó bắt buộc ghi thì bỏ qua và ghi gaps); không có thì ghi gaps; " +
+  "(5) nếu ruff có sẵn: chạy check chỉ-đọc trên scp/ và tools/, đối chiếu với baseline 0 lỗi thật (memory: 9 F821 đã fix). " +
+  "Trả về LaneResult.",
+);
+
+const [code, runtime, contractTools, contract] = await Promise.all([codeLane, runtimeLane, contractRuns, contractLane]);
+
+const runtimeFindings: AuditFinding[] = runtime.findings.map((f, i) => ({ ...f, id: "runtime-" + (i + 1) }));
+const contractFindings: AuditFinding[] = contract.findings.map((f, i) => ({ ...f, id: "contract-" + (i + 1) }));
+runtimeFindings.forEach((f) => report(f, "findings"));
+contractFindings.forEach((f) => report(f, "findings"));
+
+phase("Chạy cổng mạnh: bộ test đầy đủ");
+
+let otherPytest = false;
+try {
+  const procs = await world.run("powershell", ["-NoProfile", "-Command", "Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" | Select-Object -ExpandProperty CommandLine"]);
+  otherPytest = procs.exitCode === 0 && /pytest/i.test(procs.stdout);
+} catch {
+  otherPytest = false;
+}
+
+let porcelainBefore: string | null = null;
+try {
+  porcelainBefore = (await world.run("git", ["status", "--porcelain"])).stdout;
+} catch {
+  porcelainBefore = null;
+}
+
+let suite: { exitCode: number; stdout: string; stderr: string } | null = null;
+let suiteNote = "";
+if (otherPytest) {
+  suiteNote = "Bỏ qua full pytest local: có tiến trình pytest khác đang chạy (tránh giành lock với session khác của owner).";
+  log(suiteNote);
+} else {
+  let pytestOk = false;
+  try {
+    const pv = await world.run("python", ["-c", "import pytest; print(pytest.__version__)"]);
+    pytestOk = pv.exitCode === 0;
+  } catch {
+    pytestOk = false;
+  }
+  if (!pytestOk) {
+    suiteNote = "Không chạy full pytest: import pytest thất bại trong môi trường hiện tại.";
+    log(suiteNote);
+  } else {
+    const suiteCode = [
+      "import os, sys, tempfile",
+      "os.environ['PYTEST_DEBUG_TEMPROOT'] = tempfile.mkdtemp(prefix='scp_audit_pytest_')",
+      "import pytest",
+      "sys.exit(pytest.main(['-q', '--no-header', '-p', 'no:cacheprovider', 'tests/']))",
+    ].join("\n");
+    log("Chạy full pytest (có thể mất tới ~30-40 phút)...");
+    try {
+      suite = await world.run("python", ["-c", suiteCode], { timeoutMs: 3600000 });
+    } catch (e) {
+      suiteNote = "Full pytest bị hủy giữa chừng: " + String(e).slice(0, 300);
+      suite = null;
+    }
+  }
+}
+
+if (porcelainBefore !== null) {
+  try {
+    const after = (await world.run("git", ["status", "--porcelain"])).stdout;
+    if (after !== porcelainBefore) {
+      report({
+        id: "test-artifacts",
+        severity: "medium",
+        status: "confirmed",
+        area: "test",
+        where: "working tree",
+        what: "Việc chạy bộ test làm thay đổi working tree (file mới/đổi) — vòng chỉ đọc không dọn, ghi nhận để vòng sau xử lý.",
+        evidence: "git status --porcelain khác nhau trước và sau khi chạy suite",
+      }, "findings");
+    }
+  } catch {
+    // không snapshot được sau khi chạy — bỏ qua việc so sánh
+  }
+}
+
+phase("Tổng hợp findings và kết luận");
+
+const suiteBlock = suite
+  ? { exitCode: suite.exitCode, tail: (suite.stdout + "\n" + suite.stderr).trim().slice(-2500) }
+  : { exitCode: -1, tail: suiteNote };
+
+const synthesis = await agent("Tổng hợp audit", {
+  system:
+    "Bạn là kiểm toán viên tổng hợp SCP. Đọc .agents/skills/scp-dna/SKILL.md trước khi chấm. CHỈ ĐỌC, không sửa file nào. " +
+    "Verdict theo chuẩn scp-dna: PASS chỉ nghĩa là 'không thấy fail trong phạm vi đã kiểm'; không tuyên bố complete/secure/production-ready nếu bằng chứng không đủ. Viết tiếng Việt, giữ thuật ngữ tiếng Anh.",
+}).ask<Synthesis>(
+  "Tổng hợp audit SCP vòng chỉ đọc tại HEAD=" + sha + ".\n\n" +
+  "CI GitHub main (raw):\n" + ciNote + "\n\n" +
+  "Git status: " + JSON.stringify({ branch: st.branch ?? "detached", staged: st.staged, unstaged: st.unstaged, untracked: st.untracked }) + "\n\n" +
+  "Hai tool hợp đồng (script chạy trực tiếp): " + JSON.stringify(contractTools) + "\n\n" +
+  "Cổng mạnh full pytest: " + JSON.stringify(suiteBlock) + "\n\n" +
+  "Lane mã & bảo mật: " + JSON.stringify({ summary: code.summary, findings: code.findings, gaps: code.gaps }) + "\n\n" +
+  "Lane runtime & live: " + JSON.stringify({ summary: runtime.summary, findings: runtimeFindings, gaps: runtime.gaps, evidenceLog: runtime.evidenceLog }) + "\n\n" +
+  "Lane hợp đồng & phụ thuộc: " + JSON.stringify({ summary: contract.summary, findings: contractFindings, gaps: contract.gaps }) + "\n\n" +
+  "Nhiệm vụ: gộp finding trùng (giữ id của bản đại diện), chấm lại severity theo DNA (high chỉ cho crash/mất dữ liệu/lỗ hổng thật), " +
+  "xếp hạng high→medium→low, giữ nguyên status confirmed/unconfirmed từ nguồn, viết verdict có phạm vi rõ (đã kiểm gì/bằng chứng gì/chưa kiểm gì), " +
+  "và overview 2-3 câu. Nếu mọi mạch không có fail trong phạm vi → verdict dạng PASS_WITHIN_SCOPE kèm phạm vi; có fail thật → verdict phản ánh đúng, không độn.",
+);
+
+const findings = synthesis.ranked;
+const laneGaps = [...code.gaps, ...runtime.gaps, ...contract.gaps];
+
+const md = [
+  "# Báo cáo audit SCP — vòng chỉ đọc",
+  "",
+  "- **HEAD:** `" + sha + "` | branch: " + (st.branch ?? "detached"),
+  "- **Delta kể từ b085e241:** " + delta.length + " file (" + deltaList + ")",
+  "- **Hai tool hợp đồng:** verify_scp_test_skill_contract exit " + contractTools[0].exitCode + " | t00_meta_audit exit " + contractTools[1].exitCode,
+  "- **Cổng mạnh full pytest:** " + (suite ? (suite.exitCode === 0 ? "PASS (exit 0)" : "FAIL (exit " + suite.exitCode + ")") : "không chạy — " + suiteNote),
+  "",
+  "## Verdict",
+  "",
+  synthesis.verdict,
+  "",
+  synthesis.overview,
+  "",
+  "## Findings (xếp hạng)",
+  "",
+  ...(findings.length > 0
+    ? findings.map((f) => "- **[" + f.severity.toUpperCase() + "][" + f.status + "]** (" + f.area + ") " + f.what + " — `" + f.where + "`\n  - Bằng chứng: " + f.evidence)
+    : ["Không có finding nào trong phạm vi này."]),
+  "",
+  "## Provenance",
+  "",
+  "- Working tree: staged=" + st.staged.length + ", unstaged=" + st.unstaged.length + ", untracked=" + st.untracked.length,
+  ...(st.unstaged.length > 0 ? ["- Untracked: " + st.untracked.join(", ")] : []),
+  ...(st.unstaged.length > 0 ? ["- Unstaged: " + st.unstaged.join(", ")] : []),
+  "- Commit gần nhất:",
+  ...recent.map((c) => "  - `" + c.hash.slice(0, 9) + "` " + c.subject + " (" + c.author + ", " + c.date + ")"),
+  "- CI runs gần nhất:",
+  ...ciNote.split("\n").map((l) => "  - " + l),
+  "",
+  "## Đã kiểm (bằng chứng thu được)",
+  "",
+  ...[...code.evidenceLog, ...runtime.evidenceLog, ...contract.evidenceLog].map((e) => "- " + e),
+  "- `git rev-parse HEAD` → " + sha,
+  "- `gh run list --branch main --limit 8` (exit " + ci.exitCode + ")",
+  "- `python tools/verify_scp_test_skill_contract.py` (exit " + contractTools[0].exitCode + ")",
+  "- `python tools/t00_meta_audit.py` (exit " + contractTools[1].exitCode + ")",
+  suite
+    ? "- Full pytest suite: python -c wrapper pytest.main (PYTEST_DEBUG_TEMPROOT tạm ngoài repo, không ghi .pytest_cache), exit " + suite.exitCode
+    : "- " + suiteNote,
+  "",
+  "## Không phủ",
+  "",
+  ...(laneGaps.length > 0 ? laneGaps.map((g) => "- " + g) : ["- (các lane không ghi nhận gap nào)"]),
+  ...(suite ? [] : ["- " + suiteNote]),
+  "- Vòng này CHỈ ĐỌC theo yêu cầu owner: không fix, không commit, không cập nhật GA.md — remediation để vòng sau.",
+].join("\n");
+
+await artifact.markdown("audit-report", md, {
+  title: "Báo cáo audit SCP (vòng chỉ đọc)",
+  description: "Verdict, findings có bằng chứng, provenance và phạm vi phủ của vòng audit tại " + sha.slice(0, 9) + ".",
+  primary: true,
+});
+
+const result: WorkflowReport = {
+  conclusion: synthesis.verdict + " " + synthesis.overview,
+  findings,
+  verified: [
+    "Provenance: HEAD " + sha + " (`git rev-parse HEAD`), working tree qua git status, delta vs b085e241 qua git diff",
+    "verify_scp_test_skill_contract.py exit " + contractTools[0].exitCode + "; t00_meta_audit.py exit " + contractTools[1].exitCode,
+    suite ? "Full pytest suite chạy thật (cổng mạnh), exit " + suite.exitCode : suiteNote,
+    "3 lane kiểm toán độc lập; finding code medium/high được confirmer độc lập tái lập từ bằng chứng",
+  ],
+  notCovered: [
+    ...laneGaps,
+    ...(suite ? [] : [suiteNote]),
+    "Không sửa/skip/xóa gì trong vòng này theo yêu cầu owner — mọi remediation chờ vòng sau",
+  ],
+};
+return result;

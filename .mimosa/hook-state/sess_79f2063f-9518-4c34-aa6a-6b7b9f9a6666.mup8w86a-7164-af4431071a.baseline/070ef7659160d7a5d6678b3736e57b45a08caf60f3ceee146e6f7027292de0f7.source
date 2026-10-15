@@ -1,0 +1,78 @@
+{
+  "name": "scp-desktop",
+  "version": "1.6.0",
+  "private": true,
+  "description": "SCP DNA desktop launcher and control center",
+  "main": "main.cjs",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "check": "node --check main.cjs && node --check preload.cjs",
+    "dist:dir": "electron-builder --dir",
+    "dist:win": "electron-builder --win nsis portable",
+    "dist": "electron-builder --win"
+  },
+  "devDependencies": {
+    "electron": "43.4.0",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "com.scpdna.controlcenter",
+    "productName": "SCP DNA Control Center",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "runtime",
+        "to": "runtime",
+        "filter": [
+          "**/*",
+          "!data",
+          "!data/**/*",
+          "!**/*.env",
+          "!**/*.py",
+          "!**/*.sqlite",
+          "!**/*.db",
+          "!**/*.jsonl"
+        ]
+      }
+    ],
+    "win": {
+      "signAndEditExecutable": false,
+      "forceCodeSigning": false,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "SCP-DNA-Control-Center-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "portable": {
+      "artifactName": "SCP-DNA-Control-Center-${version}-portable.${ext}"
+    }
+  }
+}

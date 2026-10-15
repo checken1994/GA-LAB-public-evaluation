@@ -1,0 +1,89 @@
+{
+  "schema_version": "scp-release-gate-skill-dna-v1",
+  "policy": {
+    "mandatory_skill": "scp-dna",
+    "mandatory_dna_invariants": [22, 26],
+    "rule": "Every mandatory RC or post-merge handoff gate must be bound to SCP DNA plus at least one domain skill. Missing or invalid binding is a release blocker."
+  },
+  "gates": {
+    "compile_import": {
+      "skills": ["scp-dna", "scp-startup-troubleshooter"],
+      "dna": [2, 19, 22, 26]
+    },
+    "unit_integration": {
+      "skills": ["scp-dna", "scp-runtime-audit"],
+      "dna": [2, 5, 19, 22, 26]
+    },
+    "semantic_parity": {
+      "skills": ["scp-dna", "scp-runtime-audit"],
+      "dna": [5, 14, 19, 22, 26]
+    },
+    "skill_scp_dna_contract": {
+      "skills": ["scp-dna", "scp-skill-review"],
+      "dna": [3, 19, 21, 22, 25, 26]
+    },
+    "acceptance": {
+      "skills": ["scp-dna", "scp-release-evidence-gate", "scp-reality-verifier"],
+      "dna": [5, 14, 19, 22, 26]
+    },
+    "fail_closed": {
+      "skills": ["scp-dna", "scp-capability-security-review"],
+      "dna": [6, 16, 19, 22, 26, 28]
+    },
+    "bandit_security": {
+      "skills": ["scp-dna", "scp-capability-security-review"],
+      "dna": [6, 19, 22, 26, 28]
+    },
+    "mutation": {
+      "skills": ["scp-dna", "scp-reality-verifier"],
+      "dna": [3, 19, 21, 22, 26]
+    },
+    "provider_failover_timeout": {
+      "skills": ["scp-dna", "scp-gateway-resilience"],
+      "dna": [5, 14, 16, 19, 22, 26]
+    },
+    "taskkernel_durability_recovery": {
+      "skills": ["scp-dna", "scp-task-kernel-review"],
+      "dna": [8, 17, 19, 22, 26, 28, 29]
+    },
+    "reality_tests": {
+      "skills": ["scp-dna", "scp-reality-verifier"],
+      "dna": [5, 19, 20, 22, 25, 26]
+    },
+    "bounded_runtime_smoke": {
+      "skills": ["scp-dna", "scp-runtime-audit", "scp-reality-verifier"],
+      "dna": [12, 17, 18, 19, 22, 26]
+    },
+    "dashboard_build_audit": {
+      "skills": ["scp-dna", "scp-runtime-audit"],
+      "dna": [2, 19, 22, 26]
+    },
+    "manifest_provenance": {
+      "skills": ["scp-dna", "scp-release-evidence-gate"],
+      "dna": [8, 19, 22, 26, 28]
+    }
+  },
+  "handoff_gates": {
+    "main_lineage_authority": {
+      "skills": ["scp-dna", "scp-release-evidence-gate", "scp-reality-verifier"],
+      "dna": [2, 4, 8, 19, 22, 26]
+    }
+  },
+  "failure_policy": {
+    "fix_reality_where_it_fails": true,
+    "harness_fix_must_preserve_or_increase_strictness": true,
+    "forbidden_shortcuts": [
+      "delete_test",
+      "skip_test",
+      "xfail_test",
+      "loosen_assertion",
+      "lower_threshold",
+      "lower_coverage",
+      "lower_security_policy",
+      "lower_mutation_score",
+      "drop_acceptance_gate",
+      "ignore_exit_code",
+      "fail_open_instead_of_fail_closed"
+    ]
+  }
+}

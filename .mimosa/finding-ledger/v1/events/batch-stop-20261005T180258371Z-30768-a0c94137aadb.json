@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "stop-20261005T180258371Z-30768-a0c94137aadb",
+  "runId": "20261005T180258371Z-30768-a0c94137aadb",
+  "runStatus": "completed",
+  "coverage": {
+    "status": "complete",
+    "reasons": [
+      {
+        "code": "baseline_partial",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline capture had enumeration or snapshot errors",
+        "affectsCompletion": false
+      }
+    ]
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "Stop"
+  },
+  "revision": "a1d065a31b186f11ea86fa177ae05006875e96eb",
+  "diffHash": "320eaec76afb38c07a924820b748207249b6a2f011e871766fa86d6c2352792a",
+  "rulesVersion": "unavailable",
+  "sessionHash": "7a12b8f55c13354e2b10da4dc08a4e79531cd91ff74e1fd0340a263d68c0409f",
+  "reportRef": ".mimosa/reports/task-review-sess_f1b3935b-c5f3-4747-ab61-9d046689a7ce-20261005T180258371Z-30768-a0c94137aadb.json",
+  "events": [],
+  "observedFindingIds": [],
+  "verifiedFiles": [
+    {
+      "file": "tests/T03_capability/test_flow_10_streaming_scp_standard.py",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "scp/runtime/judge.py",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "tests/T06_verifier/test_judge_w7_abstain.py",
+      "direct": "complete",
+      "projectContext": "partial"
+    }
+  ],
+  "recordedAt": "2026-10-05T18:02:58.826Z"
+}

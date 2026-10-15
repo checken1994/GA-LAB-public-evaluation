@@ -1,0 +1,307 @@
+interface IssueSeed {
+  id: string;
+  title: string;
+  severity: "low" | "medium" | "high";
+  area: string;
+  /** Vị trí code/host đã xác nhận ở vòng audit. */
+  where: string;
+  /** Tóm tắt hiện trạng đã confirmed (kèm mốc bằng chứng). */
+  status: string;
+}
+
+interface FixPlanItem {
+  /** id của issue được xử lý. */
+  issueId: string;
+  /** Hướng fix cụ thể, 3-8 câu. */
+  fix: string;
+  /** File sẽ đụng đến (path + dòng nếu có). */
+  files: string;
+  /** Chiến lược test: test mới (tên file/hàm) + NodeID nào được semantic rewrite (nếu có). */
+  tests: string;
+  /** Tiêu chí nghiệm thu đo đếm được. */
+  acceptance: string;
+  /** Rủi ro + cách rollback. */
+  risk: string;
+  /** Có phụ thuộc quyết định/tài nguyên của owner không — ghi rõ hoặc "không". */
+  ownerDependency: string;
+  /** ước lượng dung lượng: S (<2h) / M (nửa ngày) / L (1-2 ngày). */
+  estimate: string;
+}
+
+interface ClusterPlan {
+  summary: string;
+  items: FixPlanItem[];
+  /** Ghi chú: xung đột tiềm năng với cụm khác, thứ tự nội bộ, việc không nên làm. */
+  notes: string[];
+  evidenceLog: string[];
+}
+
+interface WavePlan {
+  /** Tên wave, ví dụ "W1 — /ask behavior". */
+  wave: string;
+  /** Mục tiêu 1-2 câu. */
+  goal: string;
+  /** Các issueId theo thứ tự thực hiện. */
+  items: string[];
+  /** Điều kiện bắt đầu (owner ack, provider key, main sync...). */
+  entryCriteria: string[];
+  /** Nghiệm thu wave: lệnh + ngưỡng đạt. */
+  acceptance: string[];
+  /** Blocker nếu chưa có điều kiện. */
+  blockers: string[];
+}
+
+interface OpenDecision {
+  decision: string;
+  options: string;
+  recommendation: string;
+}
+
+interface MasterPlan {
+  summary: string;
+  waves: WavePlan[];
+  /** Xung đột đã xử lý khi xếp lịch (file chồng nhau, thứ tự bắt buộc...). */
+  conflictsResolved: string[];
+  openDecisions: OpenDecision[];
+  overview: string;
+}
+
+interface ReviewFeedback {
+  /** Chỗ nào sẽ gãy khi thực thi. */
+  problems: string[];
+  /** Thiếu gì. */
+  missing: string[];
+  /** Acceptance nào không đo được hoặc ước lượng sai. */
+  unmeasurable: string[];
+}
+
+interface WorkflowReport {
+  conclusion: string;
+  findings: IssueSeed[];
+  verified: string[];
+  notCovered: string[];
+}
+
+const constraints =
+  "RÀNG BUỘC BẮT BUỘC khi thiết kế (FA-01→FA-13 + EXECUTION_PROTOCOL): không delete/skip/xfail test hay hạ threshold; " +
+  "rewrite test phải giữ 100% NodeID và cấm placebo assertion; dùng monkeypatch.setenv không dùng os.environ trong test; " +
+  "xóa tính năng phải đi 5 tầng Top-Down (spec trước, call-graph, semantic rewrite, schema, isolation); " +
+  "mỗi fix là small reversible patch + scoped test ngay sau mỗi change; pre-commit Mimosa chặn khi còn HIGH (SystemRandom CHỈ, cấm heredoc sửa source); " +
+  "mọi claim nghiệm thu cần same-SHA evidence (full pytest + T00 + verify_scp_test_skill_contract + GitHub gates xanh trên chính SHA đó); " +
+  "LLM cost governance — không đề xuất gì gọi LLM tràn lan không cần thiết.";
+
+const probeArtifacts =
+  "Bằng chứng vòng 3 còn lưu ở: C:\\Users\\check\\AppData\\Local\\Temp\\scp_ask_probe_results.json (16 response đầy đủ), " +
+  "C:\\Users\\check\\AppData\\Local\\Temp\\scp_ask_probe_server.log (52KB log server), C:\\Users\\check\\AppData\\Local\\Temp\\scp_ask_probe_battery.py (script battery — tái sử dụng làm acceptance đo trước/sau).";
+
+const invAsk: IssueSeed[] = [
+  { id: "root-1", title: "Lifecycle fail-closed giết answer hợp lệ", severity: "medium", area: "ask/lifecycle", where: "scp/ask_kernel_adapter.py:54 (TTL 60s),:532-558 (_safe_response),:940-944 (route withheld),:1228-1270 (heartbeat),:1257-1263 (1 exception → return vĩnh viễn); scp/task_kernel_parts/taskkernel.py:726,:739-742 (no resurrection),:838-850 (expire sweep); scp/api/background_jobs.py:16 (watchdog 30s)", status: "confirmed: q05 122.4s/q11 89.4s bị withheld lifecycle_authority_lost dù answer đã sinh; heartbeat không có lần renew thành công nào trước sweep (nguyên nhân missed-renewal chưa chốt: nghi event-loop starvation hoặc heartbeat chết sau 1 exception); golden 57.5s đang sát mép TTL 60s" },
+  { id: "root-2", title: "PASS over-claim ở S24 lookup fork (hardcode PASS/UPHOLD)", severity: "medium", area: "ask/verification", where: "scp/runtime/question_router.py:926-935,:939,:952; scp/ask_kernel_adapter.py:408-410,:455-461,:476", status: "confirmed: q01 'capital of France?' trả summary France không nhắc Paris vẫn PASS — không có check relevance answer↔question; grounding tự tham chiếu" },
+  { id: "root-3", title: "KILL quá tay + crosscheck consensus giả độc lập", severity: "medium", area: "ask/governance", where: "scp/runtime/multi_llm_crosscheck.py:85-91 (family=PROVIDER_NAME),:94-117 (no hedge),:122-127; scp/runtime/judge.py:362-363 (FAIL→KILL); scp/api_server_parts/_ask_impl.py:587-624 (KILL→withhold); scp/llm_gateway/client.py:390,:785", status: "confirmed: q08 bị KILL vì 2 'family' cùng 1 model nemotron; hệ không phân biệt 'không verify được' với 'nguy hiểm' (q16 politics PASS qua deflection mơ hồ)" },
+  { id: "root-4", title: "Misclassification đa tầng ở question_router", severity: "medium", area: "ask/classification", where: "scp/runtime/question_router.py:149 (default CHATBOT),:184,:220 ('gì\\b'),:226 ('\\bph\\b'),:260-280,:283-366 (thứ tự rule),:352-365 (domain-hint fallback),:442-455 (_l2_failsafe fail-open),:483-493,:938 (domain chỉ ở fork); scp/ask_kernel_adapter.py:440-453,:503-510", status: "confirmed: q08 domain='math' cho politics; q09 thơ → LOOKUP/geography; q11 lang='en' cho gibberish; fail-open về LANE_CHATBOT conf 0.5 + bypass_verdict_pass" },
+  { id: "root-5", title: "Provider identity leak ('phát triển bởi NVIDIA')", severity: "low", area: "ask/prompt", where: "scp/api_server_parts/_ask_impl.py:346-357", status: "confirmed: q12 trả lời tự nhận NVIDIA; system prompt không pin identity, không post-guard" },
+  { id: "root-6", title: "Latency variance + residual W2#3 (hedge/timeout)", severity: "medium", area: "ask/latency", where: "scp/llm_gateway/client.py:60-89 (hedge 10s/90s),:549-605 (3 retry),:620 (httpx 60s),:995-1031 (sequential no cap)", status: "confirmed: variance 1.5s→122.4s là nhân tử kích hoạt root-1; hedge chỉ khi rotation>1; cross_verify không qua hedge; W2#3 PARTIALLY MITIGATED" },
+];
+
+const invDebt: IssueSeed[] = [
+  { id: "code-1", title: "Nợ silent-except 179 findings ruff (tái phát sau B20)", severity: "medium", area: "code-debt", where: "scp/ + tools/ (142 BLE001/34 S110/3 S112, không noqa); 8 chỗ scp/ tái giới thiệu blame e8cabdc5 2026-09-28; instance: scp/capabilities/tools.py:522; tools/scp_dashboard_bridge.py:86", status: "confirmed (vòng 1): mâu thuẫn với claim GA.md B20 '1018→0'" },
+  { id: "code-4", title: "Probe in CapabilityToken (HMAC signature) ra stdout", severity: "low", area: "code-debt", where: "tools/probes/probe_challenger_m3_env_concurrency.py:464,:468", status: "confirmed (vòng 1)" },
+  { id: "code-5", title: "Comment stale mô tả nhánh ESCALATE đã bỏ", severity: "low", area: "code-debt", where: "scripts/run_system_audit_strict.py:459-463", status: "confirmed (vòng 1): có thể dụ người sửa sau restore nhánh ESCALATE" },
+  { id: "contract-5", title: "RC Promotion fail-closed đỏ thường xuyên trên main", severity: "medium", area: "ci/governance", where: ".github/workflows/scp-rc-promotion.yml:329-332,:400-415,:542-557; run 36973416465", status: "confirmed (vòng 1): docs-only push bị chặn ở manifest-provenance + main-lineage-authority → HEAD chưa có customer-handoff verdict" },
+  { id: "ga-206", title: "GA.md:206 stale — ghi 4 bug W2 'CHƯA fix' trong khi #1/#2/#4 đã xử lý", severity: "low", area: "docs/handoff", where: "GA.md:206", status: "confirmed (vòng 3): đánh lừa session sau nếu không cập nhật" },
+  { id: "crawler-noise", title: "attack_crawler nguồn chết (GitHub 404) + thiếu package datasets", severity: "low", area: "ops-noise", where: "docker logs scp-scp-api-1 (round 2, L88-L136): repo 0x5477/deepseek-v4-pro-unrestricted 404 x2; WARNING thiếu 'datasets' cho HuggingFace", status: "confirmed (vòng 2): non-fatal, log noise" },
+];
+
+const invOps: IssueSeed[] = [
+  { id: "teardown-recipe", title: "Recipe teardown supervisor thiếu bước (/End không đủ)", severity: "medium", area: "ops/deployment", where: "scripts/ops/scp_247_supervisor.ps1 + scripts/ops/scp_247_recovery_watchdog.ps1 (Invoke-Recovery resurrect ≤60s) + scripts/ops/scp_247_control.ps1 (kill-switch có sẵn)", status: "confirmed (vòng 2): schtasks /End báo success nhưng cây pwsh sống; phải Disable Watchdog TRƯỚC + taskkill /T /F trên PID đối chiếu" },
+  { id: "dashboard-bind", title: "Dashboard native bind 0.0.0.0:3000 trong khi compose loopback-only", severity: "low", area: "ops/exposure", where: "bun .next/standalone/server.js PID 1684 (vòng 2); compose.yml chỉ map 127.0.0.1 cho 8000/3030", status: "confirmed (vòng 2): hành vi có sẵn của supervisor recipe, owner quyết siết" },
+  { id: "hourly-monitor-stale", title: "Task SCP-247-Hourly-Monitor trỏ root CŨ Downloads\\scp", severity: "low", area: "ops/deployment", where: "schtasks \\SCP-247-Hourly-Monitor (action --root C:\\Users\\check\\Downloads\\scp); installer manifest chỉ đăng ký Supervisor+Watchdog", status: "confirmed (vòng 2): đang Disabled; enable nhầm sẽ monitor sai cây" },
+  { id: "hygiene-files", title: "File hygiene: data/'loop_runs.jsonl ' (trailing space) + chat_memory.jsonl.lock 8KB", severity: "low", area: "ops/hygiene", where: "D:\\scp\\data\\", status: "confirmed (vòng 1): .lock khác 0B trong khi các lock khác 0B — chưa rõ nguyên nhân" },
+  { id: "image-rebuild", title: "Container image @ b085e241 (HEAD là 1aef24a8, diff docs-only)", severity: "low", area: "ops/deployment", where: "/health service_identity.commit (vòng 2)", status: "confirmed: same-HEAD golden do live_flow_proof đảm nhiệm; rebuild trước lần boot 24/7 tiếp theo nếu muốn same-SHA container" },
+  { id: "lockfile-audit", title: "requirements.lock.txt chưa audit vulnerability trên Windows (uvloop)", severity: "low", area: "deps", where: "pip-audit --no-deps fail build uvloop trên Windows host", status: "confirmed (vòng 1): product requirements thì sạch; lockfile có thể audit trên Linux CI" },
+  { id: "port-doc", title: "Lệch kỳ vọng port 8090 vs thực tế compose = 8000", severity: "low", area: "docs", where: "compose.yml:60; reports/runtime/evidence-RUNTIME-AUDIT-20260925-0411/boot_8090.log", status: "confirmed (vòng 2): evidence cũ ghi 8090" },
+];
+
+const invOwner: IssueSeed[] = [
+  { id: "own-token", title: "ROTATE GITHUB_TOKEN trong .env", severity: "medium", area: "owner/security", where: ".env (vị trí chuẩn)", status: "residual duy nhất còn mở của campaign 2026-10-01; 0 token thật sót ngoài .env" },
+  { id: "own-hostenv", title: "Host env còn 35 advisory (major-breaking + no-fix upstream)", severity: "low", area: "owner/deps", where: "host pip env (dùng chung, không phải product surface)", status: "GA B1a: transformers 5.x, langchain* cần kế hoạch riêng; chromadb/accelerate/diskcache/sqlitedict/nltk PYSEC-2026-3740 no-fix" },
+  { id: "own-provider-keys", title: "Provider rotation chỉ còn groq+groq3 (cùng model nemotron)", severity: "medium", area: "owner/llm", where: ".env rotation + SCP_LLM_EGRESS_ALLOWLIST", status: "vòng 2: 3/5 fallback chết (sambanova 401, cerebras 402, gemini 404); BLOCKER cho nghiệm thu root-3 (cần family THẬT SỰ độc lập — khác model, không chỉ khác provider name)" },
+  { id: "own-electron", title: "Electron GUI build (cần máy có display)", severity: "low", area: "owner/build", where: "desktop/", status: "GA B1a item 3 residual" },
+  { id: "own-copyright", title: "Root AGENTS.md copyright holder — owner quyết", severity: "low", area: "owner/docs", where: "AGENTS.md", status: "GA B1a item 5" },
+  { id: "own-zonefix", title: "Zonefix same-tick residual (docstring disclosure)", severity: "low", area: "code-debt", where: "GA B1a item 5", status: "documented disclosure" },
+];
+
+phase("Chốt provenance và inventory");
+
+const head = await world.run("git", ["rev-parse", "HEAD"]);
+const sha = head.stdout.trim();
+const dirty = await world.run("git", ["status", "--porcelain"]);
+log("HEAD=" + sha + " | dirty lines=" + dirty.stdout.trim().split("\n").filter((l) => l.trim()).length);
+
+phase("Thiết kế xử lý theo 4 cụm");
+
+const commonAsk =
+  "Điều kiện chung: HEAD=" + sha + " (đây là SHA mọi fix sẽ đụng). " + constraints + " " +
+  "Trước khi thiết kế fix cho từng issue: grep/read đúng các file:dòng trong 'where' để xác nhận còn nguyên tại HEAD (pointer đến từ audit hôm nay, cùng SHA). " +
+  "Với MỖI issue trả về FixPlanItem: fix (hướng cụ thể, smallest reversible), files, tests (tên test mới + NodeID được semantic rewrite nếu có + cách chứng minh old-fails/new-passes), acceptance (đo đếm được), risk+rollback, ownerDependency, estimate S/M/L. " +
+  "KHÔNG sửa bất kỳ file nào — đây là vòng lập kế hoạch.";
+
+const [askPlan, debtPlan, opsPlan, ownerPlan] = await Promise.all([
+  agent("Thiết kế fix — /ask pipeline", {
+    system:
+      "Bạn là kỹ sư thiết kế fix cho pipeline /ask của SCP. CHỈ ĐỌC (không sửa file, không boot service, không gọi /ask). " + constraints,
+  }).ask<ClusterPlan>(
+    commonAsk + " Cụm của bạn: " + JSON.stringify(invAsk) + " " +
+    "Ngữ cảnh hành vi: battery 16 probe hôm nay 12/16 PASS; 4 fail = q01 (root-2), q05/q11 (root-1), q08 (root-3). " + probeArtifacts + " " +
+    "Yêu cầu riêng: (1) root-1 — thiết kế fix lease (nâng TTL/knob + heartbeat retry bền vững + chốt nguyên nhân missed-renewal bằng test tái hiện); (2) root-2 — relevance check answer↔question trước khi PASS ở fork; (3) root-3 — tách governance KILL khỏi FAIL-verdict + family độc lập phải theo MODEL thật (khác base_url+model), nêu rõ phần nào chờ own-provider-keys; (4) root-4 — thứ tự rule + regex + fail-closed classifier (đề xuất spec phân loại đúng cho 16 câu battery); (5) root-5 — pin identity + post-guard; (6) root-6 — cap tổng latency + hedge cho cross_verify. " +
+    "Thiết kế luôn ACCEPTANCE WAVE: tái sử dụng battery script trong TEMP làm đo trước/sau — nêu ngưỡng đạt cụ thể (ví dụ ≥14/16 PASS, q05/q11 không withheld, q01 answer chứa 'Paris', q08 không bị KILL, 0 sai phân loại trong 5 case đã biết).",
+  ),
+  agent("Thiết kế fix — nợ code & CI", {
+    system:
+      "Bạn là kỹ sư thiết kế fix nợ kỹ thuật SCP. CHỈ ĐỌC (không sửa file). " + constraints,
+  }).ask<ClusterPlan>(
+    commonAsk + " Cụm của bạn: " + JSON.stringify(invDebt) + " " +
+    "Yêu cầu riêng: (1) code-1 — chiến lược sweep 179 findings an toàn (B20 rules: chỉ thêm log+exc_info giữ nguyên hành vi; policy noqa minh bạch trong scp/ruff.toml; chống tái phát — bật rule enforcement thế nào mà không phá baseline E9/F); (2) contract-5 — các phương án (chỉnh trigger workflow / chấp nhận + đánh dấu expected / chạy đúng luồng RC để có verdict) kèm khuyến nghị; (3) ga-206 — nội dung cập nhật GA.md:206 chính xác; (4) crawler-noise — bỏ nguồn chết + optional deps cho 'datasets'; (5) code-4/code-5 — fix nhỏ trực tiếp.",
+  ),
+  agent("Thiết kế fix — vận hành & deployment", {
+    system:
+      "Bạn là kỹ sư vận hành SCP. CHỈ ĐỌC (không start/stop gì, không sửa file). " + constraints,
+  }).ask<ClusterPlan>(
+    commonAsk + " Cụm của bạn: " + JSON.stringify(invOps) + " " +
+    "Yêu cầu riêng: (1) teardown-recipe — chuẩn hóa quy trình tắt sạch (dựa scp_247_control.ps1 kill-switch có sẵn + thứ tự Disable-Watchdog-first) thành script/doc sửa được; (2) hourly-monitor-stale — re-register đúng D:\\scp qua installer hoặc xóa; (3) dashboard-bind — knob cấu hình bind host; (4) hygiene-files — quy trình kiểm tra rồi dọn 2 file (phân biệt junk với dữ liệu thật); (5) image-rebuild + port-doc — gom thành 1 việc đồng bộ doc/evidence với compose thực tế; (6) lockfile-audit — job pip-audit trên Linux CI cho lockfile.",
+  ),
+  agent("Lập checklist việc của owner", {
+    system:
+      "Bạn là trợ lý lập kế hoạch. CHỈ ĐỌC. Viết checklist hành động cụ thể, mỗi bước là một việc owner tự làm được, kèm lý do + rủi ro nếu trễ. " + constraints,
+  }).ask<ClusterPlan>(
+    commonAsk + " Cụm của bạn: " + JSON.stringify(invOwner) + " " +
+    "Yêu cầu riêng: (1) own-token — các bước rotate GitHub_TOKEN an toàn (tạo token mới → cập nhật .env → thu hồi cũ → smoke test gh); (2) own-provider-keys — tiêu chí chọn provider/model để crosscheck ĐỘC LẬP THẬT SỰ (khác model hoàn toàn, không cùng nemotron) + số lượng tối thiểu; (3) own-hostenv — kế hoạch nâng theo đợt an toàn (nhóm nào nâng được ngay, nhóm nào chờ, nhóm nào chấp nhận rủi ro có documented); (4) own-electron + own-copyright + own-zonefix — gọn từng mục.",
+  ),
+]);
+
+phase("Ghép lộ trình wave");
+
+const sequencer = agent("Giám đốc lộ trình", {
+  system:
+    "Bạn là giám đốc lộ trình remediation SCP. Đọc .agents/skills/scp-dna/SKILL.md và .agents/EXECUTION_PROTOCOL.md trước khi xếp lịch. CHỈ ĐỌC, không sửa file. " +
+    "Mỗi wave phải có điều kiện bắt đầu + nghiệm thu đo đếm được + blocker. Viết tiếng Việt.",
+});
+const draftPlan = await sequencer.ask<MasterPlan>(
+  "Ghép 4 cụm thiết kế thành lộ trình wave. Nguyên tắc: W0 = việc owner + quyết định mở khóa (không đụng code); ưu tiên user-impact cao nhất trước; wave đụng cùng một nhóm file phải tách thứ tự; mỗi wave kết thúc bằng full pytest + T00 + verify_scp_test_skill_contract + Mimosa pre-commit + GitHub gates same-SHA trước khi sang wave kế; wave /ask dùng battery 16 probe làm acceptance đo trước/sau.\n\n" +
+  "Cụm /ask: " + JSON.stringify(askPlan) + "\n\n" +
+  "Cụm nợ code & CI: " + JSON.stringify(debtPlan) + "\n\n" +
+  "Cụm vận hành: " + JSON.stringify(opsPlan) + "\n\n" +
+  "Cụm owner: " + JSON.stringify(ownerPlan) + "\n\n" +
+  "Yêu cầu: (1) waves W0..Wn với goal/items(=issueId theo thứ tự)/entryCriteria/acceptance/blockers; (2) conflictsResolved — liệt kê mọi chỗ file chồng nhau hoặc thứ tự bắt buộc bạn đã xử lý; (3) openDecisions — những gì owner phải quyết (dashboard bind, KILL semantics, contract-5 phương án...) kèm options + recommendation; (4) summary + overview. Không phát minh issue mới — chỉ xếp những cái đã có.",
+);
+
+phase("Soát độc lập rồi đăng phương án");
+
+const feedback = await agent("Người đọc thử phương án", {
+  system:
+    "Bạn đọc phương án như kỹ sư sẽ THỰC THI nó, chỉ dựa vào văn bản được đưa, không kiểm chứng repo, không sửa file. Phản biện là động tác dễ nhất: chỉ ra chỗ sẽ gãy, chỗ thiếu, chỗ acceptance không đo được.",
+}).ask<ReviewFeedback>(
+  "Đây là phương án xử lý SCP sắp trình owner duyệt:\n\n" + JSON.stringify(draftPlan) +
+  "\n\nChỉ ra: (1) problems — bước nào khi thực thi sẽ gãy hoặc mâu thuẫn ràng buộc FA/T00/Mimosa; (2) missing — thiếu việc gì (rollback, thứ tự, dependency); (3) unmeasurable — acceptance nào không đo đếm được hoặc ngưỡng vô nghĩa. Mảng rỗng nếu không có.",
+);
+
+let plan = draftPlan;
+let revisionNote = "Người đọc thử không có góp ý — giữ nguyên bản nháp.";
+if (feedback.problems.length > 0 || feedback.missing.length > 0 || feedback.unmeasurable.length > 0) {
+  plan = await sequencer.ask<MasterPlan>(
+    "Người đọc thử đã soát bản nháp với phản hồi sau:\n" + JSON.stringify(feedback, null, 2) +
+    "\n\nBản nháp:\n" + JSON.stringify(draftPlan) +
+    "\n\nChỉnh phương án để xử lý TỪNG điểm phản hồi (giữ nguyên những phần không bị phản đối), trả về MasterPlan hoàn chỉnh. Đồng thời mô tả trong overview bạn đã đổi gì.",
+  );
+  revisionNote = "Đã chỉnh theo phản hồi người đọc thử: " + (plan.overview.slice(0, 300));
+}
+
+const allIssues: IssueSeed[] = [...invAsk, ...invDebt, ...invOps, ...invOwner];
+
+const md = [
+  "# Phương án xử lý tổng hợp SCP — post-audit 2026-10-02",
+  "",
+  "- **HEAD cơ sở:** `" + sha + "` — mọi fix đụng đúng SHA này, mỗi wave kết thúc cần gates xanh same-SHA.",
+  "- **Nguồn:** vòng 1 (static, PASS_WITHIN_SCOPE, 2 MEDIUM), vòng 2 (runtime live, PASS_WITHIN_SCOPE), vòng 3 (root-cause /ask, 7 root-causes) + residual GA.md B1a.",
+  "- **Soát:** phương án đã qua 1 lượt người đọc thử độc lập. " + revisionNote,
+  "",
+  "## Tóm tắt lộ trình",
+  "",
+  plan.summary,
+  "",
+  plan.overview,
+  "",
+  "## Các wave",
+  "",
+  ...plan.waves.flatMap((w) => [
+    "### " + w.wave,
+    "",
+    w.goal,
+    "",
+    "- **Thứ tự xử lý:** " + w.items.join(" → "),
+    "- **Điều kiện bắt đầu:** " + (w.entryCriteria.length > 0 ? w.entryCriteria.join("; ") : "—"),
+    "- **Nghiệm thu:** " + (w.acceptance.length > 0 ? w.acceptance.join("; ") : "—"),
+    "- **Blocker:** " + (w.blockers.length > 0 ? w.blockers.join("; ") : "không"),
+    "",
+  ]),
+  "## Chi tiết fix từng issue",
+  "",
+  ...[askPlan, debtPlan, opsPlan, ownerPlan].flatMap((cp, i) => {
+    const names = ["/ask pipeline", "nợ code & CI", "vận hành & deployment", "owner checklist"];
+    return [
+      "### Cụm " + names[i],
+      "",
+      cp.summary,
+      "",
+      ...cp.items.flatMap((it) => [
+        "- **[" + it.issueId + "]** " + it.fix,
+        "  - Files: `" + it.files + "`",
+        "  - Tests: " + it.tests,
+        "  - Acceptance: " + it.acceptance,
+        "  - Risk/rollback: " + it.risk,
+        "  - Owner dependency: " + it.ownerDependency + " | Estimate: " + it.estimate,
+      ]),
+      ...(cp.notes.length > 0 ? cp.notes.map((n) => "- Ghi chú cụm: " + n) : []),
+      "",
+    ];
+  }),
+  "## Quyết định owner phải chốt trước khi chạy",
+  "",
+  ...plan.openDecisions.map((d) => "- **" + d.decision + "** — Options: " + d.options + " — **Khuyến nghị:** " + d.recommendation),
+  "",
+  "## Xung đột đã xử lý khi xếp lịch",
+  "",
+  ...plan.conflictsResolved.map((c) => "- " + c),
+  "",
+  "## Inventory đầy đủ (" + allIssues.length + " issue)",
+  "",
+  "| id | Mức | Khu vực | Vấn đề |",
+  "|---|---|---|---|",
+  ...allIssues.map((s) => "| " + s.id + " | " + s.severity + " | " + s.area + " | " + s.title + " |"),
+  "",
+  "## Ràng buộc thi hành (áp dụng mọi wave)",
+  "",
+  constraints,
+].join("\n");
+
+await artifact.markdown("master-remediation-plan", md, {
+  title: "Phương án xử lý tổng hợp SCP (chờ owner duyệt)",
+  description: allIssues.length + " issue từ 3 vòng audit → " + plan.waves.length + " wave xử lý, kèm fix chi tiết, nghiệm thu và quyết định cần owner chốt.",
+  primary: true,
+});
+
+const result: WorkflowReport = {
+  conclusion: plan.summary + " " + plan.overview,
+  findings: allIssues,
+  verified: [
+    "HEAD cơ sở " + sha + " (`git rev-parse HEAD`); inventory 25 issue tổng hợp từ 3 vòng audit cùng SHA",
+    "4 cụm thiết kế đều yêu cầu verify lại file:dòng tại HEAD trước khi đề xuất fix; kế thừa bằng chứng TEMP của vòng 3 (probe results + server log + battery script)",
+    "Phương án đã qua 1 lượt người đọc thử độc lập" + (revisionNote.startsWith("Đã chỉnh") ? " và 1 lượt chỉnh sửa" : " (không có góp ý)"),
+  ],
+  notCovered: [
+    "Đây là PHƯƠNG ÁN — chưa fix code, chưa chạy wave nào; mọi acceptance là kế hoạch chờ thực thi",
+    "Người đọc thử soát theo văn bản, không kiểm chứng lại repo",
+    "Các issue phụ thuộc owner (provider keys, token rotate) chưa thể nghiệm thu đến nơi cho đến khi owner hành động",
+  ],
+};
+return result;

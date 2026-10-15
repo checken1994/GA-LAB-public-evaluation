@@ -1,0 +1,337 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "stop-20261002T002346598Z-7008-9293e555e97f",
+  "runId": "20261002T002346598Z-7008-9293e555e97f",
+  "runStatus": "inconclusive",
+  "coverage": {
+    "status": "partial",
+    "reasons": [
+      {
+        "code": "bash_discovery_incomplete",
+        "stage": "baseline-enumerate",
+        "target": ".pytest_cache",
+        "detail": "EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+        "affectsCompletion": true
+      },
+      {
+        "code": "baseline_partial",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline capture had enumeration or snapshot errors",
+        "affectsCompletion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "benchmark/download_global_top1_benchmarks.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tests/test_audit_r2_dashboard_proxy_contract.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tests/T03_capability/test_egress_enforcement.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tests/T03_capability/test_flow_05_agent_call_scp_standard.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tests/T03_capability/test_flow_14_reintegrated_systems_scp_standard.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tests/T03_capability/test_security_store_bounds.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tests/T02_contract/test_api_route_profile.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "tests/integration/test_critical_chain_severed.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "scanner_failed",
+        "stage": "scan",
+        "target": "scp/security/auth.py",
+        "detail": "spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "stop_budget_exhausted",
+        "stage": "supply-chain-check",
+        "target": ".",
+        "detail": "focused supply-chain check was not run before the gate budget",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline-enumerate",
+        "target": ".pytest_cache",
+        "detail": "bash_discovery_incomplete: EPERM: operation not permitted, scandir 'D:\\scp\\.pytest_cache'",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline",
+        "target": ".",
+        "detail": "baseline_partial: baseline capture had enumeration or snapshot errors",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "benchmark/download_global_top1_benchmarks.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tests/test_audit_r2_dashboard_proxy_contract.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tests/T03_capability/test_egress_enforcement.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tests/T03_capability/test_flow_05_agent_call_scp_standard.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tests/T03_capability/test_flow_14_reintegrated_systems_scp_standard.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tests/T03_capability/test_security_store_bounds.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tests/T02_contract/test_api_route_profile.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "tests/integration/test_critical_chain_severed.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "scan",
+        "target": "scp/security/auth.py",
+        "detail": "scanner_failed: spawnSync C:\\Program Files\\nodejs\\node.exe ETIMEDOUT",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "supply-chain-check",
+        "target": ".",
+        "detail": "stop_budget_exhausted: focused supply-chain check was not run before the gate budget",
+        "affectsCompletion": true
+      }
+    ]
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "Stop"
+  },
+  "revision": "96628de3ef595094c500cac27d8c5a8e4cc0e39d",
+  "diffHash": "c36b395baca7b5cc9129e69f3b555f13a85b7ceb437333bafb835c10d1ca4ccb",
+  "rulesVersion": "unavailable",
+  "sessionHash": "9695907888fc56a516b9a8109eb33bd06ed939c6fce6523fe4ca71303b20d81a",
+  "reportRef": ".mimosa/reports/task-review-sess_01ba8183-90be-42a8-9a94-244f5ab921ed-20261002T002346598Z-7008-9293e555e97f.json",
+  "events": [
+    {
+      "eventId": "hook-501a17b6541d6aeed9afd53ffa99298b",
+      "findingId": "mimosa-bd6dd96416515666aa031351",
+      "type": "finding_blocked",
+      "at": "2026-10-01T20:01:09.021Z",
+      "identity": {
+        "projectRelativeFile": "benchmark/download_global_top1_benchmarks.py",
+        "ruleId": "security",
+        "codeEvidenceHash": "7ddac4c8165efc6c259c180a26c21bfeabc4a67ef130e5dba5a0f9cf765d5494",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 13,
+      "endLine": 13,
+      "reasonCode": "deny",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "7ddac4c8165efc6c259c180a26c21bfeabc4a67ef130e5dba5a0f9cf765d5494"
+      },
+      "sequence": 0
+    },
+    {
+      "eventId": "hook-f0cd82506c1c97b8608678abf54e19ca",
+      "findingId": "mimosa-bd6dd96416515666aa031351",
+      "type": "static_fix_verified",
+      "at": "2026-10-01T20:01:11.362Z",
+      "identity": {
+        "projectRelativeFile": "benchmark/download_global_top1_benchmarks.py",
+        "ruleId": "security",
+        "codeEvidenceHash": "7ddac4c8165efc6c259c180a26c21bfeabc4a67ef130e5dba5a0f9cf765d5494",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 13,
+      "endLine": 13,
+      "reasonCode": "static_rescan_passed",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "static_scan",
+        "boundary": "observed",
+        "producer": "deterministic",
+        "evidenceHash": "7ddac4c8165efc6c259c180a26c21bfeabc4a67ef130e5dba5a0f9cf765d5494"
+      },
+      "sequence": 1
+    },
+    {
+      "eventId": "hook-59b55a676b97347a2df9f6da10152b57",
+      "findingId": "mimosa-bd6dd96416515666aa031351",
+      "type": "finding_blocked",
+      "at": "2026-10-01T20:04:01.373Z",
+      "identity": {
+        "projectRelativeFile": "benchmark/download_global_top1_benchmarks.py",
+        "ruleId": "security",
+        "codeEvidenceHash": "7ddac4c8165efc6c259c180a26c21bfeabc4a67ef130e5dba5a0f9cf765d5494",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 10,
+      "endLine": 10,
+      "reasonCode": "deny",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "7ddac4c8165efc6c259c180a26c21bfeabc4a67ef130e5dba5a0f9cf765d5494"
+      },
+      "sequence": 2
+    },
+    {
+      "eventId": "hook-dcbc0398ef74a8164edaeb1de56b5fe2",
+      "findingId": "mimosa-bd6dd96416515666aa031351",
+      "type": "static_fix_verified",
+      "at": "2026-10-01T20:04:55.461Z",
+      "identity": {
+        "projectRelativeFile": "benchmark/download_global_top1_benchmarks.py",
+        "ruleId": "security",
+        "codeEvidenceHash": "7ddac4c8165efc6c259c180a26c21bfeabc4a67ef130e5dba5a0f9cf765d5494",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 10,
+      "endLine": 10,
+      "reasonCode": "static_rescan_passed",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "static_scan",
+        "boundary": "observed",
+        "producer": "deterministic",
+        "evidenceHash": "7ddac4c8165efc6c259c180a26c21bfeabc4a67ef130e5dba5a0f9cf765d5494"
+      },
+      "sequence": 3
+    },
+    {
+      "eventId": "hook-0749e43c0e7331d9d78a01c88a334f59",
+      "findingId": "mimosa-bd6dd96416515666aa031351",
+      "type": "finding_blocked",
+      "at": "2026-10-01T20:09:28.876Z",
+      "identity": {
+        "projectRelativeFile": "benchmark/download_global_top1_benchmarks.py",
+        "ruleId": "security",
+        "codeEvidenceHash": "7ddac4c8165efc6c259c180a26c21bfeabc4a67ef130e5dba5a0f9cf765d5494",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 39,
+      "endLine": 39,
+      "reasonCode": "deny",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "7ddac4c8165efc6c259c180a26c21bfeabc4a67ef130e5dba5a0f9cf765d5494"
+      },
+      "sequence": 4
+    },
+    {
+      "eventId": "hook-61b921741b58cbde0074551b7954b9a1",
+      "findingId": "mimosa-bd6dd96416515666aa031351",
+      "type": "static_fix_verified",
+      "at": "2026-10-01T20:12:10.187Z",
+      "identity": {
+        "projectRelativeFile": "benchmark/download_global_top1_benchmarks.py",
+        "ruleId": "security",
+        "codeEvidenceHash": "7ddac4c8165efc6c259c180a26c21bfeabc4a67ef130e5dba5a0f9cf765d5494",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 39,
+      "endLine": 39,
+      "reasonCode": "static_rescan_passed",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "static_scan",
+        "boundary": "observed",
+        "producer": "deterministic",
+        "evidenceHash": "7ddac4c8165efc6c259c180a26c21bfeabc4a67ef130e5dba5a0f9cf765d5494"
+      },
+      "sequence": 5
+    }
+  ],
+  "observedFindingIds": [],
+  "verifiedFiles": [],
+  "recordedAt": "2026-10-02T00:23:47.005Z"
+}

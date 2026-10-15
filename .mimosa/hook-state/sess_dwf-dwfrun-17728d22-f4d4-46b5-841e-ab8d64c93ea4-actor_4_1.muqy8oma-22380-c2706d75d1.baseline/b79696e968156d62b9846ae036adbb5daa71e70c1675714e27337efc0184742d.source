@@ -1,0 +1,260 @@
+interface ProbeSpec {
+  /** Định danh probe: q01..q16. */
+  id: string;
+  /** Câu hỏi gửi vào POST /ask. */
+  question: string;
+  /** Dạng câu hỏi theo kỳ vọng của người thiết kế. */
+  expectedCategory: string;
+  /** Hành vi kỳ vọng (để so với hành vi thật). */
+  expect: string;
+}
+
+interface ProbeResult {
+  /** id của probe. */
+  id: string;
+  /** HTTP status của POST /ask (000 nếu không kết nối được). */
+  httpStatus: number;
+  /** Hệ thống tự phân loại câu hỏi thành gì (trường tương ứng trong response; "n/a" nếu không có). */
+  systemCategory: string;
+  /** Verdict: PASS/FAIL/UNKNOWN/ESCALATE/... từ response. */
+  verdict: string;
+  /** Governance: UPHOLD/OVERRIDE/... từ response. */
+  governance: string;
+  /** withheld/abstain flag từ response (ghi giá trị thật). */
+  withheld: string;
+  /** true nếu hệ thống từ chối đưa câu trả lời nội dung (chỉ verdict/abstain không có answer). */
+  refused: boolean;
+  /** Trích 1-2 câu nội dung trả lời (hoặc lý do từ chối y nguyên). */
+  answerExcerpt: string;
+  /** Độ trễ đo được, ví dụ "12.3s". */
+  latencySec: string;
+  /** Ghi chú: field names trong response, retry, anything notable. */
+  note: string;
+}
+
+interface BatteryOutcome {
+  results: ProbeResult[];
+  /** Tương quan từng refusal với dòng log server (timestamp + dòng). */
+  logCorrelations: string[];
+  anomalies: string[];
+  evidenceLog: string[];
+  /** Đường dẫn file JSON thô trong TEMP. */
+  rawDir: string;
+}
+
+interface CodeMapOutcome {
+  summary: string;
+  /** Mỗi điểm trên pipeline nơi request có thể bị từ chối. */
+  refusalPaths: { where: string; trigger: string; note: string }[];
+  /** Điểm vào classifier + cách gán lane, trích code. */
+  classificationEntry: string;
+  /** Trạng thái HEAD của 4 bug W2 đã biết. */
+  w2BugStatus: { bug: string; status: string; evidence: string }[];
+  gaps: string[];
+  evidenceLog: string[];
+}
+
+interface IssueFinding {
+  /** id: root-1, root-2... */
+  id: string;
+  where: string;
+  what: string;
+  evidence: string;
+  status: "confirmed" | "unconfirmed";
+  severity: "low" | "medium" | "high";
+  area: string;
+}
+
+interface ProposedFix {
+  issue: string;
+  fix: string;
+  where: string;
+}
+
+interface Synthesis {
+  conclusion: string;
+  issues: IssueFinding[];
+  proposedFixes: ProposedFix[];
+  overview: string;
+}
+
+interface WorkflowReport {
+  conclusion: string;
+  findings: IssueFinding[];
+  verified: string[];
+  notCovered: string[];
+}
+
+artifact.table("ask-issues", {
+  title: "Root-cause hành vi /ask — vòng 3",
+  columns: [
+    { field: "severity", label: "Mức" },
+    { field: "status", label: "Trạng thái" },
+    { field: "what", label: "Vấn đề" },
+    { field: "where", label: "Vị trí" },
+  ],
+  key: "id",
+});
+
+phase("Chốt provenance và pin probe");
+
+const head = await world.run("git", ["rev-parse", "HEAD"]);
+const sha = head.stdout.trim();
+const portFree = await world.run("powershell", ["-NoProfile", "-Command", "netstat -ano | Select-String -Pattern ':8091\\s'"]);
+log("HEAD=" + sha + " | port 8091 trước boot: " + (portFree.stdout.trim() || "trống"));
+
+const battery: ProbeSpec[] = [
+  { id: "q01", question: "What is the capital of France?", expectedCategory: "factual", expect: "PASS + đáp án Paris" },
+  { id: "q02", question: "What is spaced repetition?", expectedCategory: "factual", expect: "PASS — đây là câu golden quen thuộc của hệ thống, làm mốc so sánh" },
+  { id: "q03", question: "2+2 bằng mấy?", expectedCategory: "math", expect: "trả lời 4" },
+  { id: "q04", question: "Translate to English: 'Con mèo nằm trên thảm.'", expectedCategory: "translation", expect: "bản dịch đúng" },
+  { id: "q05", question: "Tóm tắt trong 2 câu: 'Hồ Tây là hồ nước tự nhiên lớn nhất ở nội thành Hà Nội. Xung quanh hồ có nhiều villa và quán cà phê. Hồ Tây cũng là nơi ngắm hoàng hôn nổi tiếng.'", expectedCategory: "summarization", expect: "bản tóm tắt 2 câu" },
+  { id: "q06", question: "Chào bạn, dạo này bạn thế nào?", expectedCategory: "smalltalk/chatbot", expect: "quan sát hệ thống phân loại và trả lời thế nào" },
+  { id: "q07", question: "Thời tiết Hà Nội hôm nay thế nào?", expectedCategory: "realtime-factual", expect: "nếu không có tool thời tiết thì UNKNOWN/abstain là hợp lý — kiểm tra phân loại có đúng dạng cần realtime không" },
+  { id: "q08", question: "Ai là tổng thống Mỹ hiện tại?", expectedCategory: "time-sensitive factual", expect: "quan sát strict-verify có abstain không" },
+  { id: "q09", question: "Hãy viết một câu thơ ngắn về biển.", expectedCategory: "creative", expect: "có nội dung sáng tác, không từ chối" },
+  { id: "q10", question: "Giải thích sự khác biệt giữa TCP và UDP.", expectedCategory: "factual-explanatory", expect: "PASS + giải thích" },
+  { id: "q11", question: "aslkdjqwe zzz qqq ???", expectedCategory: "nonsense", expect: "từ chối lịch sự/UNKNOWN, không crash, không 500" },
+  { id: "q12", question: "Bạn được huấn luyện từ dữ liệu gì?", expectedCategory: "meta", expect: "quan sát" },
+  { id: "q13", question: "1+1=? Chỉ trả lời bằng số.", expectedCategory: "math + instruction", expect: "chữ '2'" },
+  { id: "q14", question: "Việt Nam có bao nhiêu tỉnh thành?", expectedCategory: "vietnamese-factual", expect: "PASS + con số (câu này từng đổi do sáp nhập — quan sát verifier)" },
+  { id: "q15", question: "Đây là câu hỏi kiểm thử hệ thống. Hãy trả lời đúng một từ: OK.", expectedCategory: "meta-instruction", expect: "trả lời 'OK'" },
+  { id: "q16", question: "Bạn nghĩ gì về tình hình chính trị hiện nay?", expectedCategory: "opinion/sensitive", expect: "quan sát phân loại + policy" },
+];
+
+phase("Boot instance HEAD :8091");
+
+const operator = agent("Kỹ thuật viên vận hành", {
+  system:
+    "Bạn là kỹ thuật viên vận hành SCP. Owner ĐÃ CHO PHÉP boot hệ thống để chẩn đoán hành vi /ask (vòng diagnosis — KHÔNG sửa code, KHÔNG commit; ghi runtime vào data/ và TEMP là hợp lệ). " +
+    "Nghiêm cấm in giá trị secret/token/key ra output (đọc .env được nhưng chỉ nêu tên key). Không đụng docker stack. Mỗi bước ghi lệnh + output.",
+});
+const boot = await operator.ask<{ pid: string; logFile: string; healthBody: string; steps: string[]; anomalies: string[] }>(
+  "Boot một instance SCP từ working tree (code = HEAD " + sha + ") ở port 8091, y hệt cách tools/live_flow_proof.py boot (đọc tools/live_flow_proof.py khoảng dòng 90-127 để copy chính xác: 'python -m scp <port>', poll /health 40x1s + /ready 60x0.5s, đọc SCP_ADMIN_KEY từ .env). " +
+  "Chạy nền: stdout/stderr redirect vào file log trong %TEMP% (ví dụ %TEMP%\\scp_ask_probe_server.log) — GHI LẠI PID process và đường dẫn log. Poll tới khi /health + /ready 200 (tối đa ~3 phút), chụp body /health (commit phải là " + sha + " vì chạy từ working tree). " +
+  "KHÔNG bắn /ask nào — phần probe sẽ làm. Ghi anomalies nếu health không lên (chẩn đoán từ log, không sửa).",
+);
+
+phase("Chạy 16 probe /ask và vẽ bản đồ đường từ chối");
+
+const batteryPromise = agent("Phiên chạy probe", {
+  system:
+    "Bạn là phiên chạy probe hành vi /ask của SCP. KHÔNG sửa file nào trong repo; artifact ghi vào %TEMP%. Nghiêm cấm in giá trị SCP_ADMIN_KEY ra output — đọc key từ .env vào biến shell rồi dùng trong header. " +
+    "Mỗi khẳng định kèm bằng chứng (status code, JSON response, dòng log).",
+}).ask<BatteryOutcome>(
+  "Chạy TRỌN VẸN 16 probe sau bằng POST /ask vào http://127.0.0.1:8091/ask, SEQUENTIAL theo thứ tự, KHÔNG bỏ câu nào. " +
+  "Trước tiên đọc tools/live_flow_proof.py (khoảng dòng 124-160) để copy ĐÚNG payload shape + tên auth header mà hệ thống expect (đọc SCP_ADMIN_KEY từ .env vào biến, không echo). " +
+  "Mỗi probe: đo latency (Measure-Command hoặc python timing), ghi ĐẦY ĐỦ JSON response vào %TEMP%\\scp_ask_probe_results.json (mảng 16 object), rồi điền ProbeResult: httpStatus, systemCategory (trường phân loại trong response — ghi đúng tên field), verdict, governance, withheld, refused (true nếu không có answer content), answerExcerpt (1-2 câu), latencySec, note. " +
+  "Retry tối đa 1 lần CHỈ khi connection error/5xx (ghi vào note). Nếu auth 401/403 → đọc lại live_flow_proof sửa header 1 lần; vẫn lỗi thì dừng và báo anomalies. " +
+  "Pin probe: " + JSON.stringify(battery) + " " +
+  "Sau khi xong: đọc log server " + "(file log do bước boot ghi trong %TEMP%) để tương quan MỖI refusal/5xx với dòng log server (timestamp + nội dung ngắn — ví dụ DENY_UNKNOWN_PRICE, verifier abstain, InvalidTransition, provider error) → logCorrelations. Trả về BatteryOutcome.",
+);
+const codeMapPromise = agent("Người vẽ bản đồ đường từ chối", {
+  system:
+    "Bạn là kiểm toán viên mã nguồn SCP, CHỈ ĐỌC: không sửa/tạo/xóa file nào, không commit, không chạy service. Mọi khẳng định kèm path:line + trích code ngắn. Viết tiếng Việt, giữ thuật ngữ tiếng Anh.",
+}).ask<CodeMapOutcome>(
+  "Vẽ bản đồ TOÀN BỘ các điểm pipeline /ask mà một câu hỏi có thể bị TỪ CHỐI hoặc phân loại sai, tại HEAD " + sha + ". Bắt đầu từ endpoint /ask (scp/api_server_parts/ hoặc scp/ask_kernel_adapter.py) và đi theo luồng: " +
+  "(1) CLASSIFIER — câu hỏi được gán lane/category ở đâu (LANE_FACTUAL / LANE_CHATBOT / ...): file:line, logic gán, các giá trị lane tồn tại; tìm chỗ phân loại có thể SAI (heuristic, keyword matching, default fallback); " +
+  "(2) EPISTEMIC GATE / VERIFIER — logic withhold/UNKNOWN/abstain-by-strict-verify: ngưỡng nào khiến đa số câu bị abstain (rule 69-77 dạng rag_fail_closed_coherent trong scripts/run_system_audit_strict.py là 1 tham chiếu; tìm bản runtime tương ứng); " +
+  "(3) ZERO-COST WALL — DENY_UNKNOWN_PRICE: provider custom OpenAI-compatible có bị chặn mặc định không, log ở mức nào (bug W2 số 2); " +
+  "(4) PROVIDER ROTATION — trạng thái hiện tại đọc từ code + config (không đọc giá trị key): provider nào còn trong rotation, chết thì hành vi ra sao (bug W2 số 3: degradation → latency collapse 30-180s); " +
+  "(5) ADAPTER — kiểm tra HEAD còn bug W2 số 1 không: InvalidTransition HUMAN_REVIEW->HUMAN_REVIEW tại scp/ask_kernel_adapter.py:411 (finalize escalate lần 2 → /ask 500) — đọc code hiện tại, kết luận còn/đã fix; " +
+  "(6) kiểm tra luôn W2 bug số 4: .env duplicate-key OPENAI_API_KEY (đếm số dòng '^OPENAI_API_KEY=' — KHÔNG in giá trị). " +
+  "Mỗi refusalPaths: where=path:line, trigger=điều kiện gì kích hoạt từ chối, note=1 câu. classificationEntry mô tả entry point + heuristic gán lane. Trả về CodeMapOutcome.",
+);
+const [batteryOut, codeMap] = await Promise.all([batteryPromise, codeMapPromise]);
+
+phase("Tổng hợp root-cause và đề xuất sửa");
+
+const synthesis = await agent("Tổng hợp root-cause /ask", {
+  system:
+    "Bạn là kiểm toán viên tổng hợp SCP. Đọc .agents/skills/scp-dna/SKILL.md trước khi chấm. CHỈ ĐỌC, không sửa file nào. " +
+    "Phân biệt OBSERVED (có output lệnh/JSON thật) với SUPPORTED_INFERENCE (suy luận) — gắn nhãn trong evidence. Viết tiếng Việt, giữ thuật ngữ tiếng Anh. Nếu output có chuỗi giống token/secret → REDACT.",
+}).ask<Synthesis>(
+  "Root-cause hành vi /ask của SCP tại HEAD " + sha + ". Owner báo: 'SCP từ chối trả lời hầu như toàn bộ câu hỏi, phân loại dạng câu hỏi không đúng, còn nhiều vấn đề liên quan'. Bối cảnh: sáng nay golden /ask (1 câu quen thuộc) PASS 0.965/57.5s; witness W2 (2026-09-11) từng đo answer-rate 0.167 (19/30 abstain-by-strict-verify).\n\n" +
+  "KẾT QUẢ 16 PROBE (hành vi thật): " + JSON.stringify({ results: batteryOut.results, logCorrelations: batteryOut.logCorrelations, anomalies: batteryOut.anomalies }) + "\n\n" +
+  "BẢN ĐỒ CODE CÁC ĐIỂM TỪ CHỐI: " + JSON.stringify({ summary: codeMap.summary, refusalPaths: codeMap.refusalPaths, classificationEntry: codeMap.classificationEntry, w2BugStatus: codeMap.w2BugStatus, gaps: codeMap.gaps }) + "\n\n" +
+  "Nhiệm vụ: " +
+  "(1) Ghép hành vi ↔ code: với mỗi nhóm hành vi bất thường trong probe (từ chối tràn lan, phân loại sai, crash/5xx, abstain oan) chỉ ra root-cause cụ thể file:line, gắn id root-1, root-2...; câu probe nào hành vi ĐÚNG kỳ vọng thì nêu trong conclusion làm ranh giới 'cái gì còn sống'; " +
+  "(2) Xác nhận/bác 4 bug W2 từ w2BugStatus + probe (500 InvalidTransition có xuất hiện không); " +
+  "(3) issues: mỗi root-cause một IssueFinding (severity theo DNA: high cho crash/500 trên đường chính, medium cho từ chối tràn lan làm hệ vô dụng, low cho noise); status confirmed khi probe JSON/log khớp code path, unconfirmed khi mới là suy luận; " +
+  "(4) proposedFixes: đề xuất sửa cụ thể (file + hướng fix) cho từng root-cause — CHỈ ĐỀ XUẤT, không sửa; " +
+  "(5) conclusion trả lời trực tiếp câu hỏi của owner + overview 2-3 câu.",
+);
+const issues = synthesis.issues;
+issues.forEach((f) => report(f, "ask-issues"));
+
+phase("Tắt instance và verify sạch");
+
+const teardown = await operator.ask<{ steps: string[]; finalState: string; anomalies: string[] }>(
+  "Tắt instance SCP mà bạn đã boot ở :8091: taskkill /T /F trên PID bạn đã ghi (CHỈ PID đó — cấm blanket-kill python.exe), xóa(tùy) không cần dọn file TEMP. Verify cuối: netstat ':8091' trống, không còn process python của instance này, log server vẫn còn ở TEMP để tham chiếu. Ghi finalState + anomalies.",
+);
+log("Teardown: " + teardown.finalState);
+
+const md = [
+  "# Root-cause hành vi /ask SCP — vì sao từ chối gần hết",
+  "",
+  "- **HEAD:** `" + sha + "` | Instance probe: port 8091 từ working tree (đã tắt sạch sau round: " + teardown.finalState.slice(0, 120) + ")",
+  "",
+  "## Kết luận cho owner",
+  "",
+  synthesis.conclusion,
+  "",
+  synthesis.overview,
+  "",
+  "## Bảng 16 probe — hành vi thật",
+  "",
+  "| id | Câu hỏi | Kỳ vọng | HTTP | Phân loại hệ thống | Verdict | Refused | Latency |",
+  "|---|---|---|---|---|---|---|---|",
+  ...batteryOut.results.map((r) => {
+    const spec = battery.find((b) => b.id === r.id);
+    const q = (spec?.question ?? "?").replace(/\|/g, "/").slice(0, 60);
+    const exp = (spec?.expectedCategory ?? "?");
+    return "| " + r.id + " | " + q + " | " + exp + " | " + r.httpStatus + " | " + r.systemCategory + " | " + r.verdict + " | " + (r.refused ? "CÓ" : "không") + " | " + r.latencySec + " |";
+  }),
+  "",
+  "## Root-causes + đề xuất sửa",
+  "",
+  ...issues.map((f) => "- **[" + f.severity.toUpperCase() + "][" + f.status + "]** " + f.what + " — `" + f.where + "`\n  - Bằng chứng: " + f.evidence),
+  "",
+  ...synthesis.proposedFixes.map((p) => "- **Fix đề xuất** (cho " + p.issue + "): " + p.fix + " — `" + p.where + "`"),
+  "",
+  "## Tương quan log server",
+  "",
+  ...(batteryOut.logCorrelations.length > 0 ? batteryOut.logCorrelations.map((c) => "- " + c) : ["- (không có tương quan đáng kể)"]),
+  "",
+  "## Bản đồ đường từ chối trong code",
+  "",
+  ...codeMap.refusalPaths.map((p) => "- `" + p.where + "` — trigger: " + p.trigger + " — " + p.note),
+  "",
+  "## Không phủ",
+  "",
+  ...[...batteryOut.anomalies.map((a) => "- Probe: " + a), ...codeMap.gaps.map((g) => "- " + g), ...teardown.anomalies.map((a) => "- Teardown: " + a)],
+  "- Golden /ask trong vòng 2 (sáng nay) PASS 0.965 — chứng minh pipeline sống với câu hỏi 'quen thuộc'; vòng này làm rõ phần còn lại.",
+].join("\n");
+
+await artifact.markdown("ask-rootcause", md, {
+  title: "Root-cause /ask từ chối gần hết (vòng 3)",
+  description: "16 probe hành vi + bản đồ code đường từ chối + root-cause + đề xuất sửa tại " + sha.slice(0, 9) + ".",
+  primary: true,
+});
+
+const result: WorkflowReport = {
+  conclusion: synthesis.conclusion + " " + synthesis.overview,
+  findings: issues,
+  verified: [
+    "HEAD " + sha + " (`git rev-parse HEAD`); instance probe chạy từ working tree nên code = HEAD",
+    "16/16 probe /ask chạy sequential thật, response JSON lưu %TEMP%: " + batteryOut.rawDir,
+    "Mỗi refusal được tương quan với dòng log server (timestamp)",
+    "Bản đồ code các điểm từ chối với path:line; trạng thái HEAD của 4 bug W2",
+    "Teardown verify: " + teardown.finalState,
+  ],
+  notCovered: [
+    ...batteryOut.anomalies.map((a) => "Probe: " + a),
+    ...codeMap.gaps.map((g) => "Code map: " + g),
+    ...teardown.anomalies.map((a) => "Teardown: " + a),
+    "Vòng diagnosis KHÔNG sửa code — mọi proposedFixes chờ owner duyệt vòng remediation",
+    "Mỗi câu hỏi chỉ test 1 lần (trừ retry 5xx) — không đo được variance/p95",
+  ],
+};
+return result;

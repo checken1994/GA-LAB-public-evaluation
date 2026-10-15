@@ -1,0 +1,197 @@
+name: SCP Pre-RC Verification (Non-Authoritative)
+
+# Broad developer/PR verification only. Release authority belongs exclusively
+# to scp-rc-promotion.yml. Uses GitHub-hosted runners (ubuntu-latest, windows-latest).
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  SCP_JWT_SECRET: "pre-rc-jwt-secret-0123456789abcdef0123456789"
+  SCP_ADMIN_KEY: "pre-rc-admin-key-0123456789"
+  # [H-01 fix 2026-10-01] Scan oracle for the RC-2 no-hardcoded-token test —
+  # unset env made that test skip forever. CI-only value, not a real secret;
+  # appears in no source file, so the scan stays meaningful.
+  SCP_AUTH_TOKEN_SECRET: "ci-only-runtime-placeholder"
+  SCP_PRODUCTION_MODE: '0'
+  SCP_SKIP_STARTUP_GATE: '0'
+  SCP_EGRESS_MODE: deny
+  SCP_PORT: '8000'
+  PORT: '8000'
+  PYTHONUTF8: '1'
+
+jobs:
+  pre-rc-verification:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+          - os: windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4
+        with:
+          node-version: "20"
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: "1.3.14"
+
+      - name: Prove exact SHA checkout
+        shell: bash
+        run: |
+          EXPECTED="${{ github.event.pull_request.head.sha || github.sha }}"
+          test "$(git rev-parse HEAD)" = "$EXPECTED"
+
+      - name: Verify Python 3.12 runtime
+        shell: bash
+        run: python -c "import sys; assert sys.version_info[:2] == (3, 12), sys.version; print(sys.version)"
+
+      - name: Verify Node 20 runtime
+        shell: bash
+        run: node -e "if (process.versions.node.split('.')[0] !== '20') { throw new Error(process.version) } console.log(process.version)"
+
+      - name: Install Python dependencies
+        shell: bash
+        run: |
+          python -m pip install -r scp/requirements-dev.txt
+          python -m pip check
+
+      - name: Mandatory SCP Skill and DNA contract
+        shell: bash
+        run: |
+          python tools/verify_scp_test_skill_contract.py --output reports/test_skill_contract_pre_rc.json
+          python -m pytest -q tests/T11_release/test_scp_skill_dna_contract.py tests/T11_release/test_scp_test_skill_contract.py --tb=short
+
+      - name: Compile selected executable surfaces
+        shell: bash
+        run: >-
+          python -m py_compile
+          scp/runtime/judge.py
+          scp/api_server.py
+          scp/__main__.py
+          scp/security/auth.py
+          scp/security/production_guard.py
+          scp/security/secret_loader.py
+          scp/autofix/llm_fix.py
+          scp/autofix/runner_phases/ast_scan.py
+          scp/autofix/restricted_exec.py
+          scp/runtime/safe_math.py
+          scp/history/migration.py
+          tools/summarize_bandit_report.py
+          tools/verify_snapshot_manifest.py
+          tools/check_bandit_policy.py
+          tools/verify_scp_test_skill_contract.py
+
+      - name: Focused Ruff correctness
+        shell: bash
+        run: >-
+          python -m ruff check
+          scp/autofix/llm_fix.py
+          scp/autofix/property_validator.py
+          scp/autofix/realtime_verifier.py
+          scp/autofix/runner_phases/post_fix_verify.py
+          scp/autofix/restricted_exec.py
+          scp/core/knowledge_io.py
+          scp/core/policy_materializer.py
+          scp/history/migration.py
+          scp/runtime/safe_math.py
+          scp/security/cisa_kev.py
+          tests/T11_release/test_scp_skill_dna_contract.py
+          tests/T11_release/test_scp_test_skill_contract.py
+          tools/summarize_bandit_report.py
+          tools/verify_snapshot_manifest.py
+          tools/check_bandit_policy.py
+          tools/verify_scp_test_skill_contract.py
+          --select E9,F
+
+      - name: Install dashboard dependencies for integration suite
+        # Pre-RC run 36102606213: the bun -e middleware/route imports and the
+        # live cluster e2e (`next dev` on 3000) ran BEFORE dashboard deps were
+        # installed (the full install/build step only runs later in the job),
+        # so next/server could not resolve and 4 tests failed with
+        # CalledProcessError / dashboard HTTP 200 deadline. Install the same
+        # dependency set here, before the suite, mirroring the later
+        # 'Dashboard install, production audit, and build' step.
+        shell: bash
+        working-directory: dashboard
+        run: npm ci --ignore-scripts --no-audit
+
+      - name: Full unit and integration suite
+        shell: bash
+        run: python -m pytest -q --tb=short
+
+      - name: Bounded live mutation score gate
+        id: mutation
+        if: matrix.os == 'ubuntu-latest'
+        shell: bash
+        run: python scripts/run_mutation_ci.py --max-mutants 15 --min-score 0.40 --report reports/mutation/mutation_report.json
+
+      - name: Bandit production policy
+        shell: bash
+        run: |
+          set +e
+          python -m bandit -r scp -x scp/examples,scp/tools,scp/venv -f json -o bandit-prod.json
+          bandit_exit=$?
+          set -e
+          python tools/summarize_bandit_report.py bandit-prod.json --output bandit-prod-summary.json
+          python tools/check_bandit_policy.py bandit-prod-summary.json --max-medium 9
+          if [ "$bandit_exit" -gt 1 ]; then exit "$bandit_exit"; fi
+
+      - name: Portable reality suite
+        shell: bash
+        run: python scripts/run_reality_tests_portable.py
+
+      - name: Bounded full-system runtime smoke
+        shell: bash
+        env:
+          # The smoke boots `python -m scp` with an empty SCP_ENV_FILE; without
+          # a capability secret GAP-09 fail-closed kills the server at import
+          # and /health never becomes ready on a clean runner.
+          SCP_CAPABILITY_SECRET: ${{ secrets.SCP_CAPABILITY_SECRET || format('smoke-{0}{1}', github.run_id, github.run_attempt) }}
+        run: python tools/run_bounded_system_smoke.py --output-dir reports/bounded_system_smoke_pre_rc
+
+      - name: Dashboard install, production audit, and build
+        shell: bash
+        working-directory: dashboard
+        env:
+          SCP_AUDIT_NPM_CLI: ${{ runner.temp }}/scp-audit-npm/node_modules/npm/bin/npm-cli.js
+        run: |
+          npm install --prefix "$RUNNER_TEMP/scp-audit-npm" --ignore-scripts --no-audit --no-fund npm@11.19.1
+          test "$(node "$SCP_AUDIT_NPM_CLI" --version)" = "11.19.1"
+          npm ci --ignore-scripts --no-audit
+          python ../tools/run_dashboard_audit.py --output "../reports/dashboard_audit_pre_rc_${{ runner.os }}"
+          npm run build
+
+      - name: Upload pre-RC evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scp-pre-rc-${{ runner.os }}-${{ github.sha }}
+          path: |
+            reports/test_skill_contract_pre_rc.json
+            reports/dashboard_audit_pre_rc_${{ runner.os }}/
+            reports/mutation/mutation_report.json
+            bandit-prod.json
+            bandit-prod-summary.json
+            reports/reality/
+            reports/bounded_system_smoke_pre_rc/
+          if-no-files-found: warn
+          retention-days: 14
+
+      # No manifest freeze, final RC verdict, merge, or handoff authority here.

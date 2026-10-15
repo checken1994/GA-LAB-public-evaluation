@@ -1,0 +1,1866 @@
+{
+  "bare": [],
+  "swallowed": [
+    {
+      "file": "scp\\api_server.py",
+      "line": 626,
+      "func": "health_detailed",
+      "type": "Exception",
+      "body": [
+        "_sched_started = getattr(app.state, \"background_scheduler_started\", False)",
+        "return {"
+      ]
+    },
+    {
+      "file": "scp\\ask_kernel_adapter.py",
+      "line": 65,
+      "func": "ask_lease_ttl_seconds",
+      "type": "(TypeError, ValueError)",
+      "body": [
+        "return DEFAULT_ASK_LEASE_TTL_SECONDS"
+      ]
+    },
+    {
+      "file": "scp\\ask_kernel_adapter.py",
+      "line": 928,
+      "func": "_lease_heartbeat",
+      "type": "asyncio.TimeoutError",
+      "body": [
+        "pass"
+      ]
+    },
+    {
+      "file": "scp\\ask_kernel_adapter.py",
+      "line": 962,
+      "func": "run_rag",
+      "type": "Exception",
+      "body": [
+        "return self._kernel_blocked_response(req, exc)"
+      ]
+    },
+    {
+      "file": "scp\\event_bus_pg.py",
+      "line": 160,
+      "func": "redacted_dsn",
+      "type": "Exception",
+      "body": [
+        "return \"<redacted-dsn>\""
+      ]
+    },
+    {
+      "file": "scp\\kernel_storage_pg.py",
+      "line": 290,
+      "func": "_redacted_dsn",
+      "type": "Exception",
+      "body": [
+        "return \"<redacted-dsn>\""
+      ]
+    },
+    {
+      "file": "scp\\kernel_storage_pg.py",
+      "line": 454,
+      "func": "_pragma_table_info",
+      "type": "pg_errors.UndefinedTable",
+      "body": [
+        "rows = []"
+      ]
+    },
+    {
+      "file": "scp\\verifier.py",
+      "line": 25,
+      "func": "verify",
+      "type": "SchemaValidationError",
+      "body": [
+        "return VerificationResult(\"INSUFFICIENT\", self.verifier_id, None, tuple(), (f\"schema_error:{e}\",))"
+      ]
+    },
+    {
+      "file": "scp\\api\\routes\\hands_routes.py",
+      "line": 156,
+      "func": "hands_plan",
+      "type": "KeyError",
+      "body": [
+        "return {\"success\": False, \"action\": payload.action, \"error\": str(exc), \"allowed\": False}"
+      ]
+    },
+    {
+      "file": "scp\\api\\routes\\hands_routes.py",
+      "line": 211,
+      "func": "hands_reconcile",
+      "type": "Exception",
+      "body": [
+        "return {\"success\": False, \"error\": str(exc), \"taskId\": payload.taskId}"
+      ]
+    },
+    {
+      "file": "scp\\api\\routes\\hands_routes.py",
+      "line": 249,
+      "func": "planner_create",
+      "type": "(TypeError, ValueError, KeyError)",
+      "body": [
+        "return {\"success\": False, \"version\": \"3.7\", \"error\": str(exc)}"
+      ]
+    },
+    {
+      "file": "scp\\api\\routes\\v104_routes.py",
+      "line": 112,
+      "func": "v104_image_check",
+      "type": "_PayloadTooLarge",
+      "body": [
+        "return JSONResponse(status_code=413, content={\"error\": \"Image payload too large\"})"
+      ]
+    },
+    {
+      "file": "scp\\api\\routes\\v104_routes.py",
+      "line": 114,
+      "func": "v104_image_check",
+      "type": "ValueError",
+      "body": [
+        "return JSONResponse(status_code=400, content={\"error\": \"Invalid image_base64\"})"
+      ]
+    },
+    {
+      "file": "scp\\api\\routes\\v104_routes.py",
+      "line": 165,
+      "func": "v104_voice_check",
+      "type": "_PayloadTooLarge",
+      "body": [
+        "return JSONResponse(status_code=413, content={\"error\": \"Audio payload too large\"})"
+      ]
+    },
+    {
+      "file": "scp\\api\\routes\\v104_routes.py",
+      "line": 167,
+      "func": "v104_voice_check",
+      "type": "ValueError",
+      "body": [
+        "return JSONResponse(status_code=400, content={\"error\": \"Invalid audio_base64\"})"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\bug_report_validator.py",
+      "line": 340,
+      "func": "_check_string_context",
+      "type": "SyntaxError",
+      "body": [
+        "return ValidationResult(is_valid=True, reason=\"parse error \u2014 skip string check\")"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\callgraph_delta.py",
+      "line": 298,
+      "func": "_analyze_file",
+      "type": "SyntaxError",
+      "body": [
+        "node.parse_error = f\"SyntaxError: {e}\"  # silent-by-design: error recorded on FileNode.parse_error and surfaced by delta checks",
+        "return node"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\callgraph_delta.py",
+      "line": 301,
+      "func": "_analyze_file",
+      "type": "Exception",
+      "body": [
+        "node.parse_error = f\"{type(e).__name__}: {e}\"  # silent-by-design: same explicit record on the node",
+        "return node"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\callgraph_delta.py",
+      "line": 643,
+      "func": "stats",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\deterministic_patches.py",
+      "line": 179,
+      "func": "verify",
+      "type": "SyntaxError",
+      "body": [
+        "return False, f\"syntax error after BareExcept patch: {exc}\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\deterministic_patches.py",
+      "line": 259,
+      "func": "verify",
+      "type": "SyntaxError",
+      "body": [
+        "return False, f\"syntax error after SQL patch: {exc}\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\deterministic_patches.py",
+      "line": 312,
+      "func": "verify",
+      "type": "SyntaxError",
+      "body": [
+        "return False, f\"syntax error after encoding patch: {exc}\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 288,
+      "func": "_path_allowed",
+      "type": "Exception",
+      "body": [
+        "return False, f\"path check failed: {exc}\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 499,
+      "func": "process_job",
+      "type": "SyntaxError",
+      "body": [
+        "return self._reject(job, f\"candidate syntax invalid before write: {exc}\")"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 590,
+      "func": "status",
+      "type": "json.JSONDecodeError",
+      "body": [
+        "row[\"result\"] = {\"raw\": row[\"result_json\"]}  # silent-by-design: degraded record keeps the raw payload visible to the caller"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\engine.py",
+      "line": 668,
+      "func": "_auto_approve_tier3",
+      "type": "SyntaxError",
+      "body": [
+        "_reality_test_result = f\"FAIL:SyntaxError:{(_se.msg or '')[:80]}\"  # silent-by-design: error recorded in _reality_test_result, enforced fail-closed by the R6 gate below"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\engine.py",
+      "line": 674,
+      "func": "_auto_approve_tier3",
+      "type": "Exception",
+      "body": [
+        "_reality_test_result = f\"FAIL:{type(_ee).__name__}:{str(_ee)[:80]}\"  # silent-by-design: same \u2014 failure drives the R6 rollback gate"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\engine_extensions.py",
+      "line": 279,
+      "func": "rollback",
+      "type": "Exception",
+      "body": [
+        "return {\"ok\": False, \"token\": token, \"file\": file_path,"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\engine_extensions.py",
+      "line": 426,
+      "func": "preview",
+      "type": "Exception",
+      "body": [
+        "return {\"ok\": False, \"diff\": \"\", \"snapshot_path\": \"\","
+      ]
+    },
+    {
+      "file": "scp\\autofix\\engine_extensions.py",
+      "line": 463,
+      "func": "apply_preview",
+      "type": "Exception",
+      "body": [
+        "return {\"ok\": False, \"reason\": f\"apply_preview error: {e}\"}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\path_guard.py",
+      "line": 86,
+      "func": "ensure_within",
+      "type": "(TypeError, ValueError, OSError)",
+      "body": [
+        "return None"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\policy_gate.py",
+      "line": 523,
+      "func": "verify_chain",
+      "type": "Exception",
+      "body": [
+        "return False, f\"verify error: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\policy_gate.py",
+      "line": 482,
+      "func": "verify_chain",
+      "type": "json.JSONDecodeError",
+      "body": [
+        "return False, f\"line {i} not JSON: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\policy_gate.py",
+      "line": 811,
+      "func": "stats",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\policy_gate.py",
+      "line": 869,
+      "func": "appeal_block",
+      "type": "Exception",
+      "body": [
+        "return {\"appeal_id\": \"\", \"status\": \"error\", \"message\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\policy_gate.py",
+      "line": 877,
+      "func": "list_blocks",
+      "type": "Exception",
+      "body": [
+        "return []"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\property_validator.py",
+      "line": 517,
+      "func": "_safe_call",
+      "type": "Exception",
+      "body": [
+        "return False, None, f\"{type(e).__name__}: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\property_validator.py",
+      "line": 515,
+      "func": "_safe_call",
+      "type": "Exception",
+      "body": [
+        "return False, None, f\"TypeError-retry: {e2}\"  # silent-by-design: explicit (False, None, reason) error return \u2014 crash evidence reaches the caller"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\property_validator.py",
+      "line": 573,
+      "func": "_outputs_differ",
+      "type": "Exception",
+      "body": [
+        "return True"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\realtime_verifier.py",
+      "line": 219,
+      "func": "_safe_exec_callable",
+      "type": "Exception",
+      "body": [
+        "return None, e"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\shadow_snapshot.py",
+      "line": 36,
+      "func": "is_pid_alive",
+      "type": "(ProcessLookupError,)",
+      "body": [
+        "return False"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\shadow_snapshot.py",
+      "line": 39,
+      "func": "is_pid_alive",
+      "type": "PermissionError",
+      "body": [
+        "return True"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\shadow_snapshot.py",
+      "line": 43,
+      "func": "is_pid_alive",
+      "type": "OSError",
+      "body": [
+        "return False"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\speculative_prefixer.py",
+      "line": 659,
+      "func": "stats",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\speculative_prefixer.py",
+      "line": 829,
+      "func": "stats",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\type_flow_verifier.py",
+      "line": 390,
+      "func": "_is_none_check",
+      "type": "Exception",
+      "body": [
+        "return None  # silent-by-design: analysis probe \u2014 None means \"no none-check detected\" per the helper contract"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\type_flow_verifier.py",
+      "line": 401,
+      "func": "_snippet",
+      "type": "Exception",
+      "body": [
+        "return \"<call>\"  # silent-by-design: best-effort snippet \u2014 placeholder marks the failed formatting (documented in docstring)"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\type_flow_verifier.py",
+      "line": 419,
+      "func": "_arg_repr",
+      "type": "Exception",
+      "body": [
+        "return \"<err>\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\type_flow_verifier.py",
+      "line": 468,
+      "func": "_arg_literal_type",
+      "type": "Exception",
+      "body": [
+        "return \"\"  # silent-by-design: literal-type probe \u2014 empty tag means \"unknown literal type\" per the helper contract"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\validate_patch.py",
+      "line": 173,
+      "func": "validate_patch",
+      "type": "Exception",
+      "body": [
+        "result.reason = f\"Cannot read file: {e}\"",
+        "return result"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\verify_mixin.py",
+      "line": 72,
+      "func": "_verify_fix",
+      "type": "SyntaxError",
+      "body": [
+        "return False, f\"patched file SyntaxError: {_se}\"  # silent-by-design: explicit (False, reason) error return \u2014 caller rolls back fail-closed"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\verify_mixin.py",
+      "line": 74,
+      "func": "_verify_fix",
+      "type": "Exception",
+      "body": [
+        "return False, f\"parse check failed: {_parse_err}\"  # silent-by-design: same \u2014 error text reaches the caller's rollback path"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\buildmixin.py",
+      "line": 57,
+      "func": "build_module",
+      "type": "Exception",
+      "body": [
+        "return {\"status\": \"blocked\", \"reason\": f\"CapabilityManager error: {_e}\"}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\buildmixin.py",
+      "line": 83,
+      "func": "build_module",
+      "type": "SyntaxError",
+      "body": [
+        "return {\"action\": \"skipped\", \"reason\": f\"generated code SyntaxError: {e}\"}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\buildmixin.py",
+      "line": 208,
+      "func": "_validate_evolved_module",
+      "type": "SyntaxError",
+      "body": [
+        "return False, f\"module SyntaxError: {_se}\"  # silent-by-design: explicit (False, reason) error return \u2014 validation fails closed"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\buildmixin.py",
+      "line": 210,
+      "func": "_validate_evolved_module",
+      "type": "Exception",
+      "body": [
+        "return False, f\"parse check failed: {_parse_err}\"  # silent-by-design: same fail-closed contract"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\buildmixin.py",
+      "line": 230,
+      "func": "_validate_evolved_module",
+      "type": "Exception",
+      "body": [
+        "return False, f\"import setup failed: {_import_err}\"  # silent-by-design: explicit (False, reason) error return \u2014 validation fails closed"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\buildmixin.py",
+      "line": 343,
+      "func": "_wire_module",
+      "type": "Exception",
+      "body": [
+        "return {\"status\": \"blocked\", \"reason\": f\"CapabilityManager error: {_e}\"}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\buildmixin.py",
+      "line": 376,
+      "func": "_wire_module",
+      "type": "Exception",
+      "body": [
+        "return {\"wire_point\": wire_point, \"status\": \"failed\", \"reason\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\buildmixin.py",
+      "line": 373,
+      "func": "_wire_module",
+      "type": "SyntaxError",
+      "body": [
+        "return {\"wire_point\": wire_point, \"status\": \"failed\", \"reason\": f\"syntax error: {e}\"}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\reflectmixin.py",
+      "line": 307,
+      "func": "fix_dead_slm",
+      "type": "Exception",
+      "body": [
+        "return {\"status\": \"blocked\", \"reason\": f\"CapabilityManager error: {_e}\"}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\reflectmixin.py",
+      "line": 374,
+      "func": "fix_dead_slm",
+      "type": "SyntaxError",
+      "body": [
+        "return {\"action\": \"skipped\", \"reason\": f\"patched code SyntaxError: {e}\"}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\evolution_parts\\wiremixin.py",
+      "line": 130,
+      "func": "wire_api",
+      "type": "SyntaxError",
+      "body": [
+        "return {\"action\": \"skipped\", \"reason\": f\"patched code SyntaxError: {e}\"}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\ast_scan.py",
+      "line": 558,
+      "func": "_scan_file",
+      "type": "SyntaxError",
+      "body": [
+        "return [{"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\ast_scan.py",
+      "line": 667,
+      "func": "_v3_update_cache",
+      "type": "Exception",
+      "body": [
+        "pass  # silent-by-design: fail-open \u2014 cache update is best-effort"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\auto_rollback.py",
+      "line": 491,
+      "func": "rollback",
+      "type": "Exception",
+      "body": [
+        "result = {\"ok\": False, \"reason\": f\"rollback crashed: {e}\"}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\blast_radius.py",
+      "line": 155,
+      "func": "visit_Call",
+      "type": "Exception",
+      "body": [
+        "val_dump = \"?\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\post_fix_verify.py",
+      "line": 95,
+      "func": "_try_import_module",
+      "type": "ImportError",
+      "body": [
+        "return False, f\"ImportError: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\post_fix_verify.py",
+      "line": 97,
+      "func": "_try_import_module",
+      "type": "SyntaxError",
+      "body": [
+        "return False, f\"SyntaxError: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\post_fix_verify.py",
+      "line": 76,
+      "func": "_try_import_module",
+      "type": "ValueError",
+      "body": [
+        "return _import_module_by_location(Path(file_path))"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\reality_test.py",
+      "line": 76,
+      "func": "_safe_call",
+      "type": "SystemExit",
+      "body": [
+        "return False, f\"SystemExit({e.code}) \u2014 target function tried to kill the host process\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\reality_test.py",
+      "line": 78,
+      "func": "_safe_call",
+      "type": "KeyboardInterrupt",
+      "body": [
+        "return False, \"KeyboardInterrupt \u2014 target function blocked host interruption\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\reality_test.py",
+      "line": 81,
+      "func": "_safe_call",
+      "type": "BaseException",
+      "body": [
+        "return False, f\"{type(e).__name__}: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\reality_test.py",
+      "line": 106,
+      "func": "_exercise_callable",
+      "type": "(ValueError, TypeError)",
+      "body": [
+        "return {\"callable\": name, \"exercised\": False, \"error\": f\"signature unavailable: {e}\"}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\reality_test.py",
+      "line": 165,
+      "func": "run_reality_test",
+      "type": "SyntaxError",
+      "body": [
+        "return {\"ok\": False, \"status\": \"UNVERIFIED\", \"reason\": f\"Syntax error: {e}\"}"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\reality_test.py",
+      "line": 194,
+      "func": "run_reality_test",
+      "type": "BaseException",
+      "body": [
+        "return {"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\shadow_canary.py",
+      "line": 206,
+      "func": "_ast_parse_test",
+      "type": "SyntaxError",
+      "body": [
+        "return CanaryTestResult("
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\shadow_canary.py",
+      "line": 211,
+      "func": "_ast_parse_test",
+      "type": "Exception",
+      "body": [
+        "return CanaryTestResult("
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\shadow_canary.py",
+      "line": 236,
+      "func": "_import_test",
+      "type": "Exception",
+      "body": [
+        "return CanaryTestResult("
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\shadow_canary.py",
+      "line": 304,
+      "func": "_smoke_call_test",
+      "type": "Exception",
+      "body": [
+        "return CanaryTestResult("
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\shadow_canary.py",
+      "line": 296,
+      "func": "_smoke_call_test",
+      "type": "Exception",
+      "body": [
+        "exc_class = type(e).__name__  # silent-by-design: exception class recorded into smoke output for the original-vs-shadow comparison"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\shadow_canary.py",
+      "line": 332,
+      "func": "_reality_test_wrapper",
+      "type": "ImportError",
+      "body": [
+        "return CanaryTestResult("
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\shadow_canary.py",
+      "line": 338,
+      "func": "_reality_test_wrapper",
+      "type": "Exception",
+      "body": [
+        "return CanaryTestResult("
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\shadow_canary.py",
+      "line": 374,
+      "func": "_property_test_wrapper",
+      "type": "ImportError",
+      "body": [
+        "return CanaryTestResult("
+      ]
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\shadow_canary.py",
+      "line": 380,
+      "func": "_property_test_wrapper",
+      "type": "Exception",
+      "body": [
+        "return CanaryTestResult("
+      ]
+    },
+    {
+      "file": "scp\\autofix\\scanners\\hypothesis_scanner.py",
+      "line": 75,
+      "func": "_hypothesis_available",
+      "type": "ImportError",
+      "body": [
+        "return False"
+      ]
+    },
+    {
+      "file": "scp\\autofix\\scanners\\hypothesis_scanner.py",
+      "line": 295,
+      "func": "_test_function_with_hypothesis",
+      "type": "ImportError",
+      "body": [
+        "return True, \"hypothesis not installed, skip\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\scanners\\hypothesis_scanner.py",
+      "line": 301,
+      "func": "_test_function_with_hypothesis",
+      "type": "Exception",
+      "body": [
+        "return True, f\"module import failed (non-fatal): {type(e).__name__}: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\scanners\\hypothesis_scanner.py",
+      "line": 318,
+      "func": "_test_function_with_hypothesis",
+      "type": "Exception",
+      "body": [
+        "return True, f\"strategy eval failed (skip): {e}\""
+      ]
+    },
+    {
+      "file": "scp\\autofix\\scanners\\hypothesis_scanner.py",
+      "line": 347,
+      "func": "_test_function_with_hypothesis",
+      "type": "Exception",
+      "body": [
+        "msg = failure_msg_holder[0] if failure_msg_holder else str(e)",
+        "return False, f\"property test failed: {msg[:300]}\""
+      ]
+    },
+    {
+      "file": "scp\\benchmark\\run_baseline.py",
+      "line": 126,
+      "func": "call_openrouter",
+      "type": "Exception",
+      "body": [
+        "return {\"answer\": \"\", \"latency_ms\": (time.time() - t0) * 1000, \"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\benchmark\\run_benchmark.py",
+      "line": 61,
+      "func": "ask_scp",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e), \"verdict\": \"ERROR\", \"final_answer\": \"\", \"confidence\": 0}"
+      ]
+    },
+    {
+      "file": "scp\\core\\agent_autofix_adapter.py",
+      "line": 216,
+      "func": "propose",
+      "type": "Exception",
+      "body": [
+        "terminal, ledger_ok = self.ledger.finish(run, \"INTERNAL_FAILED\", error=exc, result={\"verdict\": \"UNKNOWN\"})",
+        "return {\"success\": False, \"status\": \"INTERNAL_FAILED\", \"run_id\": run.run_id, \"trace_id\": run.trace_id, \"ledger_status\": \"OK\" if ledger_ok else \"DB_WRITE_FAILED\", \"terminal_status\": terminal, \"error\": self._bounded(exc, 300)}"
+      ]
+    },
+    {
+      "file": "scp\\core\\agent_autofix_adapter.py",
+      "line": 251,
+      "func": "_evidence_result",
+      "type": "Exception",
+      "body": [
+        "rollback[\"error\"] = self._bounded(exc, 250)"
+      ]
+    },
+    {
+      "file": "scp\\core\\agent_autofix_adapter.py",
+      "line": 320,
+      "func": "resume",
+      "type": "Exception",
+      "body": [
+        "terminal, ledger_ok = self.ledger.finish(run, \"INTERNAL_FAILED\", error=exc, proposal_id=proposal_id)",
+        "return {\"success\": False, \"status\": \"RESUME_FAILED\", \"proposal_id\": proposal_id, \"run_id\": run.run_id, \"trace_id\": run.trace_id, \"ledger_status\": \"OK\" if ledger_ok else \"DB_WRITE_FAILED\", \"terminal_status\": terminal, \"error\": self._bounded(exc, 300)}"
+      ]
+    },
+    {
+      "file": "scp\\core\\agent_orchestrator.py",
+      "line": 192,
+      "func": "propose",
+      "type": "Exception",
+      "body": [
+        "terminal, ledger_ok = self.ledger.finish(run, \"INTERNAL_FAILED\", error=exc, orchestration_status=\"PLANNING_FAILED\")",
+        "return {\"success\": False, \"status\": \"INTERNAL_FAILED\", \"agent_run_id\": run.run_id, \"trace_id\": run.trace_id, \"ledger_status\": \"OK\" if ledger_ok else \"DB_WRITE_FAILED\", \"terminal_status\": terminal, \"error\": self._bounded(exc, 300)}"
+      ]
+    },
+    {
+      "file": "scp\\core\\agent_orchestrator.py",
+      "line": 237,
+      "func": "run",
+      "type": "Exception",
+      "body": [
+        "terminal, ledger_ok = self.ledger.finish(run, \"INTERNAL_FAILED\", error=exc, plan_id=plan_id, orchestration_status=\"FAILED\")",
+        "return {\"success\": False, \"status\": \"INTERNAL_FAILED\", \"agent_run_id\": agent_run_id or run.run_id, \"trace_id\": run.trace_id, \"ledger_status\": \"OK\" if ledger_ok else \"DB_WRITE_FAILED\", \"terminal_status\": terminal, \"error\": self._bounded(exc, 300)}"
+      ]
+    },
+    {
+      "file": "scp\\core\\anchor.py",
+      "line": 152,
+      "func": "verify",
+      "type": "Exception",
+      "body": [
+        "return {\"match\": False, \"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\core\\bounded_evolution.py",
+      "line": 183,
+      "func": "run_bounded_evolution",
+      "type": "queue.Empty",
+      "body": [
+        "return finalize({"
+      ]
+    },
+    {
+      "file": "scp\\core\\capability_token.py",
+      "line": 84,
+      "func": "verify_token",
+      "type": "Exception",
+      "body": [
+        "return {\"valid\": False, \"error\": \"Invalid payload\"}"
+      ]
+    },
+    {
+      "file": "scp\\core\\code_evolution_agent.py",
+      "line": 398,
+      "func": "_run_tests",
+      "type": "Exception",
+      "body": [
+        "return {\"passed\": False, \"output\": \"\", \"failures\": str(exc)}"
+      ]
+    },
+    {
+      "file": "scp\\core\\dependency_resolver.py",
+      "line": 76,
+      "func": "resolve",
+      "type": "ImportError",
+      "body": [
+        "pass"
+      ]
+    },
+    {
+      "file": "scp\\core\\free_discovery_scheduler.py",
+      "line": 74,
+      "func": "parse_interval_seconds",
+      "type": "(TypeError, ValueError)",
+      "body": [
+        "return DEFAULT_DISCOVERY_INTERVAL_SECONDS"
+      ]
+    },
+    {
+      "file": "scp\\core\\free_discovery_scheduler.py",
+      "line": 90,
+      "func": "jittered_interval",
+      "type": "Exception",
+      "body": [
+        "return base"
+      ]
+    },
+    {
+      "file": "scp\\core\\free_discovery_scheduler.py",
+      "line": 236,
+      "func": "stop",
+      "type": "asyncio.CancelledError",
+      "body": [
+        "pass  # h\u1eadu qu\u1ea3 mong mu\u1ed1n c\u1ee7a cancel()"
+      ]
+    },
+    {
+      "file": "scp\\core\\math_evaluator.py",
+      "line": 428,
+      "func": "verify_math",
+      "type": "MathEvalError",
+      "body": [
+        "return (\"UNKNOWN\", None, f\"L\u1ed7i evaluate: {e}\")"
+      ]
+    },
+    {
+      "file": "scp\\core\\math_evaluator.py",
+      "line": 430,
+      "func": "verify_math",
+      "type": "Exception",
+      "body": [
+        "return (\"UNKNOWN\", None, f\"L\u1ed7i kh\u00f4ng x\u00e1c \u0111\u1ecbnh: {e}\")"
+      ]
+    },
+    {
+      "file": "scp\\core\\multi_source_verifier.py",
+      "line": 668,
+      "func": "_check_single_source_async",
+      "type": "Exception",
+      "body": [
+        "return {\"verified\": False, \"contradicted\": False, \"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 328,
+      "func": "get_conclusion_with_evidences",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\core\\phase0.py",
+      "line": 344,
+      "func": "get_stats",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\core\\trace_store.py",
+      "line": 123,
+      "func": "_parse",
+      "type": "Exception",
+      "body": [
+        "return v"
+      ]
+    },
+    {
+      "file": "scp\\core\\partition\\archive.py",
+      "line": 262,
+      "func": "get_stats",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\data_sources\\live_knowledge.py",
+      "line": 661,
+      "func": "get_cache_stats",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\governance\\drift_guard.py",
+      "line": 143,
+      "func": "inspect_change",
+      "type": "Exception",
+      "body": [
+        "return DriftResult("
+      ]
+    },
+    {
+      "file": "scp\\hands\\goal_parser.py",
+      "line": 160,
+      "func": "parse",
+      "type": "(TypeError, ValueError, KeyError)",
+      "body": [
+        "return {\"success\": False, \"error\": str(exc), \"lineage\": lineage, \"durationMs\": round((time.perf_counter() - started) * 1000, 2), \"errors\": errors, \"proposalOnly\": True}"
+      ]
+    },
+    {
+      "file": "scp\\hands\\hands_executor.py",
+      "line": 366,
+      "func": "execute",
+      "type": "Exception",
+      "body": [
+        "result = {\"success\": False, \"error\": f\"Executor error: {exc}\", \"verification\": {\"passed\": False}}"
+      ]
+    },
+    {
+      "file": "scp\\hands\\planner.py",
+      "line": 550,
+      "func": "_run_plan_locked",
+      "type": "Exception",
+      "body": [
+        "last_result = {\"success\": False, \"error\": f\"Planner executor error: {exc}\", \"verification\": {\"passed\": False}}"
+      ]
+    },
+    {
+      "file": "scp\\hands\\planner.py",
+      "line": 684,
+      "func": "_run_dag_step",
+      "type": "Exception",
+      "body": [
+        "last_result = {\"success\": False, \"error\": f\"Planner executor error: {exc}\", \"verification\": {\"passed\": False}}"
+      ]
+    },
+    {
+      "file": "scp\\hands\\planner.py",
+      "line": 940,
+      "func": "journal_integrity",
+      "type": "OSError",
+      "body": [
+        "return {\"valid\": False, \"checked\": 0, \"legacy\": 0, \"errors\": [str(exc)]}"
+      ]
+    },
+    {
+      "file": "scp\\hands\\task_kernel_bridge.py",
+      "line": 574,
+      "func": "execute",
+      "type": "Exception",
+      "body": [
+        "return {"
+      ]
+    },
+    {
+      "file": "scp\\knowledge\\promotion_authority.py",
+      "line": 64,
+      "func": "assess",
+      "type": "KeyError",
+      "body": [
+        "return PromotionDecision("
+      ]
+    },
+    {
+      "file": "scp\\knowledge\\promotion_contract.py",
+      "line": 61,
+      "func": "evaluate_promotion",
+      "type": "ValueError",
+      "body": [
+        "return PromotionDecision("
+      ]
+    },
+    {
+      "file": "scp\\llm_gateway\\client.py",
+      "line": 62,
+      "func": "_parse_positive_seconds",
+      "type": "(TypeError, ValueError)",
+      "body": [
+        "return default"
+      ]
+    },
+    {
+      "file": "scp\\llm_gateway\\client.py",
+      "line": 408,
+      "func": "_call_model_once",
+      "type": "EgressDeniedError",
+      "body": [
+        "return None, \"egress_denied\""
+      ]
+    },
+    {
+      "file": "scp\\llm_gateway\\client.py",
+      "line": 436,
+      "func": "_call_model_once",
+      "type": "Exception",
+      "body": [
+        "return None, str(e)"
+      ]
+    },
+    {
+      "file": "scp\\mcp_server\\server.py",
+      "line": 223,
+      "func": "_handle_line",
+      "type": "json.JSONDecodeError",
+      "body": [
+        "return self._error_response(None, _PARSE_ERROR, \"Parse error\")"
+      ]
+    },
+    {
+      "file": "scp\\mcp_server\\server.py",
+      "line": 367,
+      "func": "_tool_hands_plan",
+      "type": "KeyError",
+      "body": [
+        "return {\"success\": False, \"action\": action, \"error\": str(exc), \"allowed\": False}"
+      ]
+    },
+    {
+      "file": "scp\\meta\\calibration_engine.py",
+      "line": 477,
+      "func": "recompute_factors",
+      "type": "Exception",
+      "body": [
+        "results[domain] = {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\meta\\calibration_engine.py",
+      "line": 507,
+      "func": "get_stats",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\meta\\kb_evolve.py",
+      "line": 278,
+      "func": "stats",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\meta\\policy_applier.py",
+      "line": 379,
+      "func": "get_stats",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\meta\\principle_rules.py",
+      "line": 441,
+      "func": "get_stats",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\meta\\reverify_scheduler.py",
+      "line": 277,
+      "func": "get_stats",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\meta\\verdict_predictor.py",
+      "line": 348,
+      "func": "get_stats",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\meta\\why_engine_parts\\whyengine.py",
+      "line": 433,
+      "func": "get_stats",
+      "type": "Exception",
+      "body": [
+        "return {'error': str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\observability\\otel.py",
+      "line": 27,
+      "func": "configure_fastapi_otel",
+      "type": "ImportError",
+      "body": [
+        "return {\"enabled\": False, \"reason\": f\"OTel packages unavailable: {type(exc).__name__}\"}"
+      ]
+    },
+    {
+      "file": "scp\\observability\\otel.py",
+      "line": 46,
+      "func": "configure_fastapi_otel",
+      "type": "Exception",
+      "body": [
+        "return {\"enabled\": False, \"reason\": f\"OTel setup failed: {type(exc).__name__}\"}"
+      ]
+    },
+    {
+      "file": "scp\\pc_control\\pc_controller.py",
+      "line": 291,
+      "func": "_run_sync",
+      "type": "subprocess.TimeoutExpired",
+      "body": [
+        "return {\"success\": False, \"returnCode\": None, \"stdout\": str(exc.stdout or \"\")[-5000:], \"stderr\": \"timeout\", \"durationMs\": round((time.perf_counter() - started) * 1000)}"
+      ]
+    },
+    {
+      "file": "scp\\pc_control\\pc_controller.py",
+      "line": 293,
+      "func": "_run_sync",
+      "type": "OSError",
+      "body": [
+        "return {\"success\": False, \"returnCode\": None, \"stdout\": \"\", \"stderr\": str(exc), \"durationMs\": round((time.perf_counter() - started) * 1000)}"
+      ]
+    },
+    {
+      "file": "scp\\pc_control\\pc_controller.py",
+      "line": 355,
+      "func": "read_file",
+      "type": "OSError",
+      "body": [
+        "result = {\"success\": False, \"path\": str(target), \"error\": str(exc), \"tokenId\": token_obj.token_id}"
+      ]
+    },
+    {
+      "file": "scp\\prediction\\predictive.py",
+      "line": 930,
+      "func": "verify_pending",
+      "type": "Exception",
+      "body": [
+        "return {\"error\": str(e), \"verified\": 0}"
+      ]
+    },
+    {
+      "file": "scp\\prediction\\predictive.py",
+      "line": 956,
+      "func": "_compare_prediction",
+      "type": "Exception",
+      "body": [
+        "return (False, \"compare_error\", str(e))"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\judge.py",
+      "line": 41,
+      "func": "_run_crosscheck_sync",
+      "type": "RuntimeError",
+      "body": [
+        "return asyncio.run(cross_verify(question, ai_answer, context))"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\judge.py",
+      "line": 50,
+      "func": "_worker",
+      "type": "BaseException",
+      "body": [
+        "box[\"error\"] = exc"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\judge.py",
+      "line": 96,
+      "func": "domain_experts",
+      "type": "Exception",
+      "body": [
+        "pass"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\judge.py",
+      "line": 93,
+      "func": "domain_experts",
+      "type": "Exception",
+      "body": [
+        "pass"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\judge.py",
+      "line": 341,
+      "func": "judge_async",
+      "type": "Exception",
+      "body": [
+        "semantic = await _llm_judge_async(question, ai_answer, context)"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\multi_llm_crosscheck.py",
+      "line": 104,
+      "func": "cross_verify",
+      "type": "Exception",
+      "body": [
+        "attempt = {"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\notifications.py",
+      "line": 45,
+      "func": null,
+      "type": "ImportError",
+      "body": [
+        "_SEVERITY_ORDER_RESOLVED = {"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\question_router.py",
+      "line": 132,
+      "func": "t2_min_confidence",
+      "type": "(TypeError, ValueError)",
+      "body": [
+        "return DEFAULT_MIN_CONFIDENCE"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\question_router.py",
+      "line": 414,
+      "func": "classify_l2",
+      "type": "Exception",
+      "body": [
+        "return _l2_failsafe(question, domain, exc)"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\question_router.py",
+      "line": 403,
+      "func": "classify_l2",
+      "type": "RuntimeError",
+      "body": [
+        "loop = None"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\question_router.py",
+      "line": 434,
+      "func": "classify_l2_async",
+      "type": "Exception",
+      "body": [
+        "return _l2_failsafe(question, domain, exc)"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\question_router.py",
+      "line": 786,
+      "func": "_extract_readable",
+      "type": "(TypeError, ValueError)",
+      "body": [
+        "data = None"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\slm_base.py",
+      "line": 118,
+      "func": "_cache_key",
+      "type": "ImportError",
+      "body": [
+        "return hashlib.sha256(question.encode()).hexdigest()"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\slm_base.py",
+      "line": 130,
+      "func": "_keyword_match",
+      "type": "ImportError",
+      "body": [
+        "q_lower = question.lower()",
+        "return any(kw.lower() in q_lower for kw in keywords if kw)"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\timing_and_restart.py",
+      "line": 123,
+      "func": "check_timeout",
+      "type": "(TypeError, ValueError)",
+      "body": [
+        "return"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\engine_parts\\direct_api_verifier.py",
+      "line": 113,
+      "func": "verify",
+      "type": "Exception",
+      "body": [
+        "return {\"verdict\": \"UNKNOWN\","
+      ]
+    },
+    {
+      "file": "scp\\runtime\\engine_parts\\direct_api_verifier.py",
+      "line": 219,
+      "func": "_verify_geography",
+      "type": "Exception",
+      "body": [
+        "return {\"verdict\": \"UNKNOWN\","
+      ]
+    },
+    {
+      "file": "scp\\runtime\\engine_parts\\direct_api_verifier.py",
+      "line": 271,
+      "func": "_verify_chemistry",
+      "type": "Exception",
+      "body": [
+        "return {\"verdict\": \"UNKNOWN\","
+      ]
+    },
+    {
+      "file": "scp\\runtime\\engine_parts\\direct_api_verifier.py",
+      "line": 343,
+      "func": "_verify_finance",
+      "type": "Exception",
+      "body": [
+        "return {\"verdict\": \"UNKNOWN\","
+      ]
+    },
+    {
+      "file": "scp\\runtime\\engine_parts\\direct_api_verifier.py",
+      "line": 329,
+      "func": "_verify_finance",
+      "type": "ValueError",
+      "body": [
+        "return {\"verdict\": \"UNKNOWN\","
+      ]
+    },
+    {
+      "file": "scp\\runtime\\engine_parts\\direct_api_verifier.py",
+      "line": 409,
+      "func": "_verify_general",
+      "type": "Exception",
+      "body": [
+        "return {\"verdict\": \"UNKNOWN\","
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\humanities.py",
+      "line": 788,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Wikidata fetch error: {e}\"",
+        "confidence = 0.0"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\lifestyle.py",
+      "line": 120,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"All sources failed: {e}, {e2}\"",
+        "confidence = 0.0"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\lifestyle.py",
+      "line": 187,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Bible API error: {e}\"",
+        "confidence = 0.0"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\lifestyle.py",
+      "line": 260,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"MealDB error: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\lifestyle.py",
+      "line": 284,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"CocktailDB error: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\lifestyle.py",
+      "line": 309,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Fruityvice error: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\lifestyle.py",
+      "line": 378,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Geocoding error: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\lifestyle.py",
+      "line": 474,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Holiday API error: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\lifestyle.py",
+      "line": 535,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Cat facts error: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\lifestyle.py",
+      "line": 554,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Dog facts error: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\lifestyle.py",
+      "line": 614,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Advice API error: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\lifestyle.py",
+      "line": 673,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Chuck Norris API error: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\math_biology.py",
+      "line": 329,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"PokeAPI error: {e}\"",
+        "confidence = 0.0"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\math_biology.py",
+      "line": 357,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Fruityvice error: {e}\"",
+        "confidence = 0.0"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\misc.py",
+      "line": 268,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Book lookup error: {e}\"",
+        "confidence = 0.0"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\misc.py",
+      "line": 287,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Book lookup error: {e}\"",
+        "confidence = 0.0"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\misc.py",
+      "line": 361,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"SWAPI error: {e}\"",
+        "confidence = 0.0"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\misc.py",
+      "line": 382,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Book cross-verify error: {e}\"",
+        "confidence = 0.0"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\misc.py",
+      "line": 414,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"TVMaze error: {e}\"",
+        "confidence = 0.0"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\misc.py",
+      "line": 434,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Wiki error: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\misc.py",
+      "line": 649,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "reasoning = f\"Cross-verify + wiki fallback both failed: {e}, {e2}\"",
+        "confidence = 0.0"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\numeric_data.py",
+      "line": 42,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "cached = None"
+      ]
+    },
+    {
+      "file": "scp\\runtime\\experts\\numeric_data.py",
+      "line": 325,
+      "func": "predict",
+      "type": "Exception",
+      "body": [
+        "answer = \"\"",
+        "confidence = 0.0",
+        "reasoning = f\"L\u1ed7i evaluate: {e}\"",
+        "evidence = {\"expr\": expr, \"error\": str(e)}"
+      ]
+    },
+    {
+      "file": "scp\\sandbox_evaluator\\evaluator.py",
+      "line": 235,
+      "func": "_setup_workspace",
+      "type": "OSError",
+      "body": [
+        "return _fail(f\"setup:mkdtemp:{exc}\", started=started)"
+      ]
+    },
+    {
+      "file": "scp\\sandbox_evaluator\\evaluator.py",
+      "line": 262,
+      "func": "_setup_workspace",
+      "type": "OSError",
+      "body": [
+        "return _fail(f\"setup:write:{safe}:{exc}\", started=started, workspace=workspace, keep=keep)"
+      ]
+    },
+    {
+      "file": "scp\\sandbox_evaluator\\evaluator.py",
+      "line": 291,
+      "func": "_setup_workspace",
+      "type": "OSError",
+      "body": [
+        "return _fail(f\"setup:write_test:{base}:{exc}\", started=started, workspace=workspace, keep=keep)"
+      ]
+    },
+    {
+      "file": "scp\\sandbox_evaluator\\evaluator.py",
+      "line": 304,
+      "func": "_setup_workspace",
+      "type": "OSError",
+      "body": [
+        "return _fail(f\"setup:conftest:{exc}\", started=started, workspace=workspace, keep=keep)"
+      ]
+    },
+    {
+      "file": "scp\\sandbox_evaluator\\evaluator.py",
+      "line": 335,
+      "func": "evaluate",
+      "type": "(TypeError, ValueError)",
+      "body": [
+        "return _fail(f\"setup:bad_timeout:{raw_timeout!r}\", started=started)"
+      ]
+    },
+    {
+      "file": "scp\\sandbox_evaluator\\evaluator.py",
+      "line": 374,
+      "func": "evaluate",
+      "type": "OSError",
+      "body": [
+        "result = _fail(f\"setup:subprocess_spawn:{exc}\", started=started, workspace=workspace)",
+        "return EvalResult("
+      ]
+    },
+    {
+      "file": "scp\\sandbox_evaluator\\evaluator.py",
+      "line": 434,
+      "func": "build_patch_target",
+      "type": "ValueError",
+      "body": [
+        "relname = None"
+      ]
+    },
+    {
+      "file": "scp\\security\\autonomous_governor.py",
+      "line": 43,
+      "func": "evaluate_and_grant_step",
+      "type": "Exception",
+      "body": [
+        "return False, None, f\"Path resolution failed: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\security\\autonomous_governor.py",
+      "line": 71,
+      "func": "evaluate_and_grant_step",
+      "type": "Exception",
+      "body": [
+        "return False, None, f\"Failed to issue token: {e}\""
+      ]
+    },
+    {
+      "file": "scp\\security\\egress_static_scan.py",
+      "line": 236,
+      "func": "_verdict_candidates",
+      "type": "Exception",
+      "body": [
+        "receiver_src = \"<unparseable>\""
+      ]
+    },
+    {
+      "file": "scp\\security\\quorum_why.py",
+      "line": 80,
+      "func": "review",
+      "type": "Exception",
+      "body": [
+        "return self._human_review(f\"provider_error:{task}:{type(exc).__name__}\")"
+      ]
+    },
+    {
+      "file": "scp\\security\\quorum_why.py",
+      "line": 95,
+      "func": "review",
+      "type": "Exception",
+      "body": [
+        "return self._human_review(f\"attack_error:{attacker}:{type(exc).__name__}\")"
+      ]
+    },
+    {
+      "file": "scp\\security\\url_safety.py",
+      "line": 82,
+      "func": "_is_loopback_host",
+      "type": "ValueError",
+      "body": [
+        "return False"
+      ]
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 758,
+      "func": "renew_lease",
+      "type": "(TypeError, ValueError)",
+      "body": [
+        "return False"
+      ]
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 763,
+      "func": "renew_lease",
+      "type": "(TypeError, ValueError)",
+      "body": [
+        "return False"
+      ]
+    },
+    {
+      "file": "scp\\web_control\\ai_orchestrator.py",
+      "line": 83,
+      "func": "cross_verify",
+      "type": "Exception",
+      "body": [
+        "results[ai_name] = {\"success\": False, \"error\": str(exc)}"
+      ]
+    },
+    {
+      "file": "scp\\web_control\\playwright_backend.py",
+      "line": 93,
+      "func": "_clamp_timeout_seconds",
+      "type": "ValueError",
+      "body": [
+        "value = DEFAULT_TIMEOUT_SECONDS"
+      ]
+    },
+    {
+      "file": "scp\\web_control\\playwright_backend.py",
+      "line": 211,
+      "func": "search_public",
+      "type": "(ValueError, RuntimeError, TimeoutError)",
+      "body": [
+        "return {"
+      ]
+    }
+  ]
+}

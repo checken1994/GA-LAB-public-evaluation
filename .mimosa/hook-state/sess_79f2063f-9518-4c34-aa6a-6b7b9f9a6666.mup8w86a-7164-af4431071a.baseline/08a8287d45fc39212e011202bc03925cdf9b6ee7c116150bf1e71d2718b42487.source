@@ -1,0 +1,72 @@
+# SCP — requirements.lock.txt [A3 supply-chain lockfile]
+#
+# LÀ GÌ: full `pip freeze` từ container scp-scp-api-1 (image build từ
+# scp/requirements.txt đã pin 100% `==`). Ghi toàn bộ transitive deps ở
+# version ĐANG CHẠY THẬT để build reproducible (CWE-1357 / SLSA).
+#
+# CÁCH DÙNG:
+#   pip install -r scp/requirements.lock.txt          # install đúng môi trường lock
+#   docker compose -f compose.yml build scp-api && \
+#     docker compose -f compose.yml up -d scp-api     # rebuild từ requirements.txt
+#   docker compose -f compose.yml exec scp-api pip freeze > scp/requirements.lock.txt
+#                                                     # re-lock sau khi đổi deps
+#
+# LƯU Ý: requirements.txt = source of truth cho direct deps (có comment lý do);
+# lockfile = snapshot full env. Khi nâng cấp deps: sửa requirements.txt →
+# rebuild → re-freeze lockfile (không sửa lockfile tay).
+# Freeze tại: 2026-09-12, commit A3, container scp-scp-api-1 (cryptography==49.0.0).
+
+annotated-doc==0.0.5
+annotated-types==0.8.0
+anyio==4.13.0
+asgiref==3.12.1
+bandit==1.9.4
+certifi==2025.8.3
+cffi==2.1.1
+charset-normalizer==3.4.3
+click==8.5.0
+cryptography==49.0.0
+defusedxml==0.7.1
+Deprecated==1.3.1
+fastapi==0.128.0
+h11==0.16.0
+httpcore==1.0.9
+httptools==0.8.0
+httpx==0.28.1
+idna==3.11
+limits==5.8.0
+markdown-it-py==4.2.0
+mdurl==0.1.2
+opentelemetry-api==1.44.0
+opentelemetry-instrumentation==0.65b0
+opentelemetry-instrumentation-asgi==0.65b0
+opentelemetry-instrumentation-fastapi==0.65b0
+opentelemetry-sdk==1.44.0
+opentelemetry-semantic-conventions==0.65b0
+opentelemetry-util-http==0.65b0
+packaging==26.3
+prometheus_client==0.26.0
+pycparser==3.0
+pydantic==2.13.4
+pydantic-settings==2.14.2
+pydantic_core==2.46.4
+Pygments==2.21.0
+PyJWT==2.13.0
+python-dotenv==1.0.1
+PyYAML==6.0.3
+requests==2.32.5
+rich==15.0.0
+slowapi==0.1.10
+sniffio==1.3.0
+starlette==0.50.0
+stevedore==5.9.1
+tenacity==9.0.0
+typing-inspection==0.4.4
+typing_extensions==4.16.0
+urllib3==2.7.0
+uv==0.12.10
+uvicorn==0.44.0
+uvloop==0.22.1
+watchfiles==1.2.0
+websockets==17.1
+wrapt==2.4.1

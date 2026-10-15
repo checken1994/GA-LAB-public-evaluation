@@ -1,0 +1,89 @@
+# SCP — requirements.lock.txt [A3 supply-chain lockfile]
+#
+# LÀ GÌ: full `pip freeze` từ container scp-scp-api-1 (image build từ
+# scp/requirements.txt đã pin 100% `==`). Ghi toàn bộ transitive deps ở
+# version ĐANG CHẠY THẬT để build reproducible (CWE-1357 / SLSA).
+#
+# CÁCH DÙNG:
+#   pip install -r scp/requirements.lock.txt          # install đúng môi trường lock
+#   docker compose -f compose.yml build scp-api && \
+#     docker compose -f compose.yml up -d scp-api     # rebuild từ requirements.txt
+#   docker compose -f compose.yml exec scp-api pip freeze > scp/requirements.lock.txt
+#                                                     # re-lock sau khi đổi deps
+#
+# LƯU Ý: requirements.txt = source of truth cho direct deps (có comment lý do);
+# lockfile = snapshot full env. Khi nâng cấp deps: sửa requirements.txt →
+# rebuild → re-freeze lockfile (không sửa lockfile tay).
+# Freeze tại: 2026-10-02 01:40 local, container scp-scp-api-1 (image scp-api:local
+# build từ requirements.txt [AUDIT-R2 2026-10-01] trên commit 583edc5a).
+# [AUDIT-R2] Security pins: PyJWT 2.15.0, anyio 4.14.2, urllib3 2.8.0,
+# cryptography 50.0.0, starlette 1.3.1, fastapi 0.142.2, idna 3.15,
+# python-dotenv 1.2.2, requests 2.33.0 — đối chiếu khớp pip freeze live.
+# [AUDIT-R2 2026-10-02] PyJWT 2.14.0 -> 2.15.0 (PYSEC-2026-4141, pip-audit).
+
+annotated-doc==0.0.5
+annotated-types==0.8.0
+anyio==4.14.2
+asgiref==3.12.1
+bandit==1.9.4
+beautifulsoup4==4.15.0
+certifi==2025.8.3
+cffi==2.1.1
+charset-normalizer==3.4.3
+click==8.5.0
+cryptography==50.0.0
+defusedxml==0.7.1
+Deprecated==3.0.0
+fastapi==0.142.2
+googleapis-common-protos==1.75.5
+h11==0.16.0
+httpcore==1.0.9
+httptools==0.8.0
+httpx==0.28.1
+idna==3.15
+limits==5.8.0
+markdown-it-py==4.2.0
+mdurl==0.1.2
+numpy==2.5.3
+opentelemetry-api==1.44.0
+opentelemetry-exporter-otlp-proto-common==1.44.0
+opentelemetry-exporter-otlp-proto-http==1.44.0
+opentelemetry-instrumentation==0.65b0
+opentelemetry-instrumentation-asgi==0.65b0
+opentelemetry-instrumentation-fastapi==0.65b0
+opentelemetry-proto==1.44.0
+opentelemetry-sdk==1.44.0
+opentelemetry-semantic-conventions==0.65b0
+opentelemetry-util-http==0.65b0
+packaging==26.3
+prometheus_client==0.26.0
+protobuf==7.36.2
+psutil==7.2.2
+psycopg==3.3.5
+psycopg-binary==3.3.5
+pycparser==3.0
+pydantic==2.13.4
+pydantic-settings==2.14.2
+pydantic_core==2.46.4
+Pygments==2.21.0
+PyJWT==2.15.0
+python-dotenv==1.2.2
+PyYAML==6.0.3
+requests==2.33.0
+rich==15.0.0
+slowapi==0.1.10
+sniffio==1.3.0
+soupsieve==2.10
+starlette==1.3.1
+stevedore==5.9.1
+tenacity==9.0.0
+typing-inspection==0.4.4
+typing_extensions==4.16.0
+Unidecode==1.3.8
+urllib3==2.8.0
+uv==0.12.21
+uvicorn==0.44.0
+uvloop==0.23.0
+watchfiles==1.3.0
+websockets==17.1
+wrapt==2.5.0

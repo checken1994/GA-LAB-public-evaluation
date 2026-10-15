@@ -1,0 +1,12 @@
+{
+  "duplicate_elifs": [],
+  "shadowed_vars": [],
+  "off_by_one": [
+    {
+      "file": "scp\\runtime\\question_router.py",
+      "line": 854,
+      "func": "_trim",
+      "code": "return text[: limit - 1].rstrip() + \"\u2026\""
+    }
+  ]
+}

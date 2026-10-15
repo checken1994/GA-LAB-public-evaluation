@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "posttooluse-2860e78f04bac72b8f085a85ff661910",
+  "runId": null,
+  "runStatus": "completed",
+  "coverage": {
+    "status": "complete",
+    "reasons": []
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "PostToolUse"
+  },
+  "revision": null,
+  "diffHash": null,
+  "rulesVersion": null,
+  "sessionHash": "4b28d25ef066705756f9a0805c3245d77d2f52a2b301d9d315602e1f23d459c9",
+  "reportRef": null,
+  "events": [
+    {
+      "eventId": "hook-f81a4a2d6c751a20af44a0ac419857bc",
+      "findingId": "mimosa-5a1d06021a5d4047cbff101f",
+      "type": "static_fix_verified",
+      "at": "2026-09-30T20:28:51.130Z",
+      "identity": {
+        "projectRelativeFile": "tools/anthropic_proxy.js",
+        "ruleId": "security",
+        "codeEvidenceHash": "c2f371727809a9961c7f7e3ddeaa19481e29c63ccd3d4bdff3f1dd95fe641145",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 70,
+      "endLine": 70,
+      "reasonCode": "static_rescan_passed",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "static_scan",
+        "boundary": "observed",
+        "producer": "deterministic",
+        "evidenceHash": "c2f371727809a9961c7f7e3ddeaa19481e29c63ccd3d4bdff3f1dd95fe641145"
+      },
+      "sequence": 0
+    }
+  ],
+  "observedFindingIds": [],
+  "verifiedFiles": [],
+  "recordedAt": "2026-09-30T20:28:51.536Z"
+}

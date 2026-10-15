@@ -1,0 +1,376 @@
+{
+  "swallowed_exceptions": [
+    {
+      "file": "scp\\ask_kernel_adapter.py",
+      "line": 928,
+      "type": "asyncio.TimeoutError",
+      "snippet": "            except asyncio.TimeoutError:"
+    },
+    {
+      "file": "scp\\autofix\\path_guard.py",
+      "line": 86,
+      "type": "(TypeError, ValueError, OSError)",
+      "snippet": "    except (TypeError, ValueError, OSError):"
+    },
+    {
+      "file": "scp\\autofix\\shadow_snapshot.py",
+      "line": 36,
+      "type": "(ProcessLookupError,)",
+      "snippet": "    except (ProcessLookupError,):"
+    },
+    {
+      "file": "scp\\autofix\\shadow_snapshot.py",
+      "line": 43,
+      "type": "OSError",
+      "snippet": "    except OSError:"
+    },
+    {
+      "file": "scp\\autofix\\type_flow_verifier.py",
+      "line": 390,
+      "type": "Exception",
+      "snippet": "        except Exception:  # noqa: BLE001"
+    },
+    {
+      "file": "scp\\autofix\\type_flow_verifier.py",
+      "line": 468,
+      "type": "Exception",
+      "snippet": "        except Exception:  # noqa: BLE001"
+    },
+    {
+      "file": "scp\\autofix\\runner_phases\\ast_scan.py",
+      "line": 667,
+      "type": "Exception",
+      "snippet": "        except Exception:"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\hypothesis_scanner.py",
+      "line": 75,
+      "type": "ImportError",
+      "snippet": "    except ImportError:"
+    },
+    {
+      "file": "scp\\core\\dependency_resolver.py",
+      "line": 76,
+      "type": "ImportError",
+      "snippet": "        except ImportError:  # silent-by-design: absence is explicitly recorded in report.missing_imports."
+    },
+    {
+      "file": "scp\\core\\free_discovery_scheduler.py",
+      "line": 236,
+      "type": "asyncio.CancelledError",
+      "snippet": "        except asyncio.CancelledError:"
+    },
+    {
+      "file": "scp\\runtime\\judge.py",
+      "line": 96,
+      "type": "Exception",
+      "snippet": "                    except Exception:"
+    },
+    {
+      "file": "scp\\runtime\\judge.py",
+      "line": 93,
+      "type": "Exception",
+      "snippet": "                                except Exception:"
+    },
+    {
+      "file": "scp\\runtime\\timing_and_restart.py",
+      "line": 123,
+      "type": "(TypeError, ValueError)",
+      "snippet": "        except (TypeError, ValueError):"
+    },
+    {
+      "file": "scp\\security\\url_safety.py",
+      "line": 82,
+      "type": "ValueError",
+      "snippet": "    except ValueError:"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 758,
+      "type": "(TypeError, ValueError)",
+      "snippet": "        except (TypeError, ValueError):"
+    },
+    {
+      "file": "scp\\task_kernel_parts\\taskkernel.py",
+      "line": 763,
+      "type": "(TypeError, ValueError)",
+      "snippet": "            except (TypeError, ValueError):"
+    }
+  ],
+  "mutable_defaults": [],
+  "literal_is_comparisons": [
+    {
+      "file": "scp\\api\\chat.py",
+      "line": 372,
+      "snippet": "                    elif task_result.get(\"success\") is True:"
+    },
+    {
+      "file": "scp\\autofix\\deterministic_worker.py",
+      "line": 236,
+      "snippet": "        if self._eval_bus is False:"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 1330,
+      "snippet": "                if _pfv_result.get(\"ok\") is not True:"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 1450,
+      "snippet": "            if _verify_ok_local is True:"
+    },
+    {
+      "file": "scp\\autofix\\engine_parts\\autofix_mixin.py",
+      "line": 1452,
+      "snippet": "            elif _verify_ok_local is False:"
+    },
+    {
+      "file": "scp\\autofix\\scanners\\security_scanner.py",
+      "line": 135,
+      "snippet": "                            and kw.value.value is True):"
+    },
+    {
+      "file": "scp\\brain\\error_store_index.py",
+      "line": 400,
+      "snippet": "    assert history[\"has_similar_error\"] is True  # noqa: S101"
+    },
+    {
+      "file": "scp\\brain\\error_store_index.py",
+      "line": 495,
+      "snippet": "    assert garbage_history[\"has_similar_error\"] is False  # noqa: S101"
+    },
+    {
+      "file": "scp\\core\\data_partitioner.py",
+      "line": 180,
+      "snippet": "        assert r[\"new\"] is True  # noqa: S101"
+    },
+    {
+      "file": "scp\\core\\data_partitioner.py",
+      "line": 185,
+      "snippet": "        assert r[\"updated\"] is True  # noqa: S101"
+    },
+    {
+      "file": "scp\\core\\policy_materializer.py",
+      "line": 273,
+      "snippet": "        if isinstance(restored, dict) and restored.get(\"_rollback_absent\") is True:"
+    },
+    {
+      "file": "scp\\core\\request_run_ledger.py",
+      "line": 504,
+      "snippet": "        if explicit_success is False:"
+    },
+    {
+      "file": "scp\\core\\request_run_ledger.py",
+      "line": 506,
+      "snippet": "            return \"REJECTED\" if isinstance(result, dict) and result.get(\"allowed\") is False else \"INTERNAL_FAILED\""
+    },
+    {
+      "file": "scp\\core\\request_run_ledger.py",
+      "line": 508,
+      "snippet": "        if explicit_success is True:"
+    },
+    {
+      "file": "scp\\core\\safe_process.py",
+      "line": 120,
+      "snippet": "    if \"shell\" in extra and extra[\"shell\"] is True:"
+    },
+    {
+      "file": "scp\\hands\\planner.py",
+      "line": 847,
+      "snippet": "                if result.get(\"success\") is True:"
+    },
+    {
+      "file": "scp\\knowledge\\claim_extractor.py",
+      "line": 422,
+      "snippet": "        verified = sum(1 for c in claims if c.verified is True)"
+    },
+    {
+      "file": "scp\\knowledge\\claim_extractor.py",
+      "line": 423,
+      "snippet": "        refuted = sum(1 for c in claims if c.verified is False)"
+    },
+    {
+      "file": "scp\\knowledge\\source_watchlist.py",
+      "line": 265,
+      "snippet": "    assert d[\"require_verification\"] is True, \"Unknown source must require verification\"  # noqa: S101"
+    },
+    {
+      "file": "scp\\meta\\falsification_engine.py",
+      "line": 895,
+      "snippet": "    assert escalate is True, \"0.85 < 0.90 must escalate\"  # noqa: S101"
+    },
+    {
+      "file": "scp\\meta\\falsification_engine.py",
+      "line": 901,
+      "snippet": "    assert esc2 is False, \"0.90 == threshold should NOT escalate\"  # noqa: S101"
+    },
+    {
+      "file": "scp\\meta\\falsification_engine.py",
+      "line": 906,
+      "snippet": "    assert esc3 is True, \"3 contradictions must escalate\"  # noqa: S101"
+    },
+    {
+      "file": "scp\\meta\\falsification_engine.py",
+      "line": 922,
+      "snippet": "    assert ref[\"recorded\"] is True  # noqa: S101"
+    },
+    {
+      "file": "scp\\meta\\falsification_engine.py",
+      "line": 923,
+      "snippet": "    assert ref[\"errorstore_grew\"] is True  # noqa: S101"
+    },
+    {
+      "file": "scp\\meta\\why_engine.py",
+      "line": 66,
+      "snippet": "    return _METAWHY_MONITOR_SINGLETON if _METAWHY_MONITOR_SINGLETON is not False else None"
+    },
+    {
+      "file": "scp\\meta\\why_sources\\rest_countries.py",
+      "line": 37,
+      "snippet": "            if isinstance(data, dict) and data.get('success') is False:"
+    },
+    {
+      "file": "scp\\runtime\\judge.py",
+      "line": 247,
+      "snippet": "            elif semantic == \"PASS\" or semantic is True:"
+    },
+    {
+      "file": "scp\\runtime\\judge.py",
+      "line": 349,
+      "snippet": "            elif semantic == \"PASS\" or semantic is True:"
+    },
+    {
+      "file": "scp\\runtime\\experts\\humanities.py",
+      "line": 347,
+      "snippet": "                    if isinstance(_data, dict) and _data.get('success') is False:"
+    },
+    {
+      "file": "scp\\tests\\test_free_catalog.py",
+      "line": 31,
+      "snippet": "    assert fc._text_capable({\"output_modalities\": [\"audio\"]}) is False"
+    },
+    {
+      "file": "scp\\tests\\test_free_catalog.py",
+      "line": 32,
+      "snippet": "    assert fc._text_capable({\"output_modalities\": [\"video\"]}) is False"
+    },
+    {
+      "file": "scp\\tests\\test_free_catalog.py",
+      "line": 36,
+      "snippet": "    assert fc._text_capable({\"output_modalities\": [\"text\"]}) is True"
+    },
+    {
+      "file": "scp\\tests\\test_free_catalog.py",
+      "line": 37,
+      "snippet": "    assert fc._text_capable({}) is True"
+    },
+    {
+      "file": "scp\\tests\\test_free_catalog.py",
+      "line": 41,
+      "snippet": "    assert fc._text_capable({\"architecture\": {\"output_modalities\": [\"text\"]}}) is True"
+    },
+    {
+      "file": "scp\\tests\\test_free_catalog.py",
+      "line": 42,
+      "snippet": "    assert fc._text_capable({\"architecture\": {\"output_modalities\": [\"audio\"]}}) is False"
+    },
+    {
+      "file": "scp\\tests\\test_free_catalog.py",
+      "line": 50,
+      "snippet": "    assert fc.refresh_free_catalog() is True"
+    },
+    {
+      "file": "scp\\tests\\test_free_catalog.py",
+      "line": 59,
+      "snippet": "    assert fc.refresh_free_catalog() is True"
+    },
+    {
+      "file": "scp\\tests\\test_free_catalog.py",
+      "line": 71,
+      "snippet": "    assert fc.refresh_free_catalog() is False"
+    },
+    {
+      "file": "scp\\tests\\test_free_catalog.py",
+      "line": 80,
+      "snippet": "    assert fc.refresh_free_catalog() is False"
+    },
+    {
+      "file": "scp\\tests\\test_free_catalog.py",
+      "line": 92,
+      "snippet": "    assert fc.refresh_free_catalog() is False, \"no exact-$0 text model in this catalog\""
+    },
+    {
+      "file": "scp\\tests\\test_free_catalog.py",
+      "line": 101,
+      "snippet": "    assert fc.refresh_free_catalog(force=True) is True"
+    },
+    {
+      "file": "scp\\tests\\test_free_catalog.py",
+      "line": 110,
+      "snippet": "    assert fc._refresh_thread_started is True"
+    },
+    {
+      "file": "scp\\tests\\external_audit\\test_security.py",
+      "line": 196,
+      "snippet": "        assert decision.allowed is False, command  # noqa: S101"
+    },
+    {
+      "file": "scp\\tests\\property\\test_none_safety.py",
+      "line": 127,
+      "snippet": "        assert result is False, f\"crypto_guard(None) should be False, got {result}\""
+    },
+    {
+      "file": "scp\\tests\\property\\test_none_safety.py",
+      "line": 130,
+      "snippet": "        assert result is False"
+    },
+    {
+      "file": "scp\\tests\\property\\test_none_safety.py",
+      "line": 134,
+      "snippet": "            assert result is False"
+    },
+    {
+      "file": "scp\\tests\\property\\test_none_safety.py",
+      "line": 136,
+      "snippet": "            assert result is True"
+    },
+    {
+      "file": "scp\\tests\\property\\test_none_safety.py",
+      "line": 154,
+      "snippet": "        assert result is False"
+    },
+    {
+      "file": "scp\\tests\\property\\test_none_safety.py",
+      "line": 156,
+      "snippet": "        assert result is False"
+    },
+    {
+      "file": "scp\\tests\\property\\test_none_safety.py",
+      "line": 158,
+      "snippet": "        assert result is True"
+    },
+    {
+      "file": "scp\\tests\\property\\test_none_safety.py",
+      "line": 192,
+      "snippet": "        assert result is False"
+    },
+    {
+      "file": "scp\\tests\\property\\test_none_safety.py",
+      "line": 194,
+      "snippet": "        assert result is False"
+    },
+    {
+      "file": "scp\\tests\\property\\test_none_safety.py",
+      "line": 196,
+      "snippet": "        assert result is False"
+    },
+    {
+      "file": "scp\\tests\\property\\test_none_safety.py",
+      "line": 198,
+      "snippet": "        assert result is True"
+    }
+  ],
+  "dead_branches": [],
+  "suspicious_none_comparisons": [],
+  "unawaited_async_calls": []
+}

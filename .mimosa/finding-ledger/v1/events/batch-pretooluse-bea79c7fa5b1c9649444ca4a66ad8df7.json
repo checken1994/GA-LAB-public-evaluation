@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "pretooluse-bea79c7fa5b1c9649444ca4a66ad8df7",
+  "runId": null,
+  "runStatus": "completed",
+  "coverage": {
+    "status": "complete",
+    "reasons": []
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "PreToolUse"
+  },
+  "revision": null,
+  "diffHash": null,
+  "rulesVersion": null,
+  "sessionHash": "4b28d25ef066705756f9a0805c3245d77d2f52a2b301d9d315602e1f23d459c9",
+  "reportRef": null,
+  "events": [
+    {
+      "eventId": "hook-38102c8fa54bfce0d93a1441b24b8a59",
+      "findingId": "mimosa-5a1d06021a5d4047cbff101f",
+      "type": "finding_blocked",
+      "at": "2026-09-30T20:28:15.609Z",
+      "identity": {
+        "projectRelativeFile": "tools/anthropic_proxy.js",
+        "ruleId": "security",
+        "codeEvidenceHash": "c2f371727809a9961c7f7e3ddeaa19481e29c63ccd3d4bdff3f1dd95fe641145",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 70,
+      "endLine": 70,
+      "reasonCode": "deny",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "c2f371727809a9961c7f7e3ddeaa19481e29c63ccd3d4bdff3f1dd95fe641145"
+      },
+      "sequence": 0
+    }
+  ],
+  "observedFindingIds": [],
+  "verifiedFiles": [],
+  "recordedAt": "2026-09-30T20:28:16.108Z"
+}

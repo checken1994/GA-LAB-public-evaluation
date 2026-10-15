@@ -1,0 +1,245 @@
+{
+  "root_api_server": {
+    "security": 8,
+    "api_server_parts": 7,
+    "core": 7,
+    "meta": 1,
+    "observability": 2,
+    "runtime": 2,
+    "web_control": 1,
+    "api": 21,
+    "prediction": 1,
+    "trace_ledger": 1,
+    "ask_kernel_adapter": 1
+  },
+  "root_ask_kernel_adapter": {
+    "core": 2,
+    "task_kernel": 1,
+    "trace_ledger": 1,
+    "api_server_parts": 1,
+    "runtime": 3
+  },
+  "root_kernel_storage": {
+    "kernel_storage_pg": 1
+  },
+  "root_kernel_storage_pg": {
+    "kernel_storage": 1
+  },
+  "root_task_kernel": {
+    "kernel_storage": 1,
+    "task_kernel_parts": 2
+  },
+  "root_verifier": {
+    "core": 1
+  },
+  "root___init__": {
+    "core": 1
+  },
+  "root___main__": {
+    "security": 1
+  },
+  "api": {
+    "api_server": 4,
+    "core": 51,
+    "llm_gateway": 2,
+    "runtime": 5,
+    "security": 10,
+    "web_control": 4,
+    "knowledge": 2,
+    "meta": 3,
+    "api_server_parts": 4,
+    "release": 1,
+    "calibration": 1,
+    "forecast": 2,
+    "hands": 4,
+    "history": 1,
+    "pc_control": 1,
+    "risk_intelligence": 1,
+    "data_sources": 2,
+    "consolidator": 1,
+    "autofix": 14,
+    "rag": 1,
+    "self_model": 1,
+    "epistemic": 1,
+    "contracts": 1,
+    "world_state": 1
+  },
+  "api_server_parts": {
+    "core": 33,
+    "security": 23,
+    "runtime": 6,
+    "prediction": 1,
+    "meta": 5,
+    "observability": 3,
+    "web_control": 3,
+    "api": 7,
+    "autofix": 4,
+    "policy": 1,
+    "task_kernel": 3,
+    "knowledge": 2,
+    "risk_intelligence": 1,
+    "history": 1,
+    "llm_gateway": 1,
+    "data_sources": 1,
+    "calibration": 1,
+    "forecast": 1,
+    "contracts": 2,
+    "world_state": 1,
+    "capabilities": 1,
+    "trace_ledger": 1
+  },
+  "autofix": {
+    "sandbox_evaluator": 5,
+    "event_bus_pg": 1,
+    "core": 9,
+    "llm_gateway": 2,
+    "meta": 10,
+    "security": 9,
+    "contracts": 1
+  },
+  "benchmark": {
+    "llm_gateway": 1,
+    "security": 1,
+    "knowledge": 1
+  },
+  "calibration": {
+    "contracts": 5,
+    "persistence": 1
+  },
+  "capabilities": {
+    "llm_gateway": 1
+  },
+  "core": {
+    "autofix": 5,
+    "hands": 3,
+    "security": 21,
+    "governance": 1,
+    "llm_gateway": 7,
+    "task_kernel": 3,
+    "data_sources": 3,
+    "runtime": 1,
+    "meta": 2,
+    "knowledge": 2
+  },
+  "data_sources": {
+    "interfaces": 63,
+    "core": 14,
+    "security": 27
+  },
+  "epistemic": {
+    "contracts": 7,
+    "persistence": 3,
+    "governance": 1
+  },
+  "experience": {
+    "core": 5
+  },
+  "foundation": {
+    "security": 1
+  },
+  "governance": {
+    "contracts": 3,
+    "epistemic": 1,
+    "persistence": 1
+  },
+  "hands": {
+    "pc_control": 1,
+    "security": 4,
+    "web_control": 1,
+    "core": 2,
+    "kernel_storage": 1,
+    "task_kernel": 1
+  },
+  "history": {
+    "core": 1
+  },
+  "knowledge": {
+    "meta": 2,
+    "contracts": 14,
+    "core": 1,
+    "web_control": 1,
+    "experience": 1,
+    "self_model": 1,
+    "security": 2,
+    "epistemic": 1
+  },
+  "learning": {
+    "core": 1
+  },
+  "llm_gateway": {
+    "security": 3,
+    "core": 1
+  },
+  "mcp_server": {
+    "core": 1,
+    "hands": 3,
+    "security": 1
+  },
+  "meta": {
+    "core": 32,
+    "knowledge": 2,
+    "contracts": 2,
+    "security": 10,
+    "runtime": 2,
+    "llm_gateway": 3,
+    "data_sources": 1
+  },
+  "pc_control": {
+    "core": 1,
+    "security": 1
+  },
+  "persistence": {
+    "contracts": 1
+  },
+  "prediction": {
+    "core": 6
+  },
+  "risk_intelligence": {
+    "security": 1,
+    "contracts": 2
+  },
+  "runtime": {
+    "core": 65,
+    "security": 11,
+    "verifier": 1,
+    "knowledge": 1,
+    "data_sources": 44,
+    "llm_gateway": 5,
+    "meta": 2
+  },
+  "sandbox_evaluator": {
+    "event_bus_pg": 1
+  },
+  "security": {
+    "core": 3,
+    "meta": 1,
+    "llm_gateway": 1,
+    "api_server_parts": 1
+  },
+  "self_model": {
+    "contracts": 3,
+    "epistemic": 1,
+    "persistence": 1
+  },
+  "task_kernel_parts": {
+    "kernel_storage": 1,
+    "core": 6,
+    "task_kernel": 1,
+    "security": 1,
+    "meta": 1
+  },
+  "tests": {
+    "llm_gateway": 4,
+    "core": 4,
+    "pc_control": 1,
+    "web_control": 3,
+    "api": 3
+  },
+  "web_control": {
+    "security": 4
+  },
+  "world_state": {
+    "contracts": 3,
+    "persistence": 1
+  }
+}
